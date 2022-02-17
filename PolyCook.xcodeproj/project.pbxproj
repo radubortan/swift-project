@@ -7,18 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E5E27BEF3AF004FF49A /* LoginView.swift */; };
+		66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E6027BEF4B1004FF49A /* CoefficientsView.swift */; };
 		66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3447927BEE599005821F9 /* PolyCookApp.swift */; };
-		66B3447C27BEE599005821F9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3447B27BEE599005821F9 /* ContentView.swift */; };
+		66B3447C27BEE599005821F9 /* RecipeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3447B27BEE599005821F9 /* RecipeListView.swift */; };
 		66B3447E27BEE59A005821F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B3447D27BEE59A005821F9 /* Assets.xcassets */; };
 		66B3448127BEE59A005821F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B3448027BEE59A005821F9 /* Preview Assets.xcassets */; };
+		66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3448827BEE8B6005821F9 /* StocksListView.swift */; };
+		66B3448B27BEE8DC005821F9 /* IngredientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3448A27BEE8DC005821F9 /* IngredientListView.swift */; };
+		66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3448C27BEE8E8005821F9 /* SettingsView.swift */; };
+		66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3448E27BEEBE0005821F9 /* StartingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66998E5E27BEF3AF004FF49A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		66998E6027BEF4B1004FF49A /* CoefficientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoefficientsView.swift; sourceTree = "<group>"; };
 		66B3447627BEE599005821F9 /* PolyCook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyCook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B3447927BEE599005821F9 /* PolyCookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyCookApp.swift; sourceTree = "<group>"; };
-		66B3447B27BEE599005821F9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		66B3447B27BEE599005821F9 /* RecipeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListView.swift; sourceTree = "<group>"; };
 		66B3447D27BEE59A005821F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66B3448027BEE59A005821F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		66B3448827BEE8B6005821F9 /* StocksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListView.swift; sourceTree = "<group>"; };
+		66B3448A27BEE8DC005821F9 /* IngredientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListView.swift; sourceTree = "<group>"; };
+		66B3448C27BEE8E8005821F9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		66B3448E27BEEBE0005821F9 /* StartingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +63,8 @@
 		66B3447827BEE599005821F9 /* PolyCook */ = {
 			isa = PBXGroup;
 			children = (
+				66B3448727BEE77E005821F9 /* View */,
 				66B3447927BEE599005821F9 /* PolyCookApp.swift */,
-				66B3447B27BEE599005821F9 /* ContentView.swift */,
 				66B3447D27BEE59A005821F9 /* Assets.xcassets */,
 				66B3447F27BEE59A005821F9 /* Preview Content */,
 			);
@@ -65,6 +77,20 @@
 				66B3448027BEE59A005821F9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		66B3448727BEE77E005821F9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				66B3448E27BEEBE0005821F9 /* StartingView.swift */,
+				66B3447B27BEE599005821F9 /* RecipeListView.swift */,
+				66B3448827BEE8B6005821F9 /* StocksListView.swift */,
+				66B3448A27BEE8DC005821F9 /* IngredientListView.swift */,
+				66B3448C27BEE8E8005821F9 /* SettingsView.swift */,
+				66998E5E27BEF3AF004FF49A /* LoginView.swift */,
+				66998E6027BEF4B1004FF49A /* CoefficientsView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +163,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66B3447C27BEE599005821F9 /* ContentView.swift in Sources */,
+				66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */,
+				66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */,
+				66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */,
+				66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */,
+				66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */,
+				66B3447C27BEE599005821F9 /* RecipeListView.swift in Sources */,
 				66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */,
+				66B3448B27BEE8DC005821F9 /* IngredientListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +301,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PolyCook/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -297,6 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PolyCook/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
