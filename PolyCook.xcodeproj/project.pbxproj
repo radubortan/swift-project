@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDA27C02A7E00AA308A /* RecipeView.swift */; };
+		666DABDE27C032B500AA308A /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */; };
 		66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E5E27BEF3AF004FF49A /* LoginView.swift */; };
 		66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E6027BEF4B1004FF49A /* CoefficientsView.swift */; };
 		66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3447927BEE599005821F9 /* PolyCookApp.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
+		666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		66998E5E27BEF3AF004FF49A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		66998E6027BEF4B1004FF49A /* CoefficientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoefficientsView.swift; sourceTree = "<group>"; };
 		66B3447627BEE599005821F9 /* PolyCook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyCook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +48,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		666DABDC27C032A000AA308A /* General */ = {
+			isa = PBXGroup;
+			children = (
+				666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		66B3446D27BEE599005821F9 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +75,7 @@
 		66B3447827BEE599005821F9 /* PolyCook */ = {
 			isa = PBXGroup;
 			children = (
+				666DABDC27C032A000AA308A /* General */,
 				66B3448727BEE77E005821F9 /* View */,
 				66B3447927BEE599005821F9 /* PolyCookApp.swift */,
 				66B3447D27BEE59A005821F9 /* Assets.xcassets */,
@@ -89,6 +102,7 @@
 				66B3448C27BEE8E8005821F9 /* SettingsView.swift */,
 				66998E5E27BEF3AF004FF49A /* LoginView.swift */,
 				66998E6027BEF4B1004FF49A /* CoefficientsView.swift */,
+				666DABDA27C02A7E00AA308A /* RecipeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,11 +177,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */,
 				66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */,
 				66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */,
 				66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */,
 				66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */,
 				66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */,
+				666DABDE27C032B500AA308A /* CheckboxToggleStyle.swift in Sources */,
 				66B3447C27BEE599005821F9 /* RecipeListView.swift in Sources */,
 				66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */,
 				66B3448B27BEE8DC005821F9 /* IngredientListView.swift in Sources */,
@@ -301,7 +317,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PolyCook/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = F2S727P9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -330,7 +346,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PolyCook/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = F2S727P9T9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

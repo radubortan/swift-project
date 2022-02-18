@@ -22,10 +22,11 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .navigationTitle("Paramètres")
                 Spacer()
             }
+            .navigationTitle("Paramètres")
         }
+        .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
     }
 }
 
