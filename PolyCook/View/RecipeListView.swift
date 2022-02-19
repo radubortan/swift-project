@@ -30,11 +30,14 @@ struct RecipeListView: View {
                     ForEach(searchResults, id: \.self) {recipe in
                         NavigationLink(destination: RecipeView()) {
                             HStack {
-                                Text(recipe)
+                                Text(recipe).font(.system(size: 21)).truncationMode(.tail)
                                 Spacer()
-                                Image(systemName: "exclamationmark.circle").foregroundColor(.red)
+                                Image(systemName: "exclamationmark.circle")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .foregroundColor(.red)
                             }
-                        }
+                        }.frame(height: 50)
 //                        .alert(isPresented: self.$showingDeleteAlert) {
 //                            Alert(title: Text("..."), message: Text("Etes vous sûr de vouloir supprimer la recette?"), primaryButton: .destructive(Text("Supprimer")) {
 //                                for index in self.toBeDeleted! {

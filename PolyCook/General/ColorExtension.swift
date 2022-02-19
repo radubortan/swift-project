@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    static let textFieldBackgroundColor = Color("TextFieldColor")
-    static let textFieldTextColor = Color("TextFieldTextColor")
+    static let textFieldBackground = Color("TextFieldBackground")
+    static let textFieldForeground = Color("TextFieldForeground")
+    static let stockAmountBackground = Color("StockAmountBackground")
 }

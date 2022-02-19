@@ -12,12 +12,6 @@ struct LoginView: View {
     
     @State var email : String = ""
     @State var password : String = ""
-    @FocusState private var focusedField: Field?
-    
-    enum Field: Hashable {
-        case emailField
-        case passwordField
-    }
     
     var body: some View {
         VStack{
@@ -26,22 +20,18 @@ struct LoginView: View {
             TextField("Email", text: $email)
                 .padding(10)
                 .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.textFieldBackgroundColor))
-                .foregroundColor(Color.textFieldTextColor)
+                                .fill(Color.textFieldBackground))
+                .foregroundColor(Color.textFieldForeground)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
-                .submitLabel(.next)
-                .focused($focusedField, equals: .emailField)
             
             SecureField("Mot de passe", text: $password)
                 .padding(10)
                 .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.textFieldBackgroundColor))
-                .foregroundColor(Color.textFieldTextColor)
+                                .fill(Color.textFieldBackground))
+                .foregroundColor(Color.textFieldForeground)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
-                .submitLabel(.done)
-                .focused($focusedField, equals: .passwordField)
             Spacer().frame(height: 20)
             Button(action: {
                 guard !email.isEmpty, !password.isEmpty else {
