@@ -6,8 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct StartingView: View {
+    @EnvironmentObject var loginVM : LoginViewModel
+    
+    let auth = Auth.auth()
+    
+    var isSignedIn : Bool {
+        return auth.currentUser != nil
+    }
+    
     var body: some View {
         TabView {
             RecipeListView()
@@ -15,21 +24,33 @@ struct StartingView: View {
                     Image(systemName: "list.bullet.rectangle.portrait")
                     Text("Recettes")
                 }
-            StocksListView()
-                .tabItem(){
-                    Image(systemName: "shippingbox")
-                    Text("Stock")
-                }
-            IngredientListView()
-                .tabItem(){
-                    Image(systemName: "cart")
-                    Text("Ingrédients")
-                }
-            SettingsView()
-                .tabItem(){
-                    Image(systemName: "gear")
-                    Text("Paramètres")
-                }
+            if loginVM.signedIn {
+                StocksListView()
+                    .tabItem(){
+                        Image(systemName: "shippingbox")
+                        Text("Stock")
+                    }
+                IngredientListView()
+                    .tabItem(){
+                        Image(systemName: "cart")
+                        Text("Ingrédients")
+                    }
+                SettingsView()
+                    .tabItem(){
+                        Image(systemName: "gear")
+                        Text("Paramètres")
+                    }
+            }
+            else {
+                LoginView()
+                    .tabItem(){
+                        Image(systemName: "person.circle.fill")
+                        Text("Connexion")
+                    }
+            }
+        }
+        .onAppear{
+            loginVM.signedIn = loginVM.isSignedIn
         }
     }
 }

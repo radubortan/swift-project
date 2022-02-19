@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		663E9F6F27C116290030EEFF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 663E9F6E27C116290030EEFF /* GoogleService-Info.plist */; };
+		663E9F7227C119090030EEFF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7127C119090030EEFF /* FirebaseAuth */; };
+		663E9F7427C119090030EEFF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7327C119090030EEFF /* FirebaseFirestore */; };
+		663E9F7627C119090030EEFF /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7527C119090030EEFF /* FirebaseFirestoreSwift-Beta */; };
+		663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E9F7727C11FF90030EEFF /* LoginViewModel.swift */; };
+		663E9F7D27C13B150030EEFF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E9F7C27C13B150030EEFF /* ColorExtension.swift */; };
 		666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDA27C02A7E00AA308A /* RecipeView.swift */; };
 		666DABDE27C032B500AA308A /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */; };
 		66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E5E27BEF3AF004FF49A /* LoginView.swift */; };
@@ -22,6 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		663E9F6E27C116290030EEFF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		663E9F7727C11FF90030EEFF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = ../LoginViewModel.swift; sourceTree = "<group>"; };
+		663E9F7C27C13B150030EEFF /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		66998E5E27BEF3AF004FF49A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -42,16 +51,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663E9F7627C119090030EEFF /* FirebaseFirestoreSwift-Beta in Frameworks */,
+				663E9F7227C119090030EEFF /* FirebaseAuth in Frameworks */,
+				663E9F7427C119090030EEFF /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		663E9F7927C125F80030EEFF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				663E9F7727C11FF90030EEFF /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		666DABDC27C032A000AA308A /* General */ = {
 			isa = PBXGroup;
 			children = (
 				666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */,
+				663E9F7C27C13B150030EEFF /* ColorExtension.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -75,6 +96,8 @@
 		66B3447827BEE599005821F9 /* PolyCook */ = {
 			isa = PBXGroup;
 			children = (
+				663E9F7927C125F80030EEFF /* ViewModel */,
+				663E9F6E27C116290030EEFF /* GoogleService-Info.plist */,
 				666DABDC27C032A000AA308A /* General */,
 				66B3448727BEE77E005821F9 /* View */,
 				66B3447927BEE599005821F9 /* PolyCookApp.swift */,
@@ -123,6 +146,11 @@
 			dependencies = (
 			);
 			name = PolyCook;
+			packageProductDependencies = (
+				663E9F7127C119090030EEFF /* FirebaseAuth */,
+				663E9F7327C119090030EEFF /* FirebaseFirestore */,
+				663E9F7527C119090030EEFF /* FirebaseFirestoreSwift-Beta */,
+			);
 			productName = PolyCook;
 			productReference = 66B3447627BEE599005821F9 /* PolyCook.app */;
 			productType = "com.apple.product-type.application";
@@ -151,6 +179,9 @@
 				Base,
 			);
 			mainGroup = 66B3446D27BEE599005821F9;
+			packageReferences = (
+				663E9F7027C119090030EEFF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 66B3447727BEE599005821F9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -167,6 +198,7 @@
 			files = (
 				66B3448127BEE59A005821F9 /* Preview Assets.xcassets in Resources */,
 				66B3447E27BEE59A005821F9 /* Assets.xcassets in Resources */,
+				663E9F6F27C116290030EEFF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +211,8 @@
 			files = (
 				666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */,
 				66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */,
+				663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */,
+				663E9F7D27C13B150030EEFF /* ColorExtension.swift in Sources */,
 				66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */,
 				66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */,
 				66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */,
@@ -389,6 +423,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		663E9F7027C119090030EEFF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		663E9F7127C119090030EEFF /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663E9F7027C119090030EEFF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		663E9F7327C119090030EEFF /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663E9F7027C119090030EEFF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		663E9F7527C119090030EEFF /* FirebaseFirestoreSwift-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663E9F7027C119090030EEFF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreSwift-Beta";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 66B3446E27BEE599005821F9 /* Project object */;
 }

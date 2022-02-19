@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var loginVM : LoginViewModel
+    
     var body: some View {
         NavigationView{
             VStack {
@@ -15,7 +17,9 @@ struct SettingsView: View {
                     NavigationLink(destination: CoefficientsView()){
                         Text("Coefficients Calcul")
                     }
-                    Button{} label: {
+                    Button{
+                        loginVM.signOut()
+                    } label: {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right").foregroundColor(.red)
                             Text("Déconnexion").foregroundColor(.red)

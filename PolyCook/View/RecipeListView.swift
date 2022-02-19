@@ -15,6 +15,8 @@ struct RecipeListView: View {
     @State var toBeDeleted : IndexSet?
     @State var showingDeleteAlert = false
     
+    @EnvironmentObject var loginVM : LoginViewModel
+    
     func deleteRecipe(at indexSet : IndexSet) {
         self.toBeDeleted = indexSet
         self.showingDeleteAlert = true
@@ -52,9 +54,20 @@ struct RecipeListView: View {
 //                        }
                     }
                     .onDelete(perform: deleteRecipe)
+                    .deleteDisabled(!loginVM.isSignedIn)
                 }
                 .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche recette")
                 .navigationTitle("Recettes")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                    if loginVM.signedIn {
+                        
+                            Button{} label: {
+                                Image(systemName: "plus")
+                            }
+                        }
+                    }
+                }
             }
         }
         .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
