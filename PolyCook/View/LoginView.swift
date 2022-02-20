@@ -16,7 +16,9 @@ struct LoginView: View {
     var body: some View {
         VStack{
             Spacer()
+            
             Text("Connexion").font(.system(size: 40)).bold()
+            
             TextField("Email", text: $email)
                 .padding(10)
                 .background(RoundedRectangle(cornerRadius: 10)
@@ -24,6 +26,7 @@ struct LoginView: View {
                 .foregroundColor(Color.textFieldForeground)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+                .keyboardType(.emailAddress)
             
             SecureField("Mot de passe", text: $password)
                 .padding(10)
@@ -32,7 +35,9 @@ struct LoginView: View {
                 .foregroundColor(Color.textFieldForeground)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+            
             Spacer().frame(height: 20)
+            
             Button(action: {
                 guard !email.isEmpty, !password.isEmpty else {
                     return
@@ -48,8 +53,7 @@ struct LoginView: View {
                 .cornerRadius(10)
             Spacer()
         }
-        .padding()
-        
+        .padding(20)
     }
 }
 

@@ -12,4 +12,5 @@ extension Color {
     static let textFieldBackground = Color("TextFieldBackground")
     static let textFieldForeground = Color("TextFieldForeground")
     static let stockAmountBackground = Color("StockAmountBackground")
+    static let sheetBackground = Color("SheetBackground")
 }

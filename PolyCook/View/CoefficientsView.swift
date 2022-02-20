@@ -35,12 +35,15 @@ struct CoefficientsView: View {
     
     var body: some View {
         VStack{
-            Text("Coefficients").font(.system(size: 40)).bold().padding([.top, .bottom], 20)
+            Text("Coefficients").font(.system(size: 40)).bold()
+            
+            Spacer().frame(height: 10)
+            
             VStack (spacing: 0){
                 VStack (spacing: 18){
                     Text("Coûts horaires").font(.system(size: 25)).bold()
                     VStack (spacing: 5) {
-                        Text("Coût horaire moyen").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
+                        Text("Coût horaire moyen").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
                         TextField("Coût horaire moyen", value: $coutHoraireMoyen, formatter: numberFormatter)
                             .padding(10)
                             .background(RoundedRectangle(cornerRadius: 10)
@@ -53,7 +56,7 @@ struct CoefficientsView: View {
                     }
                     
                     VStack (spacing: 5) {
-                        Text("Coût horaire forfaitaire").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
+                        Text("Coût horaire forfaitaire").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
                         TextField("Coût horaire forfaitaire", value: $coutHoraireForfaitaire, formatter: numberFormatter)
                             .padding(10)
                             .background(RoundedRectangle(cornerRadius: 10)
@@ -71,7 +74,7 @@ struct CoefficientsView: View {
                 VStack (spacing: 18){
                     Text("Coefficients multiplicateurs").font(.system(size: 25)).bold()
                     VStack (spacing: 5) {
-                        Text("Sans évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
+                        Text("Sans évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
                         TextField("Sans évalution", value: $coeffSans, formatter: numberFormatter)
                             .padding(10)
                             .background(RoundedRectangle(cornerRadius: 10)
@@ -84,7 +87,7 @@ struct CoefficientsView: View {
                     }
                     
                     VStack (spacing: 5) {
-                        Text("Avec évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
+                        Text("Avec évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
                         TextField("Avec évalution", value: $coeffAvec, formatter: numberFormatter)
                             .padding(10)
                             .background(RoundedRectangle(cornerRadius: 10)
@@ -109,28 +112,26 @@ struct CoefficientsView: View {
             
             Spacer().frame(height: 30)
             
-            HStack{
+            HStack (spacing: 20) {
                 Button(action: {
                     //sauvegarder
                 }, label: {
                     Text("Sauvegarder")
-                        .font(.system(size: 18)).foregroundColor(.white).padding(12)
-                }).frame(width: 150).background(.blue).cornerRadius(10)
-                
-                Spacer()
+                        .font(.title2).foregroundColor(.white).padding(12)
+                }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                 
                 Button(action: {
                     //dismissed the current view
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Annuler")
-                        .font(.system(size: 18)).foregroundColor(.white).padding(12)
-                }).frame(width: 150).background(.red).cornerRadius(10)
+                        .font(.title2).foregroundColor(.white).padding(12)
+                }).frame(maxWidth: .infinity).background(.red).cornerRadius(10)
             }
             Spacer()
         }
-        .padding([.leading, .trailing], 30)
-        .navigationBarTitle("test")
+        .padding([.leading, .trailing], 20)
+        .navigationBarTitle("")
         .navigationBarHidden(true)
     }
 }
