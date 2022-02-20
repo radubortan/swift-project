@@ -38,23 +38,23 @@ struct RecipeListView: View {
                                     .foregroundColor(.red)
                             }
                         }.frame(height: 50)
-//                        .alert(isPresented: self.$showingDeleteAlert) {
-//                            Alert(title: Text("..."), message: Text("Etes vous sûr de vouloir supprimer la recette?"), primaryButton: .destructive(Text("Supprimer")) {
-//                                for index in self.toBeDeleted! {
-//                                    let item = searchResults[index]
-//                                    viewContext.delete(item)
-//                                    do {
-//                                        try viewContext.save()
-//                                    }
-//                                    catch let error {
-//                                        print("Error: \(error)")
-//                                    }
-//                                }
-//                                self.toBeDeleted = nil
-//                            }, secondaryButton: .cancel(Text("Annuler")) {
-//                                self.toBeDeleted = nil
-//                            })
-//                        }
+                        //                        .alert(isPresented: self.$showingDeleteAlert) {
+                        //                            Alert(title: Text("..."), message: Text("Etes vous sûr de vouloir supprimer la recette?"), primaryButton: .destructive(Text("Supprimer")) {
+                        //                                for index in self.toBeDeleted! {
+                        //                                    let item = searchResults[index]
+                        //                                    viewContext.delete(item)
+                        //                                    do {
+                        //                                        try viewContext.save()
+                        //                                    }
+                        //                                    catch let error {
+                        //                                        print("Error: \(error)")
+                        //                                    }
+                        //                                }
+                        //                                self.toBeDeleted = nil
+                        //                            }, secondaryButton: .cancel(Text("Annuler")) {
+                        //                                self.toBeDeleted = nil
+                        //                            })
+                        //                        }
                     }
                     .onDelete(perform: deleteRecipe)
                     .deleteDisabled(!loginVM.isSignedIn)
@@ -63,10 +63,11 @@ struct RecipeListView: View {
                 .navigationTitle("Recettes")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                    if loginVM.signedIn {
-                        
+                        if loginVM.signedIn {
                             Button{} label: {
-                                Image(systemName: "plus")
+                                NavigationLink(destination: RecipeView()){
+                                    Image(systemName: "plus")
+                                }
                             }
                         }
                     }
