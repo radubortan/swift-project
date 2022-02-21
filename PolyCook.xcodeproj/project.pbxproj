@@ -13,7 +13,10 @@
 		663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E9F7727C11FF90030EEFF /* LoginViewModel.swift */; };
 		663E9F7D27C13B150030EEFF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E9F7C27C13B150030EEFF /* ColorExtension.swift */; };
 		666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDA27C02A7E00AA308A /* RecipeView.swift */; };
-		666DABDE27C032B500AA308A /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */; };
+		667D283B27C41A98001BEE8C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283A27C41A98001BEE8C /* CardView.swift */; };
+		667D283D27C41D40001BEE8C /* CustomCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283C27C41D40001BEE8C /* CustomCorner.swift */; };
+		667D283F27C422FD001BEE8C /* FilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283E27C422FD001BEE8C /* FilterMenu.swift */; };
+		667D284327C42CAD001BEE8C /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D284227C42CAD001BEE8C /* FilterItem.swift */; };
 		66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E5E27BEF3AF004FF49A /* LoginView.swift */; };
 		66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66998E6027BEF4B1004FF49A /* CoefficientsView.swift */; };
 		66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3447927BEE599005821F9 /* PolyCookApp.swift */; };
@@ -36,7 +39,10 @@
 		663E9F7727C11FF90030EEFF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = ../LoginViewModel.swift; sourceTree = "<group>"; };
 		663E9F7C27C13B150030EEFF /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
-		666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
+		667D283A27C41A98001BEE8C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		667D283C27C41D40001BEE8C /* CustomCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCorner.swift; sourceTree = "<group>"; };
+		667D283E27C422FD001BEE8C /* FilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenu.swift; sourceTree = "<group>"; };
+		667D284227C42CAD001BEE8C /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
 		66998E5E27BEF3AF004FF49A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		66998E6027BEF4B1004FF49A /* CoefficientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoefficientsView.swift; sourceTree = "<group>"; };
 		66B3447627BEE599005821F9 /* PolyCook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyCook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,8 +87,11 @@
 		666DABDC27C032A000AA308A /* General */ = {
 			isa = PBXGroup;
 			children = (
-				666DABDD27C032B500AA308A /* CheckboxToggleStyle.swift */,
 				663E9F7C27C13B150030EEFF /* ColorExtension.swift */,
+				667D283A27C41A98001BEE8C /* CardView.swift */,
+				667D283C27C41D40001BEE8C /* CustomCorner.swift */,
+				667D283E27C422FD001BEE8C /* FilterMenu.swift */,
+				667D284227C42CAD001BEE8C /* FilterItem.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -224,19 +233,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667D284327C42CAD001BEE8C /* FilterItem.swift in Sources */,
 				666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */,
 				66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */,
 				663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */,
 				663E9F7D27C13B150030EEFF /* ColorExtension.swift in Sources */,
 				66998E5F27BEF3AF004FF49A /* LoginView.swift in Sources */,
 				66FCC6EA27C29634002FB4FD /* ModifyStockView.swift in Sources */,
+				667D283F27C422FD001BEE8C /* FilterMenu.swift in Sources */,
 				66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */,
 				66998E6127BEF4B1004FF49A /* CoefficientsView.swift in Sources */,
+				667D283D27C41D40001BEE8C /* CustomCorner.swift in Sources */,
 				66FCC6E627C27EF9002FB4FD /* EditIngredientView.swift in Sources */,
 				66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */,
+				667D283B27C41A98001BEE8C /* CardView.swift in Sources */,
 				66FCC6E827C290E6002FB4FD /* StockView.swift in Sources */,
 				66FCC6E227C26746002FB4FD /* CreateIngredientView.swift in Sources */,
-				666DABDE27C032B500AA308A /* CheckboxToggleStyle.swift in Sources */,
 				66B3447C27BEE599005821F9 /* RecipeListView.swift in Sources */,
 				66FCC6E427C27C1E002FB4FD /* IngredientView.swift in Sources */,
 				66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */,

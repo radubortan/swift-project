@@ -10,6 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var loginVM : LoginViewModel
     
+    @State var confirmationShown : Bool = false
+    
     var body: some View {
         NavigationView{
             VStack {
@@ -23,22 +25,28 @@ struct SettingsView: View {
                     
                     Section() {
                         Button{
-                            loginVM.signOut()
+                            confirmationShown = true
                         } label: {
                             HStack {
                                 Image(systemName: "rectangle.portrait.and.arrow.right")
                                     .foregroundColor(.red)
-//                                    .foregroundColor(.white)
                                 Text("Déconnexion")
                                     .foregroundColor(.red)
-//                                    .foregroundColor(.white)
                                     .font(.system(size: 21))
                             }
-//                            .padding(10)
                         }
-                        .frame(maxWidth: .infinity)
-//                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-//                        .background(.red)
+                        .confirmationDialog(
+                            "Voulez vous vous déconnecter?",
+                            isPresented : $confirmationShown,
+                            titleVisibility: .visible
+                        ) {
+                            Button("Oui") {
+                                withAnimation {
+                                    loginVM.signOut()
+                                }
+                            }
+                            Button("Non", role: .cancel) {}
+                        }
                     }
                 }
                 Spacer()
