@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct IngredientView: View {
+    let bigText = CGFloat(25)
+    let smallText = CGFloat(20)
+    
     @State private var showingSheet = false
     
     var body: some View {
@@ -16,10 +19,10 @@ struct IngredientView: View {
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
-                        .font(.system(size: 27))
+                        .font(.system(size: bigText))
                     Divider()
                     Text("2.00€")
-                        .font(.title2)
+                        .font(.system(size: smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -28,10 +31,10 @@ struct IngredientView: View {
                 
                 VStack (spacing: 10) {
                     Text("Unité")
-                        .font(.system(size: 27))
+                        .font(.system(size: bigText))
                     Divider()
                     Text("Kg")
-                        .font(.title2)
+                        .font(.system(size: smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -41,10 +44,10 @@ struct IngredientView: View {
             
             VStack (spacing: 10) {
                 Text("Catégorie")
-                    .font(.system(size: 27))
+                    .font(.system(size: bigText))
                 Divider()
                 Text("Crustacés")
-                    .font(.title2)
+                    .font(.system(size: smallText))
             }
             .frame(maxWidth: .infinity)
             .frame(height: 100)
@@ -53,10 +56,10 @@ struct IngredientView: View {
             
             VStack (spacing: 10) {
                 Text("Catégorie d'allergène")
-                    .font(.system(size: 27))
+                    .font(.system(size: bigText))
                 Divider()
                 Text("Crustacés")
-                    .font(.title2)
+                    .font(.system(size: smallText))
             }
             .frame(maxWidth: .infinity)
             .frame(height: 100)

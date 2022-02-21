@@ -14,16 +14,31 @@ struct SettingsView: View {
         NavigationView{
             VStack {
                 List {
-                    NavigationLink(destination: CoefficientsView()){
-                        Text("Coefficients Calcul")
-                    }
-                    Button{
-                        loginVM.signOut()
-                    } label: {
-                        HStack {
-                            Image(systemName: "rectangle.portrait.and.arrow.right").foregroundColor(.red)
-                            Text("Déconnexion").foregroundColor(.red)
+                    Section() {
+                        NavigationLink(destination: CoefficientsView()){
+                            Text("Coefficients")
+                                .font(.system(size: 21))
                         }
+                    }
+                    
+                    Section() {
+                        Button{
+                            loginVM.signOut()
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                    .foregroundColor(.red)
+//                                    .foregroundColor(.white)
+                                Text("Déconnexion")
+                                    .foregroundColor(.red)
+//                                    .foregroundColor(.white)
+                                    .font(.system(size: 21))
+                            }
+//                            .padding(10)
+                        }
+                        .frame(maxWidth: .infinity)
+//                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+//                        .background(.red)
                     }
                 }
                 Spacer()

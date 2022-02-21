@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StockView: View {
+    let bigText = CGFloat(25)
+    let smallText = CGFloat(20)
     
     @State private var showingSheet = false
     
@@ -23,10 +25,10 @@ struct StockView: View {
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
-                        .font(.system(size: 27))
+                        .font(.system(size: bigText))
                     Divider()
                     Text("2.00€")
-                        .font(.title2)
+                        .font(.system(size: smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -35,10 +37,10 @@ struct StockView: View {
                 
                 VStack (spacing: 10) {
                     Text("Unité")
-                        .font(.system(size: 27))
+                        .font(.system(size: bigText))
                     Divider()
                     Text("Kg")
-                        .font(.title2)
+                        .font(.system(size: smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -49,10 +51,10 @@ struct StockView: View {
             HStack (spacing: 20) {
                 VStack (spacing: 10) {
                     Text("Catégorie")
-                        .font(.system(size: 27))
+                        .font(.system(size: bigText))
                     Divider()
                     Text("Crustacés")
-                        .font(.title2)
+                        .font(.system(size: smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -61,10 +63,10 @@ struct StockView: View {
                 
                 VStack (spacing: 10) {
                     Text("Quantité")
-                        .font(.system(size: 27))
+                        .font(.system(size: bigText))
                     Divider()
                     Text("2")
-                        .font(.title2)
+                        .font(.system(size: smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -74,10 +76,10 @@ struct StockView: View {
             
             VStack (spacing: 10) {
                 Text("Catégorie d'allergène")
-                    .font(.system(size: 27))
+                    .font(.system(size: bigText))
                 Divider()
                 Text("Crustacés")
-                    .font(.title2)
+                    .font(.system(size: smallText))
             }
             .frame(maxWidth: .infinity)
             .frame(height: 100)
@@ -89,7 +91,8 @@ struct StockView: View {
             }, label: {
                 Text("Modifier Stock")
                     .font(.title2)
-                    .foregroundColor(.white).padding(12)
+                    .foregroundColor(.white)
+                    .padding(12)
             }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $showingSheet) {
                     ModifyStockView()

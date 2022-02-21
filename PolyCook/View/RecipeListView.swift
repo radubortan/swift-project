@@ -27,37 +27,59 @@ struct RecipeListView: View {
         NavigationView{
             VStack {
                 List {
-                    ForEach(searchResults, id: \.self) {recipe in
-                        NavigationLink(destination: RecipeView()) {
-                            HStack {
-                                Text(recipe).font(.system(size: 21)).truncationMode(.tail)
-                                Spacer()
-                                Image(systemName: "exclamationmark.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                    .foregroundColor(.red)
-                            }
-                        }.frame(height: 50)
-                        //                        .alert(isPresented: self.$showingDeleteAlert) {
-                        //                            Alert(title: Text("..."), message: Text("Etes vous sûr de vouloir supprimer la recette?"), primaryButton: .destructive(Text("Supprimer")) {
-                        //                                for index in self.toBeDeleted! {
-                        //                                    let item = searchResults[index]
-                        //                                    viewContext.delete(item)
-                        //                                    do {
-                        //                                        try viewContext.save()
-                        //                                    }
-                        //                                    catch let error {
-                        //                                        print("Error: \(error)")
-                        //                                    }
-                        //                                }
-                        //                                self.toBeDeleted = nil
-                        //                            }, secondaryButton: .cancel(Text("Annuler")) {
-                        //                                self.toBeDeleted = nil
-                        //                            })
-                        //                        }
+                    Section {
+                        HStack() {
+                            Button ("Type Repas"){}
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .buttonStyle(BorderlessButtonStyle())
+                            
+                            Button ("Ingrédients"){}
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .buttonStyle(BorderlessButtonStyle())
+                        }
+                        .listRowBackground(Color.white.opacity(0))
                     }
-                    .onDelete(perform: deleteRecipe)
-                    .deleteDisabled(!loginVM.isSignedIn)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Section {
+                        ForEach(searchResults, id: \.self) {recipe in
+                            NavigationLink(destination: RecipeView()) {
+                                HStack {
+                                    Text(recipe).font(.system(size: 21)).truncationMode(.tail)
+                                    Spacer()
+                                    Image(systemName: "exclamationmark.circle")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.red)
+                                }
+                            }.frame(height: 50)
+                            //                        .alert(isPresented: self.$showingDeleteAlert) {
+                            //                            Alert(title: Text("..."), message: Text("Etes vous sûr de vouloir supprimer la recette?"), primaryButton: .destructive(Text("Supprimer")) {
+                            //                                for index in self.toBeDeleted! {
+                            //                                    let item = searchResults[index]
+                            //                                    viewContext.delete(item)
+                            //                                    do {
+                            //                                        try viewContext.save()
+                            //                                    }
+                            //                                    catch let error {
+                            //                                        print("Error: \(error)")
+                            //                                    }
+                            //                                }
+                            //                                self.toBeDeleted = nil
+                            //                            }, secondaryButton: .cancel(Text("Annuler")) {
+                            //                                self.toBeDeleted = nil
+                            //                            })
+                            //                        }
+                        }
+                        .onDelete(perform: deleteRecipe)
+                        .deleteDisabled(!loginVM.isSignedIn)
+                    }
                 }
                 .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche recette")
                 .navigationTitle("Recettes")

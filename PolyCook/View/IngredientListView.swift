@@ -27,42 +27,64 @@ struct IngredientListView: View {
         NavigationView{
             VStack {
                 List {
-                    ForEach(searchResults, id: \.self) {ingredient in
-                        //                        version sans flèche
-                        ZStack {
-                            NavigationLink(destination: IngredientView()) {
-                                EmptyView()
-                            }.opacity(0)
-                            HStack {
-                                Text(ingredient).font(.system(size: 21)).truncationMode(.tail)
-                                Spacer()
-                                Image(systemName: "exclamationmark.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                    .foregroundColor(.red)
-                            }.frame(height: 50)
+                    Section {
+                        HStack() {
+                            Button ("Catégorie"){}
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .buttonStyle(BorderlessButtonStyle())
+                            
+                            Button ("Allergène"){}
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .buttonStyle(BorderlessButtonStyle())
                         }
-                        
-                        
-                        
-                        //version avec flèche
-                        //                        NavigationLink(destination: RecipeView()) {
-                        //                            HStack {
-                        //                                Text(ingredient).font(.system(size: 21)).truncationMode(.tail)
-                        //                                Spacer()
-                        //                                Image(systemName: "exclamationmark.circle")
-                        //                                    .resizable()
-                        //                                    .frame(width: 25, height: 25)
-                        //                                    .foregroundColor(.red)
-                        //                                Text("10kg")
-                        //                                    .padding(10)
-                        //                                    .background(Color.stockAmountBackground)
-                        //                                    .cornerRadius(10)
-                        //                                    .foregroundColor(Color.textFieldForeground)
-                        //                            }
-                        //                        }.frame(height: 50)
+                        .listRowBackground(Color.white.opacity(0))
                     }
-                    .onDelete(perform: deleteRecipe)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Section {
+                        ForEach(searchResults, id: \.self) {ingredient in
+                            //                        version sans flèche
+                            ZStack {
+                                NavigationLink(destination: IngredientView()) {
+                                    EmptyView()
+                                }.opacity(0)
+                                HStack {
+                                    Text(ingredient).font(.system(size: 21)).truncationMode(.tail)
+                                    Spacer()
+                                    Image(systemName: "exclamationmark.circle")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.red)
+                                }.frame(height: 50)
+                            }
+                            
+                            
+                            
+                            //version avec flèche
+                            //                        NavigationLink(destination: RecipeView()) {
+                            //                            HStack {
+                            //                                Text(ingredient).font(.system(size: 21)).truncationMode(.tail)
+                            //                                Spacer()
+                            //                                Image(systemName: "exclamationmark.circle")
+                            //                                    .resizable()
+                            //                                    .frame(width: 25, height: 25)
+                            //                                    .foregroundColor(.red)
+                            //                                Text("10kg")
+                            //                                    .padding(10)
+                            //                                    .background(Color.stockAmountBackground)
+                            //                                    .cornerRadius(10)
+                            //                                    .foregroundColor(Color.textFieldForeground)
+                            //                            }
+                            //                        }.frame(height: 50)
+                        }
+                        .onDelete(perform: deleteRecipe)
+                    }
                 }
                 .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche ingrédient")
                 .navigationTitle("Ingrédients")
