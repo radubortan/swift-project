@@ -1,10 +1,3 @@
-//
-//  CardView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 21/02/2022.
-//
-
 import SwiftUI
 
 struct CardView: View {
@@ -13,7 +6,7 @@ struct CardView: View {
     var body: some View {
         HStack {
             Text(filter.title)
-                .fontWeight(.bold)
+                .bold()
                 .foregroundColor(.textFieldForeground.opacity(0.7))
             
             Spacer()

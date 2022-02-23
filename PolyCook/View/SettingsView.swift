@@ -1,10 +1,3 @@
-//
-//  SettingsView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 17/02/2022.
-//
-
 import SwiftUI
 
 struct SettingsView: View {

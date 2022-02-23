@@ -1,10 +1,3 @@
-//
-//  IngredientListView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 17/02/2022.
-//
-
 import SwiftUI
 
 struct IngredientListView: View {
@@ -22,7 +15,8 @@ struct IngredientListView: View {
     @State var allergenFilter = [FilterItem(title: "Arachide"),FilterItem(title: "Crustacés"),FilterItem(title: "Céléri"),FilterItem(title: "Fruits à coque"),FilterItem(title: "Lait"),FilterItem(title: "Lupin"), FilterItem(title: "Mollusques"), FilterItem(title: "Moutarde")]
     
     
-    @State private var showingSheet = false
+    @State private var showingCreationSheet = false
+    @State private var showingInfoSheet = false
     
     func deleteRecipe(at indexSet : IndexSet) {
         self.toBeDeleted = indexSet
@@ -36,23 +30,27 @@ struct IngredientListView: View {
                     List {
                         Section {
                             HStack(spacing: 15) {
-                                Button ("Catégorie"){
+                                Button (action: {
                                     withAnimation{showCategoryFilter.toggle()}
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .buttonStyle(BorderlessButtonStyle())
+                                }, label: {
+                                    Text("Catégorie").font(.system(size: 21))
+                                })
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .buttonStyle(BorderlessButtonStyle())
                                 
-                                Button ("Allergène"){
+                                Button (action: {
                                     withAnimation{showAllergenFilter.toggle()}
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .buttonStyle(BorderlessButtonStyle())
+                                }, label: {
+                                    Text("Allergène").font(.system(size: 21))
+                                })
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .buttonStyle(BorderlessButtonStyle())
                             }
                             .listRowBackground(Color.white.opacity(0))
                         }
@@ -60,12 +58,12 @@ struct IngredientListView: View {
                         
                         Section {
                             ForEach(searchResults, id: \.self) {ingredient in
-                                ZStack {
-                                    NavigationLink(destination: IngredientView()) {
-                                        EmptyView()
-                                    }.opacity(0)
+                                Button{
+                                    showingInfoSheet.toggle()
+                                }
+                                label : {
                                     HStack {
-                                        Text(ingredient).font(.system(size: 21)).truncationMode(.tail)
+                                        Text(ingredient).font(.system(size: 21)).truncationMode(.tail).foregroundColor(.primary)
                                         Spacer()
                                         Image(systemName: "exclamationmark.circle")
                                             .resizable()
@@ -73,8 +71,10 @@ struct IngredientListView: View {
                                             .foregroundColor(.red)
                                     }.frame(height: 50)
                                 }
+                                .sheet(isPresented : $showingInfoSheet) {
+                                    IngredientView()
+                                }
                             }
-                            .onDelete(perform: deleteRecipe)
                         }
                     }
                     .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche ingrédient")
@@ -82,13 +82,13 @@ struct IngredientListView: View {
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button{
-                                showingSheet.toggle()
+                                showingCreationSheet.toggle()
                             } label: {
-                                    Image(systemName: "plus")
+                                Image(systemName: "cart.badge.plus")
                             }
                         }
                     }
-                    .sheet(isPresented : $showingSheet) {
+                    .sheet(isPresented : $showingCreationSheet) {
                         CreateIngredientView()
                     }
                 }
