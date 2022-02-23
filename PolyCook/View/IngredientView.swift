@@ -1,10 +1,3 @@
-//
-//  IngredientView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct IngredientView: View {
@@ -15,71 +8,83 @@ struct IngredientView: View {
     
     var body: some View {
         VStack (spacing: 20){
+            Capsule()
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
+            
             Text("Crevette").font(.system(size: 40)).bold().multilineTextAlignment(.center)
+            
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("2.00€")
-                        .font(.system(size: smallText))
+                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.textFieldBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
                 
                 VStack (spacing: 10) {
                     Text("Unité")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("Kg")
-                        .font(.system(size: smallText))
+                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.textFieldBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
             
             VStack (spacing: 10) {
                 Text("Catégorie")
-                    .font(.system(size: bigText))
+                    .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                 Divider()
                 Text("Crustacés")
-                    .font(.system(size: smallText))
+                    .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
             }
+            .padding(15)
             .frame(maxWidth: .infinity)
             .frame(height: 100)
-            .background(Color.textFieldBackground)
+            .background(Color.sheetElementBackground)
             .cornerRadius(10)
             
             VStack (spacing: 10) {
                 Text("Catégorie d'allergène")
-                    .font(.system(size: bigText))
+                    .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                 Divider()
                 Text("Crustacés")
-                    .font(.system(size: smallText))
+                    .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
             }
+            .padding(15)
             .frame(maxWidth: .infinity)
             .frame(height: 100)
-            .background(Color.textFieldBackground)
+            .background(Color.sheetElementBackground)
             .cornerRadius(10)
-
-            Spacer()
-        }.padding(20)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button{
-                    showingSheet.toggle()
-                } label: {
-                    Text("Modifier")
-                }
+            
+            Button(action: {
+                showingSheet.toggle()
+            }, label: {
+                Text("Modifier ingrédient")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .padding(12)
+            }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $showingSheet) {
                     EditIngredientView()
                 }
-            }
+            
+            Spacer()
         }
+        .padding([.leading, .trailing], 20)
+        .background(Color.sheetBackground)
     }
 }
 

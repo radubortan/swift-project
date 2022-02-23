@@ -1,16 +1,9 @@
-//
-//  ContentView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 17/02/2022.
-//
-
 import SwiftUI
 
 struct RecipeListView: View {
     @EnvironmentObject var loginVM : LoginViewModel
     
-    let recipes = ["Steak frites", "Mousse au chocolat", "Boeuf bourgignon", "Ratatouille", "Pates carbonara", "Omelette", "Oeufs mimosa", "Tarte thon", "Coquilles St. Jacques", "Velouté de potiron", "Soupe à l'oignon", "Salade César", "Oeufs cocottes", "Quiche aux poireaux", "Nems de figatelli", "Bruschetta"]
+    @State var recipes = ["Steak frites", "Mousse au chocolat", "Boeuf bourgignon", "Ratatouille", "Pates carbonara", "Omelette", "Oeufs mimosa", "Tarte thon", "Coquilles St. Jacques", "Velouté de potiron", "Soupe à l'oignon", "Salade César", "Oeufs cocottes", "Quiche aux poireaux", "Nems de figatelli", "Bruschetta"]
     @State private var enteredText : String = ""
     
     @State var toBeDeleted : IndexSet?
@@ -22,11 +15,6 @@ struct RecipeListView: View {
     @State var mealFilters = [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")]
     @State var ingredientFilters = [FilterItem(title: "Pomme"), FilterItem(title: "Oeuf"), FilterItem(title: "Pâtes"), FilterItem(title: "Poisson"), FilterItem(title: "Tomate"), FilterItem(title: "Oignon"), FilterItem(title: "Courgette")]
     
-    
-    func deleteRecipe(at indexSet : IndexSet) {
-        self.toBeDeleted = indexSet
-        self.showingDeleteAlert = true
-    }
     
     func showConfirmation(at indexSet : IndexSet) {
         self.toBeDeleted = indexSet
@@ -40,23 +28,27 @@ struct RecipeListView: View {
                     List {
                         Section {
                             HStack(spacing: 15) {
-                                Button ("Type Repas"){
+                                Button (action: {
                                     withAnimation{showMealFilter.toggle()}
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .buttonStyle(BorderlessButtonStyle())
+                                }, label: {
+                                    Text("Type Repas").font(.system(size: 21))
+                                })
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .buttonStyle(BorderlessButtonStyle())
                                 
-                                Button ("Ingrédients"){
+                                Button (action: {
                                     withAnimation{showIngredientFilter.toggle()}
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .buttonStyle(BorderlessButtonStyle())
+                                }, label: {
+                                    Text("Ingrédients").font(.system(size: 21))
+                                })
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .buttonStyle(BorderlessButtonStyle())
                             }
                             .listRowBackground(Color.white.opacity(0))
                         }
@@ -65,7 +57,7 @@ struct RecipeListView: View {
                         Section {
                             ForEach(searchResults, id: \.self) {recipe in
                                 ZStack {
-                                    NavigationLink(destination: RecipeView()) {
+                                    NavigationLink(destination: RecipeView(isSheet: false)) {
                                         EmptyView()
                                     }.opacity(0)
                                     HStack {
@@ -87,14 +79,7 @@ struct RecipeListView: View {
                                 Button("Oui") {
                                     withAnimation {
                                         for index in self.toBeDeleted! {
-                                            let item = searchResults[index]
-    //                                        viewContext.delete(item)
-                                            do {
-    //                                            try viewContext.save()
-                                            }
-                                            catch let error {
-                                                print("Error: \(error)")
-                                            }
+                                            recipes.remove(at: index)
                                         }
                                     }
                                 }
@@ -109,8 +94,8 @@ struct RecipeListView: View {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             if loginVM.signedIn {
                                 Button{} label: {
-                                    NavigationLink(destination: RecipeView()){
-                                        Image(systemName: "plus")
+                                    NavigationLink(destination: CreateRecipeView()){
+                                        Image(systemName: "text.badge.plus")
                                     }
                                 }
                             }

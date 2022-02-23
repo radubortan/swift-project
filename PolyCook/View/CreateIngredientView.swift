@@ -1,10 +1,3 @@
-//
-//  AddIngredientView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct CreateIngredientView: View {
@@ -12,15 +5,17 @@ struct CreateIngredientView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var nom : String = ""
-    @State var selectedModel : String = "Kg"
+    @State var selectedUnit : String = "U"
+    @State var selectedCategory : String = "Poisson"
+    @State var selectedAllergen : String = "Crustacés"
     @State var isAllergene : Bool = false
     
     var body: some View {
         VStack (spacing: 20) {
             Capsule()
-                    .fill(Color.secondary)
-                    .frame(width: 35, height: 5)
-                    .padding(10)
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
             
             Text("Création Ingrédient").font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
@@ -29,60 +24,51 @@ struct CreateIngredientView: View {
                 TextField("Nom ingrédient", text: $nom)
                     .padding(10)
                     .background(RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.sheetBackground))
+                                    .fill(Color.sheetElementBackground))
                     .foregroundColor(Color.textFieldForeground)
             }
             
             HStack (spacing: 20){
                 VStack (spacing: 5) {
                     Text("Unité").font(.title2)
-                    Picker("Unité", selection: $selectedModel) {
-                        Text("Kg")
-                        Text("U")
-                        Text("L")
-                    }
-                    .pickerStyle(.menu)
-                    .onChange(of: selectedModel){ selected in
+                    Picker("Unité", selection: $selectedUnit) {
+                        Text("U").tag("U")
+                        Text("Kg").tag("Kg")
+                        Text("L").tag("L")
                     }
                 }
                 .frame(height: 100, alignment: .center)
                 .frame(maxWidth: .infinity)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
                 
                 VStack (spacing: 5) {
                     Text("Catégorie").font(.title2)
-                    Picker("Catégorie", selection: $selectedModel) {
-                        Text("Poisson")
-                        Text("Lait")
-                    }
-                    .pickerStyle(.menu)
-                    .onChange(of: selectedModel){ selectedModel in
+                    Picker("Catégorie", selection: $selectedCategory) {
+                        Text("Poisson").tag("Poisson")
+                        Text("Lait").tag("Lait")
                     }
                 }
                 .frame(height: 100, alignment: .center)
                 .frame(maxWidth: .infinity)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
             
             VStack {
-                Toggle("Allergène", isOn: $isAllergene).font(.title2)
+                Toggle("Allergène", isOn: $isAllergene.animation(.linear(duration: 0.3))).font(.title2)
                 
                 if isAllergene {
                     VStack (spacing: 5) {
                         Text("Catégorie Allergène").font(.title2)
-                        Picker("Catégorie Allergène", selection: $selectedModel) {
-                            Text("Poisson")
-                            Text("Lait")
-                        }
-                        .pickerStyle(.menu)
-                        .onChange(of: selectedModel){ selectedModel in
+                        Picker("Catégorie Allergène", selection: $selectedAllergen) {
+                            Text("Crustacés").tag("Crustacés")
+                            Text("Lait").tag("Lait")
                         }
                     }
                     .frame(height: 100, alignment: .center)
                     .frame(maxWidth: .infinity)
-                    .background(Color.sheetBackground)
+                    .background(Color.sheetElementBackground)
                     .cornerRadius(10)
                 }
             }
@@ -108,6 +94,7 @@ struct CreateIngredientView: View {
             Spacer()
         }
         .padding([.leading, .trailing], 20)
+        .background(Color.sheetBackground)
         .navigationBarTitle("")
         .navigationBarHidden(true)
     }

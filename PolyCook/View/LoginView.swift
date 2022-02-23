@@ -1,10 +1,3 @@
-//
-//  LoginView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 17/02/2022.
-//
-
 import SwiftUI
 
 struct LoginView: View {
@@ -22,7 +15,7 @@ struct LoginView: View {
             TextField("Email", text: $email)
                 .padding(10)
                 .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.textFieldBackground))
+                                .fill(Color.pageElementBackground))
                 .foregroundColor(Color.textFieldForeground)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
@@ -31,7 +24,7 @@ struct LoginView: View {
             SecureField("Mot de passe", text: $password)
                 .padding(10)
                 .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.textFieldBackground))
+                                .fill(Color.pageElementBackground))
                 .foregroundColor(Color.textFieldForeground)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
@@ -54,6 +47,7 @@ struct LoginView: View {
             Spacer()
         }
         .padding(20)
+        .background(Color.pageBackground)
     }
 }
 

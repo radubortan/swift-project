@@ -1,10 +1,3 @@
-//
-//  StocksListView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 17/02/2022.
-//
-
 import SwiftUI
 
 struct StocksListView: View {
@@ -27,23 +20,27 @@ struct StocksListView: View {
                     List {
                         Section {
                             HStack(spacing: 15) {
-                                Button ("Catégorie"){
+                                Button (action: {
                                     withAnimation{showCategoryFilter.toggle()}
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .buttonStyle(BorderlessButtonStyle())
+                                }, label: {
+                                    Text("Catégorie").font(.system(size: 21))
+                                })
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .buttonStyle(BorderlessButtonStyle())
                                 
-                                Button ("Allergène"){
+                                Button (action: {
                                     withAnimation{showAllergenFilter.toggle()}
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .buttonStyle(BorderlessButtonStyle())
+                                }, label: {
+                                    Text("Allergène").font(.system(size: 21))
+                                })
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.blue)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .buttonStyle(BorderlessButtonStyle())
                             }
                             .listRowBackground(Color.white.opacity(0))
                         }
@@ -62,11 +59,11 @@ struct StocksListView: View {
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .foregroundColor(.red)
-                                            Text("10kg")
-                                                .padding(10)
-                                                .background(Color.stockAmountBackground)
-                                                .cornerRadius(10)
-                                                .foregroundColor(Color.textFieldForeground)
+                                        Text("10kg")
+                                            .padding(10)
+                                            .background(Color.stockAmountBackground)
+                                            .cornerRadius(10)
+                                            .foregroundColor(Color.textFieldForeground)
                                     }.frame(height: 50)
                                 }
                                 .sheet(isPresented : $showingSheet) {

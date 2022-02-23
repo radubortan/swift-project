@@ -1,10 +1,3 @@
-//
-//  ModifyStockView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct ModifyStockView: View {
@@ -28,41 +21,45 @@ struct ModifyStockView: View {
     var body: some View {
         VStack (spacing: 20) {
             Capsule()
-                    .fill(Color.secondary)
-                    .frame(width: 35, height: 5)
-                    .padding(10)
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
             
             Text("Lait").font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
             HStack {
                 Text("Enlever")
-                Toggle("", isOn: $isAdding).labelsHidden()
+                Toggle("", isOn: $isAdding.animation(.linear(duration: 0.3))).labelsHidden()
                 Text("Ajouter")
             }
             
-            VStack (spacing: 10) {
-                Text("Quantité actuelle")
-                    .font(.system(size: 27))
-                Divider()
-                Text("2 L")
-                    .font(.title2)
+            HStack (spacing: 20) {
+                VStack (spacing: 10) {
+                    Text("Quantité actuelle")
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
+                    Divider()
+                    Text("2 L")
+                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(15)
+                .frame(maxWidth: .infinity)
+                .frame(height: 130)
+                .background(Color.sheetElementBackground)
+                .cornerRadius(10)
+                
+                VStack (spacing: 10) {
+                    Text("Nouvelle quantité")
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
+                    Divider()
+                    Text("2 L")
+                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(15)
+                .frame(maxWidth: .infinity)
+                .frame(height: 130)
+                .background(Color.sheetElementBackground)
+                .cornerRadius(10)
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 100)
-            .background(Color.sheetBackground)
-            .cornerRadius(10)
-            
-            VStack (spacing: 10) {
-                Text("Nouvelle quantité")
-                    .font(.system(size: 27))
-                Divider()
-                Text("2 L")
-                    .font(.title2)
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 100)
-            .background(Color.sheetBackground)
-            .cornerRadius(10)
             
             if isAdding {
                 VStack (spacing: 5) {
@@ -70,8 +67,12 @@ struct ModifyStockView: View {
                     TextField("Augmentation (L)", value: $increase, formatter: numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.sheetBackground))
+                                        .fill(Color.sheetElementBackground))
                         .foregroundColor(Color.textFieldForeground)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .keyboardType(.numbersAndPunctuation)
+                    
                 }
                 
                 VStack (spacing: 5) {
@@ -79,8 +80,11 @@ struct ModifyStockView: View {
                     TextField("Coût d'achat total (€)", value: $price, formatter: numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.sheetBackground))
+                                        .fill(Color.sheetElementBackground))
                         .foregroundColor(Color.textFieldForeground)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .keyboardType(.numbersAndPunctuation)
                 }
             }
             else {
@@ -89,8 +93,11 @@ struct ModifyStockView: View {
                     TextField("Diminution (L)", value: $decrease, formatter: numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.sheetBackground))
+                                        .fill(Color.sheetElementBackground))
                         .foregroundColor(Color.textFieldForeground)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .keyboardType(.numbersAndPunctuation)
                 }
             }
             
@@ -113,9 +120,11 @@ struct ModifyStockView: View {
                 }).frame(maxWidth: .infinity).background(.red).cornerRadius(10)
             }
             
+            
             Spacer()
         }
         .padding([.leading, .trailing], 20)
+        .background(Color.sheetBackground)
     }
 }
 

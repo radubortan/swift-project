@@ -1,10 +1,3 @@
-//
-//  StockView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct StockView: View {
@@ -16,76 +9,81 @@ struct StockView: View {
     var body: some View {
         VStack (spacing: 20){
             Capsule()
-                    .fill(Color.secondary)
-                    .frame(width: 35, height: 5)
-                    .padding(10)
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
             
             Text("Crevette").font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("2.00€")
-                        .font(.system(size: smallText))
+                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
                 
                 VStack (spacing: 10) {
                     Text("Unité")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("Kg")
-                        .font(.system(size: smallText))
+                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
             
             HStack (spacing: 20) {
                 VStack (spacing: 10) {
                     Text("Catégorie")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("Crustacés")
-                        .font(.system(size: smallText))
+                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
                 
                 VStack (spacing: 10) {
                     Text("Quantité")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("2")
-                        .font(.system(size: smallText))
+                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
             
             VStack (spacing: 10) {
                 Text("Catégorie d'allergène")
-                    .font(.system(size: bigText))
+                    .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                 Divider()
                 Text("Crustacés")
-                    .font(.system(size: smallText))
+                    .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .center)
             }
+            .padding(15)
             .frame(maxWidth: .infinity)
             .frame(height: 100)
-            .background(Color.sheetBackground)
+            .background(Color.sheetElementBackground)
             .cornerRadius(10)
-
+            
             Button(action: {
                 showingSheet.toggle()
             }, label: {
@@ -101,6 +99,7 @@ struct StockView: View {
             Spacer()
         }
         .padding([.leading, .trailing], 20)
+        .background(Color.sheetBackground)
     }
 }
 
