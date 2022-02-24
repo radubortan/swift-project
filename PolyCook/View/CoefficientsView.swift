@@ -4,6 +4,8 @@ struct CoefficientsView: View {
     //to make the back button dismiss the current view
     @Environment(\.presentationMode) var presentationMode
     
+    @ObservedObject var viewM = CoefficientsViewModel()
+    
     //formats the entered values
     let numberFormatter : NumberFormatter
     
@@ -12,11 +14,6 @@ struct CoefficientsView: View {
         //to format into decimal numbers
         numberFormatter.numberStyle = .decimal
     }
-    
-    @State var coutHoraireMoyen : Double = 0
-    @State var coutHoraireForfaitaire : Double = 0
-    @State var coeffSans : Double = 0
-    @State var coeffAvec : Double = 0
     
     var body: some View {
         ScrollView {
@@ -29,8 +26,8 @@ struct CoefficientsView: View {
                     VStack (spacing: 18){
                         Text("Coûts horaires").font(.system(size: 25)).bold()
                         VStack (spacing: 5) {
-                            Text("Coût horaire moyen").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Coût horaire moyen", value: $coutHoraireMoyen, formatter: numberFormatter)
+                            Text("Coût horaire moyen (€)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
+                            TextField("Coût horaire moyen", value: $viewM.coutHoraireMoyen, formatter: numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -41,8 +38,8 @@ struct CoefficientsView: View {
                         }
                         
                         VStack (spacing: 5) {
-                            Text("Coût horaire forfaitaire").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Coût horaire forfaitaire", value: $coutHoraireForfaitaire, formatter: numberFormatter)
+                            Text("Coût horaire forfaitaire (€)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
+                            TextField("Coût horaire forfaitaire", value: $viewM.coutHoraireForfaitaire, formatter: numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -59,7 +56,7 @@ struct CoefficientsView: View {
                         Text("Coefficients multiplicateurs").font(.system(size: 25)).bold()
                         VStack (spacing: 5) {
                             Text("Sans évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Sans évalution", value: $coeffSans, formatter: numberFormatter)
+                            TextField("Sans évalution", value: $viewM.coeffMultiSans, formatter: numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -71,7 +68,7 @@ struct CoefficientsView: View {
                         
                         VStack (spacing: 5) {
                             Text("Avec évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Avec évalution", value: $coeffAvec, formatter: numberFormatter)
+                            TextField("Avec évalution", value: $viewM.coeffMultiAvec, formatter: numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -88,14 +85,19 @@ struct CoefficientsView: View {
                 
                 HStack (spacing: 20) {
                     Button(action: {
-                        //sauvegarder
+                        //update the data in the DB
+                        viewM.updateCoefficients()
+                        //then dismiss the view
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Sauvegarder")
                             .font(.title2).foregroundColor(.white).padding(12)
                     }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                     
                     Button(action: {
-                        //dismiss the current view
+                        //reset the field to the original value
+                        viewM.resetValues()
+                        //then dismiss the view
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Annuler")

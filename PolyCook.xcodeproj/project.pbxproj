@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		661CBC9727C81D17001DDE25 /* CoefficientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CBC9627C81D17001DDE25 /* CoefficientsViewModel.swift */; };
+		661CBC9A27C81E5C001DDE25 /* Coefficients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CBC9927C81E5C001DDE25 /* Coefficients.swift */; };
 		663E9F7227C119090030EEFF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7127C119090030EEFF /* FirebaseAuth */; };
 		663E9F7427C119090030EEFF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7327C119090030EEFF /* FirebaseFirestore */; };
 		663E9F7627C119090030EEFF /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7527C119090030EEFF /* FirebaseFirestoreSwift-Beta */; };
@@ -41,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		661CBC9627C81D17001DDE25 /* CoefficientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoefficientsViewModel.swift; sourceTree = "<group>"; };
+		661CBC9927C81E5C001DDE25 /* Coefficients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coefficients.swift; sourceTree = "<group>"; };
 		663E9F7727C11FF90030EEFF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = ../LoginViewModel.swift; sourceTree = "<group>"; };
 		663E9F7C27C13B150030EEFF /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
@@ -86,10 +90,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		661CBC9827C81E49001DDE25 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				661CBC9927C81E5C001DDE25 /* Coefficients.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		661CBC9B27C82AF2001DDE25 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		663E9F7927C125F80030EEFF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				663E9F7727C11FF90030EEFF /* LoginViewModel.swift */,
+				661CBC9627C81D17001DDE25 /* CoefficientsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -125,6 +145,8 @@
 		66B3447827BEE599005821F9 /* PolyCook */ = {
 			isa = PBXGroup;
 			children = (
+				661CBC9B27C82AF2001DDE25 /* Intents */,
+				661CBC9827C81E49001DDE25 /* Model */,
 				66FCC6DF27C2645E002FB4FD /* GoogleService-Info.plist */,
 				663E9F7927C125F80030EEFF /* ViewModel */,
 				666DABDC27C032A000AA308A /* General */,
@@ -250,6 +272,7 @@
 			files = (
 				667D284327C42CAD001BEE8C /* FilterItem.swift in Sources */,
 				666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */,
+				661CBC9A27C81E5C001DDE25 /* Coefficients.swift in Sources */,
 				66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */,
 				663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */,
 				663E9F7D27C13B150030EEFF /* ColorExtension.swift in Sources */,
@@ -266,6 +289,7 @@
 				66FCC6E827C290E6002FB4FD /* StockView.swift in Sources */,
 				66FCC6E227C26746002FB4FD /* CreateIngredientView.swift in Sources */,
 				669BFE1927C52BF50079C071 /* RecipeIngredientListView.swift in Sources */,
+				661CBC9727C81D17001DDE25 /* CoefficientsViewModel.swift in Sources */,
 				66B3447C27BEE599005821F9 /* RecipeListView.swift in Sources */,
 				6671283F27C6D08A00012BCB /* InExtensoStepView.swift in Sources */,
 				66FCC6E427C27C1E002FB4FD /* IngredientView.swift in Sources */,
