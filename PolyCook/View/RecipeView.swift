@@ -209,7 +209,7 @@ struct RecipeView: View {
         }
         .background(Color.sheetBackground)
         .sheet(isPresented: $showPdf) {
-            PdfView()
+            PdfView(withCosts : $withCosts, quantity: $quantity)
         }
     }
 }
