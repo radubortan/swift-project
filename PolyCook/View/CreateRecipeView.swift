@@ -4,30 +4,21 @@ struct CreateRecipeView: View {
     //to make the back button dismiss the current view
     @Environment(\.presentationMode) var presentationMode
     
-    @State var mealType : String = "Entrée"
-    @State var nomRecette : String = ""
-    @State var nomAuteur : String = ""
-    @State var dishes : Int = 1
-    
-    @State var newStepSheetIsOn = false
-    @State var costsSheetIsOn = false
-    @State var ingredientsSheetIsOn = false
-    @State var showStep = false
-    
-    //formats the entered values
-    let numberFormatter = NumberFormatter()
+    @ObservedObject var listVm : RecipeListViewModel
+    @ObservedObject var createVm : CreateRecipeViewModel
     
     func deletion(at indexSet: IndexSet) {
         
     }
     
-    let etapes = ["etape 1", "etape 2", "etape 3", "etape 4"]
-    
     func fonctionProvisoire(at indexSet : IndexSet) {
         
     }
     
-    init() {
+    init(listVm : RecipeListViewModel) {
+        self.listVm = listVm
+        self.createVm = CreateRecipeViewModel(listVm: listVm)
+
         //to have no spacing between sections
         UITableView.appearance().sectionFooterHeight = 0
     }
@@ -42,7 +33,7 @@ struct CreateRecipeView: View {
                         VStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Nom recette").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                                TextField("Nom recette", text: $nomRecette)
+                                TextField("Nom recette", text: $createVm.nomRecette)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.pageElementBackground))
@@ -51,7 +42,7 @@ struct CreateRecipeView: View {
                             
                             VStack (spacing: 5) {
                                 Text("Nom auteur").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                                TextField("Nom auteur", text: $nomAuteur)
+                                TextField("Nom auteur", text: $createVm.nomAuteur)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.pageElementBackground))
@@ -62,7 +53,7 @@ struct CreateRecipeView: View {
                             HStack (spacing: 20){
                                 VStack (spacing: 5) {
                                     Text("Type repas").font(.title2)
-                                    Picker("Type repas", selection: $mealType) {
+                                    Picker("Type repas", selection: $createVm.mealType) {
                                         Text("Entrée").tag("Entrée")
                                         Text("Principal").tag("Principal")
                                         Text("Déssert").tag("Déssert")
@@ -76,7 +67,7 @@ struct CreateRecipeView: View {
                                 
                                 VStack (spacing: 5) {
                                     Text("N° Couverts").font(.title2)
-                                    TextField("N° Couverts", value: $dishes, formatter: numberFormatter)
+                                    TextField("N° Couverts", value: $createVm.dishes, formatter: createVm.numberFormatter)
                                         .padding(10)
                                         .background(RoundedRectangle(cornerRadius: 10)
                                                         .fill(Color.pageInnerTextFieldBackground))
@@ -84,6 +75,9 @@ struct CreateRecipeView: View {
                                         .disableAutocorrection(true)
                                         .autocapitalization(.none)
                                         .keyboardType(.numbersAndPunctuation)
+                                        .onSubmit {
+                                            createVm.creationIntent.intentToChange(dishes: createVm.dishes)
+                                        }
                                 }
                                 .padding(15)
                                 .frame(height: 100, alignment: .center)
@@ -107,7 +101,7 @@ struct CreateRecipeView: View {
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
                     Button(action: {
-                        newStepSheetIsOn.toggle()
+                        createVm.newStepSheetIsOn.toggle()
                     }, label: {
                         HStack {
                             Image(systemName : "plus")
@@ -121,7 +115,7 @@ struct CreateRecipeView: View {
                         .background(.blue)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
-                        .sheet(isPresented: $newStepSheetIsOn) {
+                        .sheet(isPresented: $createVm.newStepSheetIsOn) {
                             NewStepView()
                         }
                 }
@@ -129,16 +123,16 @@ struct CreateRecipeView: View {
                 
                 //steps list
                 Section {
-                    ForEach(etapes, id: \.self) {etape in
+                    ForEach(createVm.etapes, id: \.self) {etape in
                         //                        Text(etape).font(.system(size: 21))
                         //                            .frame(height: 50)
                         Button {
-                            showStep.toggle()
+                            createVm.showStep.toggle()
                         } label : {
                             Text(etape).font(.system(size: 21))
                                 .frame(height: 50).foregroundColor(.primary)
                         }
-                        .sheet(isPresented: $showStep) {
+                        .sheet(isPresented: $createVm.showStep) {
                             InExtensoStepView()
                         }
                     }
@@ -151,7 +145,7 @@ struct CreateRecipeView: View {
                 //costs button
                 Section {
                     Button(action: {
-                        costsSheetIsOn.toggle()
+                        createVm.costsSheetIsOn.toggle()
                     }, label: {
                         HStack {
                             Text("Coûts")
@@ -164,7 +158,7 @@ struct CreateRecipeView: View {
                         .cornerRadius(10)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
-                        .sheet(isPresented: $costsSheetIsOn) {
+                        .sheet(isPresented: $createVm.costsSheetIsOn) {
                             CostsView()
                         }
                 }
@@ -175,7 +169,7 @@ struct CreateRecipeView: View {
                 //ingredients button
                 Section {
                     Button(action: {
-                        ingredientsSheetIsOn.toggle()
+                        createVm.ingredientsSheetIsOn.toggle()
                     }, label: {
                         HStack {
                             Image(systemName: "cart")
@@ -189,7 +183,7 @@ struct CreateRecipeView: View {
                         .background(.blue)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
-                        .sheet(isPresented: $ingredientsSheetIsOn) {
+                        .sheet(isPresented: $createVm.ingredientsSheetIsOn) {
                             RecipeIngredientListView()
                         }
                 }
@@ -199,7 +193,13 @@ struct CreateRecipeView: View {
                 Section {
                     HStack (spacing: 20){
                         Button(action: {
-                            //sauvegarder
+                            if !createVm.nomRecette.isEmpty && !createVm.nomAuteur.isEmpty{
+                                createVm.listIntent.intentToAdd(recette: Recette(nbCouverts: createVm.dishes, nomAuteur: createVm.nomAuteur, nomCatRecette: createVm.mealType, nomRecette: createVm.nomRecette, etapes: createVm.etapes))
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                            else {
+                                createVm.showSubmitError.toggle()
+                            }
                         }, label: {
                             Text("Créer")
                                 .font(.title2)
@@ -210,9 +210,14 @@ struct CreateRecipeView: View {
                             .background(.blue)
                             .cornerRadius(10)
                             .buttonStyle(BorderlessButtonStyle())
+                            .alert(isPresented: $createVm.showSubmitError) {
+                                Alert (
+                                    title: Text("Veuillez remplir tous les champs")
+                                    )
+                            }
                         
                         Button(action: {
-                            //dismissed the current view
+                            //dismiss the current view
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             Text("Annuler")
@@ -238,8 +243,8 @@ struct CreateRecipeView: View {
     }
 }
 
-struct CreateRecipeView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateRecipeView()
-    }
-}
+//struct CreateRecipeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateRecipeView()
+//    }
+//}
