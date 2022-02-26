@@ -9,6 +9,7 @@ struct RecipeView: View {
     @State var withCosts = false
     @State var quantity = 1
     @State var showStep = false
+    @State var showPdf = false
     
     //formats the entered values
     let numberFormatter = NumberFormatter()
@@ -185,7 +186,7 @@ struct RecipeView: View {
                         }
                         
                         Button(action: {
-                            //impression
+                            showPdf.toggle()
                         }, label: {
                             HStack {
                                 Image(systemName: "printer")
@@ -207,6 +208,9 @@ struct RecipeView: View {
             }
         }
         .background(Color.sheetBackground)
+        .sheet(isPresented: $showPdf) {
+            PdfView(withCosts : $withCosts, quantity: $quantity)
+        }
     }
 }
 
