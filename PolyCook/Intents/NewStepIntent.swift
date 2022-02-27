@@ -1,13 +1,12 @@
 import Foundation
 import Combine
 
-enum CreateRecipeIntentState {
+enum NewStepIntentState {
     case dishesChanging(Int)
-    case addingStep(Step)
 }
 
-struct CreateRecipeIntent {
-    private var state = PassthroughSubject<CreateRecipeIntentState, Never>()
+struct NewStepIntent {
+    private var state = PassthroughSubject<NewStepIntentState, Never>()
     
     func addObserver(viewModel: CreateRecipeViewModel){
         self.state.subscribe(viewModel)
@@ -15,9 +14,5 @@ struct CreateRecipeIntent {
     
     func intentToChange(dishes: Int){
         self.state.send(.dishesChanging(dishes))
-    }
-    
-    func intentToAdd(step : Step){
-        self.state.send(.addingStep(step))
     }
 }

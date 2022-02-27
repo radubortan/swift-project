@@ -14,8 +14,9 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     func receive(_ input: CreateRecipeIntentState) -> Subscribers.Demand {
         switch input{
         case .dishesChanging(let dishes):
-            print(".dishesChanging \(dishes)")
-            self.recipe.nbCouvers = dishes
+            self.recipe.nbCouverts = dishes
+        case .addingStep(let step):
+            self.recipe.etapes.append(step)
         }
         return .none
     }
@@ -38,10 +39,14 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     @Published var showStep = false
     @Published var showSubmitError = false
     
-    @Published var etapes = ["etape 1", "etape 2", "etape 3", "etape 4"]
+    @Published var etapes : [Step] = []
     
     func change(nbCouverts: Int) {
         self.dishes = nbCouverts
+    }
+    
+    func change(step: Step) {
+        self.etapes.append(step)
     }
     
     var recipe : Recette

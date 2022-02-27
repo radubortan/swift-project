@@ -2,37 +2,43 @@ import Foundation
 
 protocol RecetteObserver {
     func change (nbCouverts: Int)
+    func change (step: Step)
 }
 
-class Recette {
+class Recette : Step {
     var observer : RecetteObserver?
     
-    var id : String
+    var nomAuteur : String
     
-    var nbCouvers : Int {
+    var nbCouverts : Int {
         didSet {
-            if nbCouvers < 1 {
+            if nbCouverts < 1 {
                 observer?.change(nbCouverts: oldValue)
             }
             else {
-                observer?.change(nbCouverts: nbCouvers)
+                observer?.change(nbCouverts: nbCouverts)
             }
         }
     }
-    var nomAuteur : String
+    
     
     var nomCatRecette : String
     
     var nomRecette : String
     
-    var etapes : [String] = []
+    var etapes : [Step] = []
+    {
+        didSet {
+            observer?.change(step: etapes.last!)
+        }
+    }
     
-    init(nbCouverts: Int, nomAuteur: String, nomCatRecette: String, nomRecette: String, etapes: [String], id: String = UUID().uuidString) {
-        self.id = id
-        self.nbCouvers = nbCouverts
-        self.nomAuteur = nomAuteur
+    init(nbCouverts: Int, nomAuteur: String, nomCatRecette: String, nomRecette: String, etapes: [Step], nomEtape : String = "", id: String = UUID().uuidString) {
+        self.nbCouverts = nbCouverts
         self.nomCatRecette = nomCatRecette
         self.nomRecette = nomRecette
         self.etapes = etapes
+        self.nomAuteur = nomAuteur
+        super.init(id : id, nomEtape : nomEtape)
     }
 }

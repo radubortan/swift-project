@@ -39,37 +39,49 @@ struct RecipeListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
-                            ForEach(searchResults, id: \.id) {recipe in
-                                ZStack {
-                                    NavigationLink(destination: RecipeView(isSheet: false)) {
-                                        EmptyView()
-                                    }.opacity(0)
-                                    HStack {
-                                        Text(recipe.nomRecette).font(.system(size: 21)).truncationMode(.tail)
-//                                        Spacer()
-//                                        Image(systemName: "exclamationmark.circle")
-//                                            .resizable()
-//                                            .frame(width: 25, height: 25)
-//                                            .foregroundColor(.red)
-                                    }.frame(height: 50)
-                                }
+                            if searchResults.isEmpty {
+                                Text("Aucune recette")
+                                    .font(.system(size: 21))
+                                    .bold()
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 20)
+                                    .listRowBackground(Color.white.opacity(0))
+                                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }
-                            .onDelete(perform: listVm.showConfirmation)
-                            .confirmationDialog(
-                                "Voulez vous supprimer la recette?",
-                                isPresented : $listVm.showingDeleteAlert,
-                                titleVisibility: .visible
-                            ) {
-                                Button("Oui") {
-                                    withAnimation {
-                                        for index in self.listVm.toBeDeleted! {
-                                            listVm.recipes.remove(at: index)
-                                        }
+                            else {
+                                ForEach(searchResults, id: \.id) {recette in
+                                    ZStack {
+                                        NavigationLink(destination: RecipeView(recette: recette, isSheet: false)) {
+                                            EmptyView()
+                                        }.opacity(0)
+                                        HStack {
+                                            Text(recette.nomRecette).font(.system(size: 21)).truncationMode(.tail)
+    //                                        Spacer()
+    //                                        Image(systemName: "exclamationmark.circle")
+    //                                            .resizable()
+    //                                            .frame(width: 25, height: 25)
+    //                                            .foregroundColor(.red)
+                                        }.frame(height: 50)
                                     }
                                 }
-                                Button("Non", role: .cancel) {}
+                                .onDelete(perform: listVm.showConfirmation)
+                                .confirmationDialog(
+                                    "Voulez vous supprimer la recette?",
+                                    isPresented : $listVm.showingDeleteAlert,
+                                    titleVisibility: .visible
+                                ) {
+                                    Button("Oui") {
+                                        withAnimation {
+                                            for index in self.listVm.toBeDeleted! {
+                                                listVm.recipes.remove(at: index)
+                                            }
+                                        }
+                                    }
+                                    Button("Non", role: .cancel) {}
+                                }
+                                .deleteDisabled(!loginVM.isSignedIn)
                             }
-                            .deleteDisabled(!loginVM.isSignedIn)
+                            
                         }
                     }
                     .searchable(text: $listVm.enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche recette")

@@ -116,24 +116,28 @@ struct CreateRecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $createVm.newStepSheetIsOn) {
-                            NewStepView()
+                            NewStepView(listVm : createVm)
                         }
                 }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 
                 //steps list
                 Section {
-                    ForEach(createVm.etapes, id: \.self) {etape in
-                        //                        Text(etape).font(.system(size: 21))
-                        //                            .frame(height: 50)
+                    ForEach(createVm.etapes, id: \.id) {etape in
                         Button {
                             createVm.showStep.toggle()
                         } label : {
-                            Text(etape).font(.system(size: 21))
+                            Text(etape.nomEtape).font(.system(size: 21))
                                 .frame(height: 50).foregroundColor(.primary)
                         }
                         .sheet(isPresented: $createVm.showStep) {
-                            InExtensoStepView()
+                            if etape is InExtensoStep {
+                                InExtensoStepView(etape: etape as! InExtensoStep)
+                            }
+                            else {
+                                RecipeView(recette: etape as! Recette, isSheet: true)
+                            }
+                            
                         }
                     }
                     .onDelete(perform: fonctionProvisoire)
