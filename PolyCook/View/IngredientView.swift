@@ -13,9 +13,22 @@ struct IngredientView: View {
     
     @State private var showingSheet = false
     
+    @ObservedObject var ingredientViewModel : IngredientViewModel
+    @ObservedObject var ingredientListViewModel : IngredientListViewModel
+    var intentIngredient: IntentIngredient
+    
+    
+    init(ingredientViewModel: IngredientViewModel, ingredientListViewModel: IngredientListViewModel){
+        self.ingredientViewModel = ingredientViewModel
+        self.ingredientListViewModel = ingredientListViewModel
+        self.intentIngredient = IntentIngredient()
+        self.intentIngredient.addObserver(viewModel: ingredientViewModel)
+        self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
+    }
+    
     var body: some View {
         VStack (spacing: 20){
-            Text("Crevette").font(.system(size: 40)).bold().multilineTextAlignment(.center)
+            Text(self.ingredientViewModel.nomIng).font(.system(size: 40)).bold().multilineTextAlignment(.center)
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
@@ -46,7 +59,7 @@ struct IngredientView: View {
                 Text("Catégorie")
                     .font(.system(size: bigText))
                 Divider()
-                Text("Crustacés")
+                Text(ingredientViewModel.nomCat)
                     .font(.system(size: smallText))
             }
             .frame(maxWidth: .infinity)
@@ -54,17 +67,21 @@ struct IngredientView: View {
             .background(Color.textFieldBackground)
             .cornerRadius(10)
             
-            VStack (spacing: 10) {
-                Text("Catégorie d'allergène")
-                    .font(.system(size: bigText))
-                Divider()
-                Text("Crustacés")
-                    .font(.system(size: smallText))
+            
+            if let currentAllergCategory = ingredientViewModel.nomCatAllerg {
+                VStack (spacing: 10) {
+                    Text("Catégorie d'allergène")
+                        .font(.system(size: bigText))
+                    Divider()
+                    Text(currentAllergCategory)
+                        .font(.system(size: smallText))
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 100)
+                .background(Color.textFieldBackground)
+                .cornerRadius(10)
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 100)
-            .background(Color.textFieldBackground)
-            .cornerRadius(10)
+            
 
             Spacer()
         }.padding(20)
@@ -76,16 +93,16 @@ struct IngredientView: View {
                     Text("Modifier")
                 }
                 .sheet(isPresented : $showingSheet) {
-                    EditIngredientView()
+                    EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)
                 }
             }
         }
     }
 }
 
-struct IngredientView_Previews: PreviewProvider {
-    static var previews: some View {
-        IngredientView()
-            .preferredColorScheme(.dark)
-    }
-}
+//struct IngredientView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        IngredientView()
+//            .preferredColorScheme(.dark)
+//    }
+//}
