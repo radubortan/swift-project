@@ -28,7 +28,7 @@
 		66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3448C27BEE8E8005821F9 /* SettingsView.swift */; };
 		66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3448E27BEEBE0005821F9 /* StartingView.swift */; };
 		66FCC6E027C2645E002FB4FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66FCC6DF27C2645E002FB4FD /* GoogleService-Info.plist */; };
-		66FCC6E227C26746002FB4FD /* AddIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E127C26746002FB4FD /* AddIngredientView.swift */; };
+		66FCC6E227C26746002FB4FD /* CreateIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E127C26746002FB4FD /* CreateIngredientView.swift */; };
 		66FCC6E427C27C1E002FB4FD /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E327C27C1E002FB4FD /* IngredientView.swift */; };
 		66FCC6E627C27EF9002FB4FD /* EditIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E527C27EF9002FB4FD /* EditIngredientView.swift */; };
 		66FCC6E827C290E6002FB4FD /* StockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E727C290E6002FB4FD /* StockView.swift */; };
@@ -65,7 +65,7 @@
 		66B3448C27BEE8E8005821F9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66B3448E27BEEBE0005821F9 /* StartingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingView.swift; sourceTree = "<group>"; };
 		66FCC6DF27C2645E002FB4FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		66FCC6E127C26746002FB4FD /* AddIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientView.swift; sourceTree = "<group>"; };
+		66FCC6E127C26746002FB4FD /* CreateIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientView.swift; sourceTree = "<group>"; };
 		66FCC6E327C27C1E002FB4FD /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		66FCC6E527C27EF9002FB4FD /* EditIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIngredientView.swift; sourceTree = "<group>"; };
 		66FCC6E727C290E6002FB4FD /* StockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockView.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 				66998E5E27BEF3AF004FF49A /* LoginView.swift */,
 				66998E6027BEF4B1004FF49A /* CoefficientsView.swift */,
 				666DABDA27C02A7E00AA308A /* RecipeView.swift */,
-				66FCC6E127C26746002FB4FD /* AddIngredientView.swift */,
+				66FCC6E127C26746002FB4FD /* CreateIngredientView.swift */,
 				66FCC6E327C27C1E002FB4FD /* IngredientView.swift */,
 				66FCC6E527C27EF9002FB4FD /* EditIngredientView.swift */,
 				66FCC6E727C290E6002FB4FD /* StockView.swift */,
@@ -302,7 +302,7 @@
 				66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */,
 				667D283B27C41A98001BEE8C /* CardView.swift in Sources */,
 				66FCC6E827C290E6002FB4FD /* StockView.swift in Sources */,
-				66FCC6E227C26746002FB4FD /* AddIngredientView.swift in Sources */,
+				66FCC6E227C26746002FB4FD /* CreateIngredientView.swift in Sources */,
 				66B3447C27BEE599005821F9 /* RecipeListView.swift in Sources */,
 				66FCC6E427C27C1E002FB4FD /* IngredientView.swift in Sources */,
 				66B3447A27BEE599005821F9 /* PolyCookApp.swift in Sources */,

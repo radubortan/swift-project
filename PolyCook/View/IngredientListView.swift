@@ -105,7 +105,7 @@ struct IngredientListView: View {
                         }
                     }
                     .sheet(isPresented : $showingSheet) {
-                        AddIngredientView(ingredientListViewModel: self.ingredientListViewModel,ingredient:Ingredient(id: UUID().uuidString, nomIng: "",nomCat:"Crustacés", nomCatAllerg: nil, unite: "Kg"))
+                        CreateIngredientView(ingredientListViewModel: self.ingredientListViewModel,ingredient:Ingredient(id: UUID().uuidString, nomIng: "",nomCat:"Crustacés", nomCatAllerg: nil, unite: "Kg"))
                     }
                 }
                 FilterMenu(title: "Catégorie", height: 250, isOn: $showCategoryFilter, filters: $ingredientCategories.ingredientCategoryFilter)

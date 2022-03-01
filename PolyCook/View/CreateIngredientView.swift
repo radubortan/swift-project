@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddIngredientView: View {
+struct CreateIngredientView: View {
     //to make the back button dismiss the current view
     @Environment(\.presentationMode) var presentationMode
     
