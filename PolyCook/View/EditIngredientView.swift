@@ -1,10 +1,3 @@
-//
-//  EditIngredientView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct EditIngredientView: View {
@@ -46,10 +39,10 @@ struct EditIngredientView: View {
     var body: some View {
         VStack (spacing: 20) {
             Capsule()
-                    .fill(Color.secondary)
-                    .frame(width: 35, height: 5)
-                    .padding(10)
-
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
+            
             Text("Modification").font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
             VStack (spacing: 5) {
@@ -57,7 +50,7 @@ struct EditIngredientView: View {
                 TextField("Nom ingrédient", text: $editIngredientViewModel.nomIng)
                     .padding(10)
                     .background(RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.sheetBackground))
+                                    .fill(Color.sheetElementBackground))
                     .foregroundColor(Color.textFieldForeground)
                 if editIngredientViewModel.nomIngIsTooShort {
                     Text("name must be at least 3 characters length")
@@ -79,7 +72,7 @@ struct EditIngredientView: View {
             }
             .frame(height: 100, alignment: .center)
             .frame(maxWidth: .infinity)
-            .background(Color.sheetBackground)
+            .background(Color.sheetElementBackground)
             .cornerRadius(10)
             
             VStack {
@@ -108,7 +101,7 @@ struct EditIngredientView: View {
                     }
                     .frame(height: 100, alignment: .center)
                     .frame(maxWidth: .infinity)
-                    .background(Color.sheetBackground)
+                    .background(Color.sheetElementBackground)
                     .cornerRadius(10)
                 }
             }
@@ -143,8 +136,7 @@ struct EditIngredientView: View {
             Spacer()
         }
         .padding([.leading, .trailing], 20)
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+        .background(Color.sheetBackground)
     }
 }
 

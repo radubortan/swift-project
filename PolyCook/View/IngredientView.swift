@@ -1,10 +1,3 @@
-//
-//  IngredientView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct IngredientView: View {
@@ -32,32 +25,34 @@ struct IngredientView: View {
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("2.00€")
-                        .font(.system(size: smallText))
+                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.textFieldBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
                 
                 VStack (spacing: 10) {
                     Text("Unité")
-                        .font(.system(size: bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("Kg")
-                        .font(.system(size: smallText))
+                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .padding(15)
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.textFieldBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
             
             VStack (spacing: 10) {
                 Text("Catégorie")
-                    .font(.system(size: bigText))
+                    .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                 Divider()
                 Text(ingredientViewModel.nomCat)
                     .font(.system(size: smallText))
@@ -95,8 +90,11 @@ struct IngredientView: View {
                 .sheet(isPresented : $showingSheet) {
                     EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)
                 }
-            }
+            
+            Spacer()
         }
+        .padding([.leading, .trailing], 20)
+        .background(Color.sheetBackground)
     }
 }
 

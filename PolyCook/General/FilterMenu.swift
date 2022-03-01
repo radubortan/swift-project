@@ -1,10 +1,3 @@
-//
-//  FilterMenu.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 21/02/2022.
-//
-
 import SwiftUI
 
 struct FilterMenu: View {
@@ -15,48 +8,45 @@ struct FilterMenu: View {
     var filters : Binding<[FilterItem]>
     
     var body: some View {
-//        if isOn.wrappedValue {
-            VStack {
-                Spacer()
-                VStack (spacing: 10) {
-                    HStack {
-                        Text(title)
-                            .font(.title2)
-                            .fontWeight(.heavy)
-                            .foregroundColor(.textFieldForeground)
-                        
-                        Spacer()
-                        
-                        Button(action : {
-                            withAnimation{isOn.wrappedValue.toggle()}
-                        }, label : {
-                            Text("Done")
-                                .fontWeight(.heavy)
-                                .foregroundColor(.blue)
-                        })
-                    }
-                    .padding([.horizontal, .top])
-                    .padding(.bottom, 10)
+        VStack {
+            Spacer()
+            VStack (spacing: 10) {
+                HStack {
+                    Text(title)
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.textFieldForeground)
                     
-                    ScrollView(.vertical) {
-                        ForEach(filters.wrappedValue, id: \.self) {filter in
-                            CardView(filter: filter)
-                        }
-                    }
-                    .padding(.bottom, 10)
-                    .frame(height: height)
+                    Spacer()
                     
+                    Button(action : {
+                        withAnimation{isOn.wrappedValue.toggle()}
+                    }, label : {
+                        Text("Done")
+                            .bold()
+                            .foregroundColor(.blue)
+                    })
                 }
-                .padding(.top, 10)
-                .padding(.bottom, 90)
-                .background(Color.filterBackground.clipShape(CustomCorner(corners: [.topLeft, .topRight])))
-                .offset(y: isOn.wrappedValue ? 90 : UIScreen.main.bounds.height)
+                .padding([.horizontal, .top])
+                .padding(.bottom, 10)
+                
+                ScrollView(.vertical) {
+                    ForEach(filters.wrappedValue, id: \.self) {filter in
+                        CardView(filter: filter)
+                    }
+                }
+                .padding(.bottom, 10)
+                .frame(height: height)
+                
             }
-            .background(Color.black.opacity(isOn.wrappedValue ? 0.5 : 0).onTapGesture {
-                withAnimation{isOn.wrappedValue.toggle()}
-            })
-//        }
-        
+            .padding(.top, 10)
+            .padding(.bottom, 90)
+            .background(Color.sheetBackground.clipShape(CustomCorner(corners: [.topLeft, .topRight])))
+            .offset(y: isOn.wrappedValue ? 90 : UIScreen.main.bounds.height)
+        }
+        .background(Color.black.opacity(isOn.wrappedValue ? 0.5 : 0).onTapGesture {
+            withAnimation{isOn.wrappedValue.toggle()}
+        })
     }
 }
 

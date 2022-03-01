@@ -1,10 +1,3 @@
-//
-//  AddIngredientView.swift
-//  PolyCook
-//
-//  Created by Radu Bortan on 20/02/2022.
-//
-
 import SwiftUI
 
 struct CreateIngredientView: View {
@@ -12,7 +5,9 @@ struct CreateIngredientView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var nom : String = ""
-    @State var selectedModel : String = "Kg"
+    @State var selectedUnit : String = "U"
+    @State var selectedCategory : String = "Poisson"
+    @State var selectedAllergen : String = "Crustacés"
     @State var isAllergene : Bool = false
     
     
@@ -38,9 +33,9 @@ struct CreateIngredientView: View {
     var body: some View {
         VStack (spacing: 20) {
             Capsule()
-                    .fill(Color.secondary)
-                    .frame(width: 35, height: 5)
-                    .padding(10)
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
             
             Text("Création Ingrédient").font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
@@ -49,7 +44,7 @@ struct CreateIngredientView: View {
                 TextField("Nom ingrédient", text: $addIngredientViewModel.nomIng)
                     .padding(10)
                     .background(RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.sheetBackground))
+                                    .fill(Color.sheetElementBackground))
                     .foregroundColor(Color.textFieldForeground)
                     .onChange(of: addIngredientViewModel.nomIng, perform: { newNomIng in
                         addIngredientViewModel.intentIngredientState.intentToChange(nomIng:newNomIng)
@@ -75,7 +70,7 @@ struct CreateIngredientView: View {
                 }
                 .frame(height: 100, alignment: .center)
                 .frame(maxWidth: .infinity)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
                 
                 VStack (spacing: 5) {
@@ -92,7 +87,7 @@ struct CreateIngredientView: View {
                 }
                 .frame(height: 100, alignment: .center)
                 .frame(maxWidth: .infinity)
-                .background(Color.sheetBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
             
@@ -122,7 +117,7 @@ struct CreateIngredientView: View {
                     }
                     .frame(height: 100, alignment: .center)
                     .frame(maxWidth: .infinity)
-                    .background(Color.sheetBackground)
+                    .background(Color.sheetElementBackground)
                     .cornerRadius(10)
                 }
             }
@@ -152,6 +147,7 @@ struct CreateIngredientView: View {
             Spacer()
         }
         .padding([.leading, .trailing], 20)
+        .background(Color.sheetBackground)
         .navigationBarTitle("")
         .navigationBarHidden(true)
     }
