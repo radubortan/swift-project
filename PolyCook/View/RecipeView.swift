@@ -4,6 +4,8 @@ struct RecipeView: View {
     let etapes = ["etape 1", "etape 2", "etape 3", "etape 4"]
     let isSheet : Bool
     
+    let recette : Recette
+    
     @State var costsSheetIsOn = false
     @State var ingredientsSheetIsOn = false
     @State var withCosts = false
@@ -14,7 +16,8 @@ struct RecipeView: View {
     //formats the entered values
     let numberFormatter = NumberFormatter()
     
-    init(isSheet: Bool) {
+    init(recette: Recette, isSheet: Bool) {
+        self.recette = recette
         self.isSheet = isSheet
         //to have no spacing between sections
         UITableView.appearance().sectionFooterHeight = 0
@@ -32,7 +35,7 @@ struct RecipeView: View {
             
             List {
                 Section {
-                    Text("Mousse au chocolat").font(.system(size: 40)).bold().frame(maxWidth: .infinity, alignment: .center).multilineTextAlignment(.center)
+                    Text(recette.nomRecette).font(.system(size: 40)).bold().frame(maxWidth: .infinity, alignment: .center).multilineTextAlignment(.center)
                 }
                 .listRowBackground(Color.white.opacity(0))
                 
@@ -41,7 +44,7 @@ struct RecipeView: View {
                         VStack {
                             Text("Auteur(e) du plat: ").font(.title2).frame(maxWidth: .infinity, alignment: .center)
                             Divider()
-                            Text("Radu Bortan").font(.title2).frame(maxWidth: .infinity, alignment: .center)
+                            Text(recette.nomAuteur).font(.title2).frame(maxWidth: .infinity, alignment: .center)
                         }
                         .padding(15)
                         .frame(height: 110, alignment: .center)
@@ -54,7 +57,7 @@ struct RecipeView: View {
                                 Text("Catégorie recette")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
-                                Text("Déssert")
+                                Text(recette.nomCatRecette)
                                     .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(15)
@@ -67,7 +70,7 @@ struct RecipeView: View {
                                 Text("N°        couverts")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
-                                Text("1")
+                                Text("\(recette.nbCouverts)")
                                     .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(15)
@@ -90,15 +93,20 @@ struct RecipeView: View {
                             .padding(.bottom, 5)
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
-                    ForEach(etapes, id: \.self) {etape in
+                    ForEach(recette.etapes, id: \.id) {etape in
                         Button {
                             showStep.toggle()
                         } label : {
-                            Text(etape).font(.system(size: 21))
+                            Text(etape.nomEtape).font(.system(size: 21))
                                 .frame(height: 50).foregroundColor(.primary)
                         }
                         .sheet(isPresented: $showStep) {
-                            RecipeView(isSheet : true)
+                            if etape is Recette {
+                                RecipeView(recette: etape as! Recette, isSheet : true)
+                            }
+                            else {
+                                InExtensoStepView(etape: etape as! InExtensoStep)
+                            }
                         }
                     }
                 }
@@ -213,9 +221,9 @@ struct RecipeView: View {
         }
     }
 }
-
-struct RecipeView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeView(isSheet: true)
-    }
-}
+//
+//struct RecipeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RecipeView(isSheet: true)
+//    }
+//}

@@ -1,6 +1,12 @@
 import SwiftUI
 
 struct InExtensoStepView: View {
+    let etape : InExtensoStep
+    
+    init(etape: InExtensoStep) {
+        self.etape = etape
+    }
+    
     var body: some View {
         VStack (spacing: 20) {
             Capsule()
@@ -12,7 +18,7 @@ struct InExtensoStepView: View {
             List {
                 //step title
                 Section {
-                    Text("Découper la viande en tranches fines")
+                    Text(etape.nomEtape)
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -27,7 +33,7 @@ struct InExtensoStepView: View {
                         Text("Durée")
                             .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                         Divider()
-                        Text("5 min")
+                        Text("\(etape.duree) min")
                             .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
                     }
                     .padding(15)
@@ -44,7 +50,7 @@ struct InExtensoStepView: View {
                         Divider()
                             .padding(.horizontal, 15)
                             .padding(.vertical, 5)
-                        Text("Ceci est un exemple de description pour l'étape où on doit couper de la viande")
+                        Text(etape.description)
                             .foregroundColor(Color.textFieldForeground)
                             .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 10)
@@ -138,8 +144,8 @@ struct InExtensoStepView: View {
     }
 }
 
-struct InExtensoStepView_Previews: PreviewProvider {
-    static var previews: some View {
-        InExtensoStepView()
-    }
-}
+//struct InExtensoStepView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        InExtensoStepView()
+//    }
+//}

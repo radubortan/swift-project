@@ -4,22 +4,12 @@ struct NewStepView: View {
     //to make the back button dismiss the current view
     @Environment(\.presentationMode) var presentationMode
     
-    let ingredients = ["Pomme", "Tomate"]
+    @ObservedObject var listVm : CreateRecipeViewModel
+    @ObservedObject var stepVm : NewStepViewModel
     
-    @State var isRecipe = false
-    @State var nomEtape = ""
-    @State var duration = 1
-    @State var description = ""
-    @State var ingredient = "Poisson"
-    @State var recipe = "Sauce tomate"
-    @State var quantity = 1
-    @State var subrecipeQuantity = 1
-    
-    //formats the entered values
-    let numberFormatter = NumberFormatter()
-    
-    func deletion(at indexSet: IndexSet) {
-        
+    init(listVm: CreateRecipeViewModel) {
+        self.listVm = listVm
+        self.stepVm = NewStepViewModel(listVm: listVm)
     }
     
     var body: some View {
@@ -29,7 +19,7 @@ struct NewStepView: View {
                     Text("Création étape").font(.system(size: 40)).bold().multilineTextAlignment(.center)
                     VStack (spacing: 5) {
                         Text("Titre étape").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                        TextField("Titre étape", text: $nomEtape)
+                        TextField("Titre étape", text: $stepVm.nomEtape)
                             .padding(10)
                             .background(RoundedRectangle(cornerRadius: 10)
                                             .fill(Color.sheetElementBackground))
@@ -44,7 +34,7 @@ struct NewStepView: View {
                 HStack {
                     Spacer()
                     Text("In extenso")
-                    Toggle("", isOn: $isRecipe.animation(.linear(duration: 0.3))).labelsHidden()
+                    Toggle("", isOn: $stepVm.isRecipe.animation(.linear(duration: 0.3))).labelsHidden()
                     Text("Recette")
                     Spacer()
                 }
@@ -53,7 +43,7 @@ struct NewStepView: View {
             .listRowBackground(Color.white.opacity(0))
             .padding(.top, 20)
             
-            if isRecipe {
+            if stepVm.isRecipe {
                 //information
                 Section (header: Text("Informations")
                             .font(.system(size: 30))
@@ -67,7 +57,7 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Recette").font(.title2)
-                                Picker("Recette", selection: $recipe) {
+                                Picker("Recette", selection: $stepVm.recipe) {
                                     Text("Sauce tomate").tag("Sauce tomate")
                                     Text("Crème fromagère").tag("Crème fromagère")
                                 }
@@ -80,7 +70,7 @@ struct NewStepView: View {
                             
                             VStack (spacing: 5) {
                                 Text("N° Couverts").font(.title2)
-                                TextField("N° Couverts", value: $subrecipeQuantity, formatter: numberFormatter)
+                                TextField("N° Couverts", value: $stepVm.subrecipeQuantity, formatter: stepVm.numberFormatter)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.innerTextFieldBackground))
@@ -109,7 +99,7 @@ struct NewStepView: View {
                             .padding(.bottom, 5)
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
-                    ForEach(ingredients, id: \.self) {ingredient in
+                    ForEach(stepVm.ingredients, id: \.self) {ingredient in
                         HStack {
                             Text(ingredient)
                             Spacer()
@@ -135,7 +125,7 @@ struct NewStepView: View {
                     VStack (spacing: 20){
                         VStack (spacing: 5) {
                             Text("Durée (min)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Durée (min)", value: $duration, formatter: numberFormatter)
+                            TextField("Durée (min)", value: $stepVm.duration, formatter: stepVm.numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.sheetElementBackground))
@@ -148,13 +138,13 @@ struct NewStepView: View {
                         VStack (spacing: 5) {
                             Text("Description").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
                             ZStack (alignment: .leading){
-                                TextEditor(text: $description)
+                                TextEditor(text: $stepVm.description)
                                     .padding(10)
                                     .frame(height: 200)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.sheetElementBackground))
                                     .foregroundColor(Color.textFieldForeground)
-                                if description.isEmpty {
+                                if stepVm.description.isEmpty {
                                     VStack {
                                         Text("Description...")
                                             .foregroundColor(Color.placeholderColor)
@@ -183,7 +173,7 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Ingrédient").font(.title2)
-                                Picker("Ingrédient", selection: $ingredient) {
+                                Picker("Ingrédient", selection: $stepVm.ingredient) {
                                     Text("Poisson").tag("Poisson")
                                     Text("Tomate").tag("Tomate")
                                     Text("Poulet").tag("Poulet")
@@ -197,7 +187,7 @@ struct NewStepView: View {
                             
                             VStack (spacing: 5) {
                                 Text("Quantité (Kg)").font(.title2)
-                                TextField("Quantité (Kg)", value: $quantity, formatter: numberFormatter)
+                                TextField("Quantité (Kg)", value: $stepVm.quantity, formatter: stepVm.numberFormatter)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.innerTextFieldBackground))
@@ -236,7 +226,7 @@ struct NewStepView: View {
                 
                 //ingredient list
                 Section {
-                    ForEach(ingredients, id: \.self) {ingredient in
+                    ForEach(stepVm.ingredients, id: \.self) {ingredient in
                         HStack {
                             Text(ingredient)
                             Spacer()
@@ -247,7 +237,7 @@ struct NewStepView: View {
                                 .foregroundColor(Color.textFieldForeground)
                         }
                     }
-                    .onDelete(perform: deletion)
+                    .onDelete(perform: stepVm.deletion)
                 }
             }
             
@@ -255,7 +245,13 @@ struct NewStepView: View {
             Section {
                 HStack (spacing: 20){
                     Button(action: {
-                        //sauvegarder
+                        if !stepVm.isRecipe {
+                            stepVm.listIntent.intentToAdd(step: InExtensoStep(nomEtape: stepVm.nomEtape, duree: stepVm.duration, description: stepVm.description))
+                        }
+                        else {
+                            stepVm.listIntent.intentToAdd(step: Recette(nbCouverts: 2, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [], nomEtape: stepVm.nomEtape))
+                        }
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Créer")
                             .font(.title2)
@@ -290,8 +286,8 @@ struct NewStepView: View {
     }
 }
 
-struct NewStepView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewStepView()
-    }
-}
+//struct NewStepView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewStepView()
+//    }
+//}
