@@ -82,7 +82,7 @@ struct IngredientListView: View {
                                     }.frame(height: 50)
                                 }
                                 .sheet(isPresented : $showingInfoSheet) {
-                                    IngredientView()
+//                                    IngredientView()
                                 }
                             }
                             .onDelete {
@@ -105,7 +105,7 @@ struct IngredientListView: View {
                             }
                         }
                     }
-                    .sheet(isPresented : $showingSheet) {
+                    .sheet(isPresented : $showingCreationSheet) {
                         CreateIngredientView(ingredientListViewModel: self.ingredientListViewModel,ingredient:Ingredient(id: UUID().uuidString, nomIng: "",nomCat:"Crustacés", nomCatAllerg: nil, unite: "Kg"))
                     }
                 }

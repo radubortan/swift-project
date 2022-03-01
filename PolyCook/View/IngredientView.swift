@@ -59,7 +59,7 @@ struct IngredientView: View {
             }
             .frame(maxWidth: .infinity)
             .frame(height: 100)
-            .background(Color.textFieldBackground)
+            .background(Color.sheetElementBackground)
             .cornerRadius(10)
             
             
@@ -73,31 +73,27 @@ struct IngredientView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
-                .background(Color.textFieldBackground)
+                .background(Color.sheetElementBackground)
                 .cornerRadius(10)
             }
-            
-
-            Spacer()
-        }.padding(20)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button{
-                    showingSheet.toggle()
-                } label: {
-                    Text("Modifier")
-                }
+            Button(action: {
+                showingSheet.toggle()
+            }, label: {
+                Text("Modifier ingrédient")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .padding(12)
+            }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $showingSheet) {
-                    EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)
-                }
+                    EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)                            }
             
             Spacer()
         }
         .padding([.leading, .trailing], 20)
         .background(Color.sheetBackground)
+        
     }
 }
-
 //struct IngredientView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        IngredientView()
