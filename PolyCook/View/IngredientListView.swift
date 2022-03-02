@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct IngredientListView: View {
-    let ingredients = ["Poisson", "Tomate", "Pomme", "Chocolat", "Viande Boeuf", "Pates", "Oignon", "Pain", "Courgette"]
+    @ObservedObject var ingredientListViewModel = IngredientListViewModel()
+    var intentIngredient: IntentIngredient
+    
     
     @State private var enteredText : String = ""
     
@@ -11,17 +13,25 @@ struct IngredientListView: View {
     //filter states
     @State var showCategoryFilter = false
     @State var showAllergenFilter = false
-    @State var categoryFilter = [FilterItem(title: "Crustacés"),FilterItem(title: "Crèmerie"),FilterItem(title: "Epicerie"),FilterItem(title: "Fruits"),FilterItem(title: "Légumes"),FilterItem(title: "Poisson"), FilterItem(title: "Viande"), FilterItem(title: "Volailles")]
-    @State var allergenFilter = [FilterItem(title: "Arachide"),FilterItem(title: "Crustacés"),FilterItem(title: "Céléri"),FilterItem(title: "Fruits à coque"),FilterItem(title: "Lait"),FilterItem(title: "Lupin"), FilterItem(title: "Mollusques"), FilterItem(title: "Moutarde")]
-    
+    @ObservedObject var ingredientCategories = IngredientCategories()
+    @ObservedObject var allergenCategories = AllergenCategories()
     
     @State private var showingCreationSheet = false
     @State private var showingInfoSheet = false
     
-    func deleteRecipe(at indexSet : IndexSet) {
-        self.toBeDeleted = indexSet
-        self.showingDeleteAlert = true
+
+    init(){
+        self.intentIngredient = IntentIngredient()
+        self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
+
     }
+    
+    func deleteIngredient(at offsets: IndexSet) {
+        ingredientListViewModel.remove(atOffsets: offsets)
+//        self.ingredientListViewModel.deleteIngredient(ingredient: ingredient)
+//        self.showingDeleteAlert = true
+    }
+    
     
     var body: some View {
         NavigationView{
@@ -57,13 +67,13 @@ struct IngredientListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
-                            ForEach(searchResults, id: \.self) {ingredient in
-                                Button{
-                                    showingInfoSheet.toggle()
-                                }
-                                label : {
+                            ForEach(ingredientListViewModel.ingredientsFiltered, id: \.self.id) {ingredient in
+                                ZStack {
+                                    NavigationLink(destination: IngredientView(ingredientViewModel: IngredientViewModel(ingredient: ingredient), ingredientListViewModel: self.ingredientListViewModel)) {
+                                        EmptyView()
+                                    }.opacity(0)
                                     HStack {
-                                        Text(ingredient).font(.system(size: 21)).truncationMode(.tail).foregroundColor(.primary)
+                                        Text(ingredient.nomIng).font(.system(size: 21)).truncationMode(.tail)
                                         Spacer()
                                         Image(systemName: "exclamationmark.circle")
                                             .resizable()
@@ -72,12 +82,19 @@ struct IngredientListView: View {
                                     }.frame(height: 50)
                                 }
                                 .sheet(isPresented : $showingInfoSheet) {
-                                    IngredientView()
+//                                    IngredientView()
                                 }
+                            }
+                            .onDelete {
+                                self.deleteIngredient(at: $0)
                             }
                         }
                     }
-                    .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche ingrédient")
+                    .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche ingrédient").onChange(of: enteredText, perform: { newValue in
+                        ingredientListViewModel.filteringOptions.patternToMatch = newValue
+                        ingredientListViewModel.filterIngredients()
+                        
+                    })
                     .navigationTitle("Ingrédients")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
@@ -89,28 +106,39 @@ struct IngredientListView: View {
                         }
                     }
                     .sheet(isPresented : $showingCreationSheet) {
-                        CreateIngredientView()
+                        CreateIngredientView(ingredientListViewModel: self.ingredientListViewModel,ingredient:Ingredient(id: UUID().uuidString, nomIng: "",nomCat:"Crustacés", nomCatAllerg: nil, unite: "Kg"))
                     }
                 }
-                FilterMenu(title: "Catégorie", height: 250, isOn: $showCategoryFilter, filters: $categoryFilter)
-                FilterMenu(title: "Type Allergène", height: 250, isOn: $showAllergenFilter, filters: $allergenFilter)
+                FilterMenu(title: "Catégorie", height: 250, isOn: $showCategoryFilter, filters: $ingredientCategories.ingredientCategoryFilter)
+                FilterMenu(title: "Type Allergène", height: 250, isOn: $showAllergenFilter, filters: $allergenCategories.allergenCategoryFilter)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
     }
     
-    var searchResults: [String] {
-        if enteredText.isEmpty {
-            return ingredients
-        } else {
-            //we need to filter using lowercased names
-            return ingredients.filter { $0.lowercased().contains(enteredText.lowercased())}
+    var searchResults: [Ingredient] {
+        var ingredientsFiltered = ingredientListViewModel.ingredients
+        if !enteredText.isEmpty {
+            ingredientsFiltered = ingredientsFiltered.filter { $0.nomIng.lowercased().contains(enteredText.lowercased())
+            }
         }
-    }
+            //we need to filter using lowercased names
+
+        if !ingredientCategories.hasNoCheckedFilter {
+            ingredientsFiltered = ingredientsFiltered.filter {
+                print($0.nomCat)
+                return ingredientCategories.nomCatIsChecked(nomCat: $0.nomCat)
+            }
+        }
+        
+        print(ingredientsFiltered)
+        return ingredientsFiltered
+    
+}
 }
 
-struct IngredientListView_Previews: PreviewProvider {
-    static var previews: some View {
-        IngredientListView()
-    }
-}
+//struct IngredientListView_Previews: PreviewProvider {
+//    static var previews: some View {
+////        IngredientListView()
+//    }
+//}

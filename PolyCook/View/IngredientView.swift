@@ -6,15 +6,22 @@ struct IngredientView: View {
     
     @State private var showingSheet = false
     
+    @ObservedObject var ingredientViewModel : IngredientViewModel
+    @ObservedObject var ingredientListViewModel : IngredientListViewModel
+    var intentIngredient: IntentIngredient
+    
+    
+    init(ingredientViewModel: IngredientViewModel, ingredientListViewModel: IngredientListViewModel){
+        self.ingredientViewModel = ingredientViewModel
+        self.ingredientListViewModel = ingredientListViewModel
+        self.intentIngredient = IntentIngredient()
+        self.intentIngredient.addObserver(viewModel: ingredientViewModel)
+        self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
+    }
+    
     var body: some View {
         VStack (spacing: 20){
-            Capsule()
-                .fill(Color.secondary)
-                .frame(width: 35, height: 5)
-                .padding(10)
-            
-            Text("Crevette").font(.system(size: 40)).bold().multilineTextAlignment(.center)
-            
+            Text(self.ingredientViewModel.nomIng).font(.system(size: 40)).bold().multilineTextAlignment(.center)
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
@@ -47,28 +54,28 @@ struct IngredientView: View {
                 Text("Catégorie")
                     .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                 Divider()
-                Text("Crustacés")
-                    .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
+                Text(ingredientViewModel.nomCat)
+                    .font(.system(size: smallText))
             }
-            .padding(15)
             .frame(maxWidth: .infinity)
             .frame(height: 100)
             .background(Color.sheetElementBackground)
             .cornerRadius(10)
             
-            VStack (spacing: 10) {
-                Text("Catégorie d'allergène")
-                    .font(.title2).frame(maxWidth: .infinity, alignment: .center)
-                Divider()
-                Text("Crustacés")
-                    .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
-            }
-            .padding(15)
-            .frame(maxWidth: .infinity)
-            .frame(height: 100)
-            .background(Color.sheetElementBackground)
-            .cornerRadius(10)
             
+            if let currentAllergCategory = ingredientViewModel.nomCatAllerg {
+                VStack (spacing: 10) {
+                    Text("Catégorie d'allergène")
+                        .font(.system(size: bigText))
+                    Divider()
+                    Text(currentAllergCategory)
+                        .font(.system(size: smallText))
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 100)
+                .background(Color.sheetElementBackground)
+                .cornerRadius(10)
+            }
             Button(action: {
                 showingSheet.toggle()
             }, label: {
@@ -78,19 +85,18 @@ struct IngredientView: View {
                     .padding(12)
             }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $showingSheet) {
-                    EditIngredientView()
-                }
+                    EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)                            }
             
             Spacer()
         }
         .padding([.leading, .trailing], 20)
         .background(Color.sheetBackground)
+        
     }
 }
-
-struct IngredientView_Previews: PreviewProvider {
-    static var previews: some View {
-        IngredientView()
-            .preferredColorScheme(.dark)
-    }
-}
+//struct IngredientView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        IngredientView()
+//            .preferredColorScheme(.dark)
+//    }
+//}

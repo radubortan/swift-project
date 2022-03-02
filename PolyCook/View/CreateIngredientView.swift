@@ -10,6 +10,26 @@ struct CreateIngredientView: View {
     @State var selectedAllergen : String = "Crustacés"
     @State var isAllergene : Bool = false
     
+    
+    @ObservedObject var addIngredientViewModel : AddIngredientViewModel
+    
+    @ObservedObject var ingredientCategoryList = IngredientCategories()
+    @ObservedObject var allergenCategoryList = AllergenCategories()
+    @ObservedObject var uniteList = Unites()
+    
+    @State var selectedIngredientCategory : String = "Crustacés"
+    @State var selectedAllergenCategory : String = "Crustacés"
+    @State var selectedUnite : String = "Kg"
+    
+    var intentIngredient: IntentIngredient
+    
+    init(ingredientListViewModel: IngredientListViewModel, ingredient : Ingredient){
+        self.addIngredientViewModel = AddIngredientViewModel(ingredient: ingredient)
+        self.intentIngredient = IntentIngredient()
+        self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
+        self.addIngredientViewModel.nomCat = selectedIngredientCategory
+    }
+    
     var body: some View {
         VStack (spacing: 20) {
             Capsule()
@@ -21,20 +41,31 @@ struct CreateIngredientView: View {
             
             VStack (spacing: 5) {
                 Text("Nom ingrédient").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                TextField("Nom ingrédient", text: $nom)
+                TextField("Nom ingrédient", text: $addIngredientViewModel.nomIng)
                     .padding(10)
                     .background(RoundedRectangle(cornerRadius: 10)
                                     .fill(Color.sheetElementBackground))
                     .foregroundColor(Color.textFieldForeground)
+                    .onChange(of: addIngredientViewModel.nomIng, perform: { newNomIng in
+                        addIngredientViewModel.intentIngredientState.intentToChange(nomIng:newNomIng)
+                    })
+            }
+            if addIngredientViewModel.nomIngIsTooShort {
+                Text("name must be at least 3 characters length")
+                    .foregroundColor(.red)
             }
             
             HStack (spacing: 20){
                 VStack (spacing: 5) {
                     Text("Unité").font(.title2)
-                    Picker("Unité", selection: $selectedUnit) {
-                        Text("U").tag("U")
-                        Text("Kg").tag("Kg")
-                        Text("L").tag("L")
+                    Picker("Catégorie", selection: $selectedUnite) {
+                        ForEach(Array(uniteList), id: \.self.id) { unite in
+                            Text(unite.nomUnite).tag(unite.nomUnite)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .onChange(of: selectedUnite){ selectedUnite in
+                        self.addIngredientViewModel.unite = selectedUnite
                     }
                 }
                 .frame(height: 100, alignment: .center)
@@ -44,9 +75,14 @@ struct CreateIngredientView: View {
                 
                 VStack (spacing: 5) {
                     Text("Catégorie").font(.title2)
-                    Picker("Catégorie", selection: $selectedCategory) {
-                        Text("Poisson").tag("Poisson")
-                        Text("Lait").tag("Lait")
+                    Picker("Catégorie", selection: $selectedIngredientCategory) {
+                        ForEach(Array(ingredientCategoryList), id: \.self.id) { ingredientCategory in
+                            Text(ingredientCategory.nomCatIng).tag(ingredientCategory.nomCatIng)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .onChange(of: selectedIngredientCategory){ selectedIngredientCategory in
+                        self.addIngredientViewModel.nomCat = selectedIngredientCategory
                     }
                 }
                 .frame(height: 100, alignment: .center)
@@ -56,14 +92,27 @@ struct CreateIngredientView: View {
             }
             
             VStack {
-                Toggle("Allergène", isOn: $isAllergene.animation(.linear(duration: 0.3))).font(.title2)
+                Toggle("Allergène", isOn: $isAllergene).font(.title2).onChange(of: isAllergene){
+                    newValue in
+                    if(newValue){
+                        self.addIngredientViewModel.nomCatAllerg = selectedAllergenCategory
+
+                    }else{
+                        self.addIngredientViewModel.nomCatAllerg = nil
+                    }
+                }
                 
                 if isAllergene {
                     VStack (spacing: 5) {
                         Text("Catégorie Allergène").font(.title2)
-                        Picker("Catégorie Allergène", selection: $selectedAllergen) {
-                            Text("Crustacés").tag("Crustacés")
-                            Text("Lait").tag("Lait")
+                        Picker("Catégorie Allergène", selection: $selectedAllergenCategory) {
+                            ForEach(Array(allergenCategoryList), id: \.self.id) { allergenCategory in
+                                Text(allergenCategory.nomCatAllerg)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .onChange(of: selectedAllergenCategory){ selectedAllergenCategory in
+                            self.addIngredientViewModel.nomCatAllerg = selectedAllergenCategory
                         }
                     }
                     .frame(height: 100, alignment: .center)
@@ -76,6 +125,10 @@ struct CreateIngredientView: View {
             HStack (spacing: 20){
                 Button(action: {
                     //sauvegarder
+                    if !addIngredientViewModel.nomIngIsTooShort{
+                        intentIngredient.intentToAddIngredient(ingredient: addIngredientViewModel.ingredient)
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }, label: {
                     Text("Créer")
                         .font(.title2)
@@ -100,8 +153,8 @@ struct CreateIngredientView: View {
     }
 }
 
-struct CreateIngredientView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateIngredientView()
-    }
-}
+//struct CreateIngredientView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateIngredientView()
+//    }
+//}
