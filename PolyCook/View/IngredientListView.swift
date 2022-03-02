@@ -68,12 +68,13 @@ struct IngredientListView: View {
                         
                         Section {
                             ForEach(ingredientListViewModel.ingredientsFiltered, id: \.self.id) {ingredient in
-                                ZStack {
-                                    NavigationLink(destination: IngredientView(ingredientViewModel: IngredientViewModel(ingredient: ingredient), ingredientListViewModel: self.ingredientListViewModel)) {
-                                        EmptyView()
-                                    }.opacity(0)
+                                Button {
+                                    showingInfoSheet.toggle()
+                                }
+                                label : {
                                     HStack {
                                         Text(ingredient.nomIng).font(.system(size: 21)).truncationMode(.tail)
+                                            .foregroundColor(.primary)
                                         Spacer()
                                         Image(systemName: "exclamationmark.circle")
                                             .resizable()
@@ -82,7 +83,7 @@ struct IngredientListView: View {
                                     }.frame(height: 50)
                                 }
                                 .sheet(isPresented : $showingInfoSheet) {
-//                                    IngredientView()
+                                    IngredientView(ingredientViewModel: IngredientViewModel(ingredient: ingredient), ingredientListViewModel: self.ingredientListViewModel)
                                 }
                             }
                             .onDelete {

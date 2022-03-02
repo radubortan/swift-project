@@ -21,7 +21,13 @@ struct IngredientView: View {
     
     var body: some View {
         VStack (spacing: 20){
+            Capsule()
+                .fill(Color.secondary)
+                .frame(width: 35, height: 5)
+                .padding(10)
+            
             Text(self.ingredientViewModel.nomIng).font(.system(size: 40)).bold().multilineTextAlignment(.center)
+            
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
