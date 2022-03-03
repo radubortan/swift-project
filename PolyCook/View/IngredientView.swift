@@ -46,7 +46,7 @@ struct IngredientView: View {
                     Text("Unité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("Kg")
+                    Text(ingredientViewModel.unite)
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)

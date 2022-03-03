@@ -67,7 +67,7 @@ struct IngredientListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
-                            ForEach(ingredientListViewModel.ingredientsFiltered, id: \.self.id) {ingredient in
+                            ForEach(ingredientListViewModel.ingredientsFiltered, id: \.id) {ingredient in
                                 Button {
                                     showingInfoSheet.toggle()
                                 }
