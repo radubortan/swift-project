@@ -27,7 +27,7 @@ struct IngredientView: View {
                     Text("Prix unitaire")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("2.00€")
+                    Text(String(format: "%.2f€", self.ingredientViewModel.prixUnitaire))
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -40,7 +40,7 @@ struct IngredientView: View {
                     Text("Unité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("Kg")
+                    Text(self.ingredientViewModel.unite)
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)

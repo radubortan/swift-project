@@ -4,6 +4,11 @@ struct ModifyStockView: View {
     //to make the back button dismiss the current view
     @Environment(\.presentationMode) var presentationMode
     
+    @ObservedObject var modifyStockViewModel: ModifyStockViewModel
+    
+    var intentStock: IntentStock
+
+    
     @State var isAdding : Bool = false
     @State var increase : Double = 0
     @State var decrease : Double = 0
@@ -12,7 +17,11 @@ struct ModifyStockView: View {
     //formats the entered values
     let numberFormatter : NumberFormatter
     
-    init(){
+    init(modifyStockViewModel: ModifyStockViewModel,stockListViewModel: StockListViewModel,stockViewModel: StockViewModel){
+        self.modifyStockViewModel = modifyStockViewModel
+        self.intentStock = IntentStock()
+        self.intentStock.addObserver(viewModel: stockListViewModel)
+        self.intentStock.addObserver(viewModel: stockViewModel)
         numberFormatter = NumberFormatter()
         //to format into decimal numbers
         numberFormatter.numberStyle = .decimal
@@ -25,7 +34,7 @@ struct ModifyStockView: View {
                 .frame(width: 35, height: 5)
                 .padding(10)
             
-            Text("Lait").font(.system(size: 40)).bold().multilineTextAlignment(.center)
+            Text(modifyStockViewModel.nomIng).font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
             HStack {
                 Text("Enlever")
@@ -38,7 +47,7 @@ struct ModifyStockView: View {
                     Text("Quantité actuelle")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("2 L")
+                    Text("\(modifyStockViewModel.quantite) \(modifyStockViewModel.unite)")
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -51,7 +60,7 @@ struct ModifyStockView: View {
                     Text("Nouvelle quantité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("2 L")
+                    Text("\(modifyStockViewModel.quantite + (isAdding ? modifyStockViewModel.quantityToAdd :  -modifyStockViewModel.quantityToRemove)) \(modifyStockViewModel.unite)")
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -63,8 +72,8 @@ struct ModifyStockView: View {
             
             if isAdding {
                 VStack (spacing: 5) {
-                    Text("Augmentation (L)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                    TextField("Augmentation (L)", value: $increase, formatter: numberFormatter)
+                    Text("Augmentation (\(modifyStockViewModel.unite))").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
+                    TextField("Augmentation (\(modifyStockViewModel.unite))", value: $modifyStockViewModel.quantityToAdd, formatter: numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.sheetElementBackground))
@@ -77,7 +86,7 @@ struct ModifyStockView: View {
                 
                 VStack (spacing: 5) {
                     Text("Coût d'achat total (€)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                    TextField("Coût d'achat total (€)", value: $price, formatter: numberFormatter)
+                    TextField("Coût d'achat total (€)", value: $modifyStockViewModel.totalPriceOfAddedQuantity, formatter: numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.sheetElementBackground))
@@ -89,8 +98,8 @@ struct ModifyStockView: View {
             }
             else {
                 VStack (spacing: 5) {
-                    Text("Diminution (L)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                    TextField("Diminution (L)", value: $decrease, formatter: numberFormatter)
+                    Text("Diminution (\(modifyStockViewModel.unite))").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
+                    TextField("Diminution (\(modifyStockViewModel.unite))", value: $modifyStockViewModel.quantityToRemove, formatter: numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.sheetElementBackground))
@@ -104,6 +113,17 @@ struct ModifyStockView: View {
             HStack (spacing: 20){
                 Button(action: {
                     //sauvegarder
+                    if(isAdding){
+                        intentStock.intentToIncreaseStock(quantityToBeAdded: modifyStockViewModel.quantityToAdd, totalPriceOfQuantityAdded: modifyStockViewModel.totalPriceOfAddedQuantity)
+                        intentStock.intentToEditIngredient(ingredient: self.modifyStockViewModel.ingredient)
+                        presentationMode.wrappedValue.dismiss()
+
+                    }else{
+                        intentStock.intentToDecreaseStock(quantityToBeRemoved: modifyStockViewModel.quantityToRemove)
+                        intentStock.intentToEditIngredient(ingredient: self.modifyStockViewModel.ingredient)
+                        presentationMode.wrappedValue.dismiss()
+
+                    }
                 }, label: {
                     Text("Modifier")
                         .font(.title2)
@@ -128,8 +148,8 @@ struct ModifyStockView: View {
     }
 }
 
-struct ModifyStockView_Previews: PreviewProvider {
-    static var previews: some View {
-        ModifyStockView()
-    }
-}
+//struct ModifyStockView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ModifyStockView()
+//    }
+//}

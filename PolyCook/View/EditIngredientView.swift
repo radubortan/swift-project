@@ -53,7 +53,7 @@ struct EditIngredientView: View {
                                     .fill(Color.sheetElementBackground))
                     .foregroundColor(Color.textFieldForeground)
                 if editIngredientViewModel.nomIngIsTooShort {
-                    Text("name must be at least 3 characters length")
+                    Text("Le nom doit comporter au moins 3 caractères")
                         .foregroundColor(.red)
                 }
             }

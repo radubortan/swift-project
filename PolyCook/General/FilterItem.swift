@@ -1,7 +1,10 @@
 import Foundation
+import SwiftUI
 
 
-struct FilterItem : Hashable {
-    var checked : Bool = false
+
+struct FilterItem {
+    
+    @State var checked : Bool = false
     var title : String
 }

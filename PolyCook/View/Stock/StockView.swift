@@ -6,6 +6,9 @@ struct StockView: View {
     
     @State private var showingSheet = false
     
+    @ObservedObject var stockViewModel: StockViewModel
+    @ObservedObject var stockListViewModel: StockListViewModel
+    
     var body: some View {
         VStack (spacing: 20){
             Capsule()
@@ -13,14 +16,14 @@ struct StockView: View {
                 .frame(width: 35, height: 5)
                 .padding(10)
             
-            Text("Crevette").font(.system(size: 40)).bold().multilineTextAlignment(.center)
+            Text(stockViewModel.nomIng).font(.system(size: 40)).bold().multilineTextAlignment(.center)
             
             HStack (spacing: 20){
                 VStack (spacing: 10){
                     Text("Prix unitaire")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("2.00€")
+                    Text(String(format: "%.2f€", stockViewModel.prixUnitaire))
                         .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -33,7 +36,7 @@ struct StockView: View {
                     Text("Unité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("Kg")
+                    Text(stockViewModel.unite)
                         .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -48,7 +51,7 @@ struct StockView: View {
                     Text("Catégorie")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("Crustacés")
+                    Text(stockViewModel.nomCat)
                         .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -61,7 +64,7 @@ struct StockView: View {
                     Text("Quantité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("2")
+                    Text("\(stockViewModel.quantite)")
                         .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -71,18 +74,21 @@ struct StockView: View {
                 .cornerRadius(10)
             }
             
-            VStack (spacing: 10) {
-                Text("Catégorie d'allergène")
-                    .font(.title2).frame(maxWidth: .infinity, alignment: .center)
-                Divider()
-                Text("Crustacés")
-                    .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .center)
+            if let allergen = stockViewModel.nomCatAllerg {
+                VStack (spacing: 10) {
+                    Text("Catégorie d'allergène")
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .center)
+                    Divider()
+                    Text(allergen)
+                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .center)
+                }
+                .padding(15)
+                .frame(maxWidth: .infinity)
+                .frame(height: 100)
+                .background(Color.sheetElementBackground)
+                .cornerRadius(10)
             }
-            .padding(15)
-            .frame(maxWidth: .infinity)
-            .frame(height: 100)
-            .background(Color.sheetElementBackground)
-            .cornerRadius(10)
+            
             
             Button(action: {
                 showingSheet.toggle()
@@ -93,7 +99,7 @@ struct StockView: View {
                     .padding(12)
             }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $showingSheet) {
-                    ModifyStockView()
+                    ModifyStockView(modifyStockViewModel: ModifyStockViewModel(ingredient: stockViewModel.ingredient),stockListViewModel: self.stockListViewModel,stockViewModel: self.stockViewModel)
                 }
             
             Spacer()
@@ -103,9 +109,9 @@ struct StockView: View {
     }
 }
 
-struct StockView_Previews: PreviewProvider {
-    static var previews: some View {
-        StockView()
-            .preferredColorScheme(.dark)
-    }
-}
+//struct StockView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StockView()
+//            .preferredColorScheme(.dark)
+//    }
+//}
