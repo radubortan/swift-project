@@ -116,7 +116,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
     
     func editIngredient(ingredient: Ingredient){
         if let allergenCategory = ingredient.nomCatAllerg {
-            firestore.collection("ingredients").document(ingredient.id).setData(["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "nomCatAllerg": allergenCategory, "unite":ingredient.unite]) {
+            firestore.collection("ingredients").document(ingredient.id).setData(["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "nomCatAllerg": allergenCategory, "unite":ingredient.unite,"quantite":ingredient.quantite, "prixUnitaire": ingredient.prixUnitaire]) {
                 error in
                 if error == nil {
                     // no error
@@ -124,7 +124,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
             }
         }
         else {
-            firestore.collection("ingredients").document(ingredient.id).setData(["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat ,"unite":ingredient.unite]) {
+            firestore.collection("ingredients").document(ingredient.id).setData(["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat ,"unite":ingredient.unite,"quantite":ingredient.quantite, "prixUnitaire": ingredient.prixUnitaire]) {
                 error in
                 if error == nil {
                     // no error
@@ -136,7 +136,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
     
     func addIngredient(ingredient: Ingredient){
         if let allergenCategory = ingredient.nomCatAllerg {
-            firestore.collection("ingredients").addDocument(data: ["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "nomCatAllerg": allergenCategory, "unite":ingredient.unite]) {
+            firestore.collection("ingredients").addDocument(data: ["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "nomCatAllerg": allergenCategory, "unite":ingredient.unite, "prixUnitaire" : ingredient.prixUnitaire, "quantite" : ingredient.quantite]) {
                 error in
                 if error == nil {
                     // no error
@@ -144,7 +144,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
             }
         }
         else {
-            firestore.collection("ingredients").addDocument(data: ["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "unite":ingredient.unite])
+            firestore.collection("ingredients").addDocument(data: ["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "unite":ingredient.unite,"prixUnitaire" : ingredient.prixUnitaire, "quantite" : ingredient.quantite])
         }
 
     }

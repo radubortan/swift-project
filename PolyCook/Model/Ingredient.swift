@@ -40,12 +40,18 @@ class Ingredient: ObservableObject, Identifiable, Equatable {
     }
     var unite : String
     
-    init(id: String,nomIng: String,nomCat: String, nomCatAllerg: String?, unite: String){
+    var prixUnitaire : Float
+    
+    var quantite : Int
+    
+    init(id: String,nomIng: String,nomCat: String, nomCatAllerg: String?, unite: String, prixUnitaire : Float = 0.0, quantite: Int = 0){
         self.id = id
         self.nomIng = nomIng
         self.nomCat = nomCat
         self.nomCatAllerg = nomCatAllerg
         self.unite = unite
+        self.prixUnitaire = prixUnitaire
+        self.quantite = quantite
     }
     
     //OBSERVERS

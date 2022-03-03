@@ -31,8 +31,19 @@ struct FilterMenu: View {
                 .padding(.bottom, 10)
                 
                 ScrollView(.vertical) {
-                    ForEach(filters.wrappedValue, id: \.self) {filter in
+                    ForEach(filters.wrappedValue, id: \.self.title) {filter in
                         CardView(filter: filter)
+//                            .onChange(of: filter.checked, perform: {
+//                                checked in
+//                                print("print")
+//                                if checked {
+//                                    print("YOYOYOY")
+//                                }
+//                                else{
+//                                    print("TITIT")
+//                                }
+//                                
+//                            })
                     }
                 }
                 .padding(.bottom, 10)

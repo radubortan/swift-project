@@ -16,6 +16,7 @@ class IngredientViewModel: ObservableObject, IngredientObserver, Subscriber{
     @Published var nomCat: String
     @Published var nomCatAllerg: String?
     @Published var unite: String
+    @Published var prixUnitaire: Float
     
     init(ingredient: Ingredient){
         self.ingredient = ingredient
@@ -23,6 +24,7 @@ class IngredientViewModel: ObservableObject, IngredientObserver, Subscriber{
         self.nomCat = ingredient.nomCat
         self.nomCatAllerg = ingredient.nomCatAllerg
         self.unite = ingredient.unite
+        self.prixUnitaire = ingredient.prixUnitaire
         self.ingredient.add(ingredientObserver: self)
     }
     

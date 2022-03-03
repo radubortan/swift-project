@@ -5,6 +5,8 @@ struct StocksListView: View {
     
     @State private var enteredText : String = ""
     
+    @ObservedObject var stockListViewModel = StockListViewModel()
+    
     //filter states
     @State var showCategoryFilter = false
     @State var showAllergenFilter = false
@@ -47,19 +49,28 @@ struct StocksListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
-                            ForEach(searchResults, id: \.self) {ingredient in
+                            if searchResults.count == 0{
+                                Text("Aucune stock")
+                                    .font(.system(size: 21))
+                                    .bold()
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 20)
+                                    .listRowBackground(Color.white.opacity(0))
+                                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            }
+                            ForEach(searchResults, id: \.self.id) {ingredient in
                                 Button{
                                     showingSheet.toggle()
                                 }
                                 label : {
                                     HStack {
-                                        Text(ingredient).font(.system(size: 21)).truncationMode(.tail).foregroundColor(.primary)
+                                        Text(ingredient.nomIng).font(.system(size: 21)).truncationMode(.tail).foregroundColor(.primary)
                                         Spacer()
                                         Image(systemName: "exclamationmark.circle")
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .foregroundColor(.red)
-                                        Text("10kg")
+                                        Text("\(ingredient.quantite) \(ingredient.unite)")
                                             .padding(10)
                                             .background(Color.stockAmountBackground)
                                             .cornerRadius(10)
@@ -67,7 +78,7 @@ struct StocksListView: View {
                                     }.frame(height: 50)
                                 }
                                 .sheet(isPresented : $showingSheet) {
-                                    StockView()
+                                    StockView(stockViewModel: StockViewModel(ingredient: ingredient),stockListViewModel: self.stockListViewModel)
                                 }
                             }
                         }
@@ -83,12 +94,12 @@ struct StocksListView: View {
         .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
     }
     
-    var searchResults: [String] {
+    var searchResults: [Ingredient] {
         if enteredText.isEmpty {
-            return ingredients
+            return self.stockListViewModel.stocks
         } else {
             //we need to filter using lowercased names
-            return ingredients.filter { $0.lowercased().contains(enteredText.lowercased())}
+            return self.stockListViewModel.stocks.filter { $0.nomIng.lowercased().contains(enteredText.lowercased())}
         }
     }
 }
