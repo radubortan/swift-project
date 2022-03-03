@@ -80,7 +80,7 @@ struct IngredientListView: View {
                                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }
                             ForEach(ingredientListViewModel.ingredientsFiltered, id: \.self.id) {ingredient in
-                                Button{
+                                Button {
                                     showingInfoSheet.toggle()
                                 }
                                 label : {
