@@ -140,25 +140,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		661CBC9827C81E49001DDE25 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				661CBC9927C81E5C001DDE25 /* Coefficients.swift */,
-				66D68FA727CAB28200AF0CE7 /* Recette.swift */,
-				66E7CCDB27CB94BC00EEDA7C /* InExtensoStep.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		661CBC9B27C82AF2001DDE25 /* Intents */ = {
-			isa = PBXGroup;
-			children = (
-				66D68FAD27CAB9F500AF0CE7 /* RecipeListIntent.swift */,
-				66D68FAF27CACBAB00AF0CE7 /* CreateRecipeIntent.swift */,
-			);
-			path = Intents;
-			sourceTree = "<group>";
-		};
 		663E9F7927C125F80030EEFF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,8 +191,6 @@
 		66B3447827BEE599005821F9 /* PolyCook */ = {
 			isa = PBXGroup;
 			children = (
-				661CBC9B27C82AF2001DDE25 /* Intents */,
-				661CBC9827C81E49001DDE25 /* Model */,
 				FFC6EBB327C5327D00346CF5 /* Intent */,
 				FF5F509F27C4DFE200E1DFF5 /* Model */,
 				66FCC6DF27C2645E002FB4FD /* GoogleService-Info.plist */,
@@ -260,6 +239,9 @@
 		FF5F509F27C4DFE200E1DFF5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				661CBC9927C81E5C001DDE25 /* Coefficients.swift */,
+				66D68FA727CAB28200AF0CE7 /* Recette.swift */,
+				66E7CCDB27CB94BC00EEDA7C /* InExtensoStep.swift */,
 				FF5F50A027C4DFEE00E1DFF5 /* Ingredient.swift */,
 				FF0688E327C830EB00FDC25A /* IngredientCategories.swift */,
 				FF728B3527C8D9F8009E1DFC /* AllergenCategories.swift */,
@@ -292,6 +274,8 @@
 		FFC6EBB327C5327D00346CF5 /* Intent */ = {
 			isa = PBXGroup;
 			children = (
+				66D68FAD27CAB9F500AF0CE7 /* RecipeListIntent.swift */,
+				66D68FAF27CACBAB00AF0CE7 /* CreateRecipeIntent.swift */,
 				FFC6EBB427C532A300346CF5 /* IntentIngredient.swift */,
 				FF816CC527D0DF800044F493 /* IntentStock.swift */,
 			);
