@@ -47,11 +47,11 @@ struct CreateIngredientView: View {
                                     .fill(Color.sheetElementBackground))
                     .foregroundColor(Color.textFieldForeground)
                     .onChange(of: addIngredientViewModel.nomIng, perform: { newNomIng in
-                        addIngredientViewModel.intentIngredientState.intentToChange(nomIng:newNomIng)
+//                        addIngredientViewModel.intentIngredientState.intentToChange(nomIng:newNomIng)
                     })
             }
             if addIngredientViewModel.nomIngIsTooShort {
-                Text("name must be at least 3 characters length")
+                Text("Le nom doit comporter au moins 3 caractères")
                     .foregroundColor(.red)
             }
             
@@ -125,6 +125,8 @@ struct CreateIngredientView: View {
             HStack (spacing: 20){
                 Button(action: {
                     //sauvegarder
+                    addIngredientViewModel.intentIngredientState.intentToChange(nomIng:addIngredientViewModel.nomIng)
+
                     if !addIngredientViewModel.nomIngIsTooShort{
                         intentIngredient.intentToAddIngredient(ingredient: addIngredientViewModel.ingredient)
                         presentationMode.wrappedValue.dismiss()

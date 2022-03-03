@@ -11,6 +11,8 @@ struct IngredientListView: View {
     @State var showingDeleteAlert = false
     
     //filter states
+    @State private var multiSelection = Set<UUID>()
+    
     @State var showCategoryFilter = false
     @State var showAllergenFilter = false
     @ObservedObject var ingredientCategories = IngredientCategories()
@@ -19,17 +21,18 @@ struct IngredientListView: View {
     @State private var showingCreationSheet = false
     @State private var showingInfoSheet = false
     
-
+    
+    
     init(){
         self.intentIngredient = IntentIngredient()
         self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
-
+        
     }
     
     func deleteIngredient(at offsets: IndexSet) {
         ingredientListViewModel.remove(atOffsets: offsets)
-//        self.ingredientListViewModel.deleteIngredient(ingredient: ingredient)
-//        self.showingDeleteAlert = true
+        //        self.ingredientListViewModel.deleteIngredient(ingredient: ingredient)
+        //        self.showingDeleteAlert = true
     }
     
     
@@ -67,19 +70,29 @@ struct IngredientListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
+                            if ingredientListViewModel.ingredientsFiltered.count == 0 {
+                                Text("Aucun ingrédient")
+                                    .font(.system(size: 21))
+                                    .bold()
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 20)
+                                    .listRowBackground(Color.white.opacity(0))
+                                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            }
                             ForEach(ingredientListViewModel.ingredientsFiltered, id: \.id) {ingredient in
                                 Button {
                                     showingInfoSheet.toggle()
                                 }
                                 label : {
                                     HStack {
-                                        Text(ingredient.nomIng).font(.system(size: 21)).truncationMode(.tail)
-                                            .foregroundColor(.primary)
+                                        Text(ingredient.nomIng).font(.system(size: 21)).truncationMode(.tail).foregroundColor(.primary)
                                         Spacer()
-                                        Image(systemName: "exclamationmark.circle")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .foregroundColor(.red)
+                                        if ingredient.nomCatAllerg != nil {
+                                            Image(systemName: "exclamationmark.circle")
+                                                .resizable()
+                                                .frame(width: 25, height: 25)
+                                                .foregroundColor(.red)
+                                        }
                                     }.frame(height: 50)
                                 }
                                 .sheet(isPresented : $showingInfoSheet) {
@@ -112,6 +125,8 @@ struct IngredientListView: View {
                 }
                 FilterMenu(title: "Catégorie", height: 250, isOn: $showCategoryFilter, filters: $ingredientCategories.ingredientCategoryFilter)
                 FilterMenu(title: "Type Allergène", height: 250, isOn: $showAllergenFilter, filters: $allergenCategories.allergenCategoryFilter)
+                
+                
             }
         }
         .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
@@ -123,8 +138,8 @@ struct IngredientListView: View {
             ingredientsFiltered = ingredientsFiltered.filter { $0.nomIng.lowercased().contains(enteredText.lowercased())
             }
         }
-            //we need to filter using lowercased names
-
+        //we need to filter using lowercased names
+        
         if !ingredientCategories.hasNoCheckedFilter {
             ingredientsFiltered = ingredientsFiltered.filter {
                 print($0.nomCat)
@@ -134,8 +149,8 @@ struct IngredientListView: View {
         
         print(ingredientsFiltered)
         return ingredientsFiltered
-    
-}
+        
+    }
 }
 
 //struct IngredientListView_Previews: PreviewProvider {
