@@ -16,7 +16,7 @@ struct InExtensoStepView: View {
                 .background(Color.sheetBackground)
             
             List {
-                //step title
+                //step titlet
                 Section {
                     Text(etape.nomEtape)
                         .font(.title)
@@ -80,62 +80,51 @@ struct InExtensoStepView: View {
                 
                 
                 Section (header: Text("Normaux").font(.title2).textCase(.none)) {
-                    HStack {
-                        Text("Ingrédient 1")
-                        Spacer()
-                        Text("10")
-                            .frame(width: 30, height: 30)
-                            .background(Color.innerTextFieldBackground)
-                            .cornerRadius(10)
-                            .foregroundColor(Color.textFieldForeground)
-                    }
-                    HStack {
-                        Text("Ingrédient 2")
-                        Spacer()
-                        Text("10")
-                            .frame(width: 30, height: 30)
-                            .background(Color.innerTextFieldBackground)
-                            .cornerRadius(10)
-                            .foregroundColor(Color.textFieldForeground)
-                    }
-                    HStack {
-                        Text("Ingrédient 3")
-                        Spacer()
-                        Text("10")
-                            .frame(width: 30, height: 30)
-                            .background(Color.innerTextFieldBackground)
-                            .cornerRadius(10)
-                            .foregroundColor(Color.textFieldForeground)
+                    ZStack {
+                        Text("Aucun ingrédient")
+                            .font(.system(size: 21))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        ForEach(etape.ingredients, id: \.id) {ingredient in
+                            if ingredient.ingredient.nomCatAllerg == nil {
+                                HStack {
+                                    Text(ingredient.ingredient.nomIng)
+                                    Spacer()
+                                    Text("\(ingredient.quantity) \(ingredient.ingredient.unite)")
+                                        .frame(width: 50, height: 30)
+                                        .background(Color.innerTextFieldBackground)
+                                        .cornerRadius(10)
+                                        .foregroundColor(Color.textFieldForeground)
+                                }
+                                .background(Color.sheetElementBackground)
+                            }
+                        }
+                        
                     }
                 }
                 
                 Section (header: Text("Allergènes").font(.title2).textCase(.none).padding(.top, 5)) {
-                    HStack {
-                        Text("Ingrédient 4")
-                        Spacer()
-                        Text("10")
-                            .frame(width: 30, height: 30)
-                            .background(Color.innerTextFieldBackground)
-                            .cornerRadius(10)
-                            .foregroundColor(Color.textFieldForeground)
-                    }
-                    HStack {
-                        Text("Ingrédient 5")
-                        Spacer()
-                        Text("10")
-                            .frame(width: 30, height: 30)
-                            .background(Color.innerTextFieldBackground)
-                            .cornerRadius(10)
-                            .foregroundColor(Color.textFieldForeground)
-                    }
-                    HStack {
-                        Text("Ingrédient 6")
-                        Spacer()
-                        Text("10")
-                            .frame(width: 30, height: 30)
-                            .background(Color.innerTextFieldBackground)
-                            .cornerRadius(10)
-                            .foregroundColor(Color.textFieldForeground)
+                    ZStack {
+                        Text("Aucun ingrédient")
+                            .font(.system(size: 21))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        ForEach(etape.ingredients, id: \.id) {ingredient in
+                            if ingredient.ingredient.nomCatAllerg != nil {
+                                HStack {
+                                    Text(ingredient.ingredient.nomIng)
+                                    Spacer()
+                                    Text("\(ingredient.quantity) \(ingredient.ingredient.unite)")
+                                        .frame(width: 50, height: 30)
+                                        .background(Color.innerTextFieldBackground)
+                                        .cornerRadius(10)
+                                        .foregroundColor(Color.textFieldForeground)
+                                }
+                                .background(Color.sheetElementBackground)
+                            }
+                        }
                     }
                 }
             }

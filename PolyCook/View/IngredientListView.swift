@@ -71,7 +71,7 @@ struct IngredientListView: View {
                         
                         Section {
                             if ingredientListViewModel.ingredientsFiltered.count == 0 {
-                                Text("Aucune ingrédient")
+                                Text("Aucun ingrédient")
                                     .font(.system(size: 21))
                                     .bold()
                                     .frame(maxWidth: .infinity)
@@ -79,7 +79,7 @@ struct IngredientListView: View {
                                     .listRowBackground(Color.white.opacity(0))
                                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }
-                            ForEach(ingredientListViewModel.ingredientsFiltered, id: \.self.id) {ingredient in
+                            ForEach(ingredientListViewModel.ingredientsFiltered, id: \.id) {ingredient in
                                 Button {
                                     showingInfoSheet.toggle()
                                 }

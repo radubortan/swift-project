@@ -13,9 +13,13 @@ protocol IngredientObserver: AnyObject {
     func changed(nomCatAllerg: String?)
 }
 
-class Ingredient: ObservableObject, Identifiable, Equatable {
+class Ingredient: ObservableObject, Identifiable, Equatable, Hashable {
     static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
         return lhs === rhs
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     

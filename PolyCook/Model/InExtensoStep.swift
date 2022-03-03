@@ -20,10 +20,12 @@ class Step {
 class InExtensoStep : Step {
     var duree : Int
     var description : String
+    var ingredients : [RecipeIngredient]
     
-    init(nomEtape: String, duree: Int, description: String, id: String = UUID().uuidString) {
+    init(nomEtape: String, duree: Int, description: String, ingredients : [RecipeIngredient], id: String = UUID().uuidString) {
         self.duree = duree
         self.description = description
+        self.ingredients = ingredients
         super.init(id: id, nomEtape: nomEtape)
     }
 }
