@@ -105,7 +105,7 @@ struct RecipeView: View {
                                 RecipeView(recette: etape as! Recette, isSheet : true)
                             }
                             else {
-                                InExtensoStepView(etape: etape as! InExtensoStep)
+                                InExtensoStepView(step: etape as! InExtensoStep)
                             }
                         }
                     }
@@ -147,7 +147,7 @@ struct RecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $ingredientsSheetIsOn) {
-                            RecipeIngredientListView()
+                            RecipeIngredientListView(steps: recette.etapes)
                         }
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))

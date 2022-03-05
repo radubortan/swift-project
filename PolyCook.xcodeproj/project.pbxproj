@@ -14,6 +14,9 @@
 		663E9F7627C119090030EEFF /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7527C119090030EEFF /* FirebaseFirestoreSwift-Beta */; };
 		663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E9F7727C11FF90030EEFF /* LoginViewModel.swift */; };
 		663E9F7D27C13B150030EEFF /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E9F7C27C13B150030EEFF /* ColorExtension.swift */; };
+		664EA16427D3BEA000622540 /* RecipeIngredientListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */; };
+		664EA16627D3C12100622540 /* IngredientExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EA16527D3C12100622540 /* IngredientExtractor.swift */; };
+		664EA16827D3CF3A00622540 /* InExtensoStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */; };
 		666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDA27C02A7E00AA308A /* RecipeView.swift */; };
 		6671283F27C6D08A00012BCB /* InExtensoStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6671283E27C6D08A00012BCB /* InExtensoStepView.swift */; };
 		667D283B27C41A98001BEE8C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283A27C41A98001BEE8C /* CardView.swift */; };
@@ -72,6 +75,9 @@
 		661CBC9927C81E5C001DDE25 /* Coefficients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coefficients.swift; sourceTree = "<group>"; };
 		663E9F7727C11FF90030EEFF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = ../LoginViewModel.swift; sourceTree = "<group>"; };
 		663E9F7C27C13B150030EEFF /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeIngredientListViewModel.swift; sourceTree = "<group>"; };
+		664EA16527D3C12100622540 /* IngredientExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientExtractor.swift; sourceTree = "<group>"; };
+		664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InExtensoStepViewModel.swift; sourceTree = "<group>"; };
 		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		6671283E27C6D08A00012BCB /* InExtensoStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InExtensoStepView.swift; sourceTree = "<group>"; };
 		667D283A27C41A98001BEE8C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -154,6 +160,8 @@
 				FFC6EBB627C5388600346CF5 /* IngredientViewModel.swift */,
 				FFA4F42B27C787E10004AACB /* EditIngredientViewModel.swift */,
 				FF9CA05F27CBB4FB0035C0C4 /* AddIngredientViewModel.swift */,
+				664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */,
+				664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -168,6 +176,7 @@
 				667D284227C42CAD001BEE8C /* FilterItem.swift */,
 				66AE7A6F27C97790002CEF4C /* PdfGenerator.swift */,
 				FF0117D627CCF58800751F2F /* IngredientFilteringOptions.swift */,
+				664EA16527D3C12100622540 /* IngredientExtractor.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -388,9 +397,12 @@
 				FFC4A9BC27CA704A00A37C00 /* Unites.swift in Sources */,
 				FF0117D727CCF58800751F2F /* IngredientFilteringOptions.swift in Sources */,
 				667D283D27C41D40001BEE8C /* CustomCorner.swift in Sources */,
+				664EA16827D3CF3A00622540 /* InExtensoStepViewModel.swift in Sources */,
 				FF0688E427C830EB00FDC25A /* IngredientCategories.swift in Sources */,
+				664EA16427D3BEA000622540 /* RecipeIngredientListViewModel.swift in Sources */,
 				66FCC6E627C27EF9002FB4FD /* EditIngredientView.swift in Sources */,
 				66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */,
+				664EA16627D3C12100622540 /* IngredientExtractor.swift in Sources */,
 				667D283B27C41A98001BEE8C /* CardView.swift in Sources */,
 				66FCC6E827C290E6002FB4FD /* StockView.swift in Sources */,
 				66D68FAA27CAB71400AF0CE7 /* RecipeListViewModel.swift in Sources */,
