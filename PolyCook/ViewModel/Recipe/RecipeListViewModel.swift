@@ -69,7 +69,18 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             
             //case InExtenso
             if let inExtenso = step as? InExtensoStep {
-                steps.append(["nomEtape": inExtenso.nomEtape,"duree": inExtenso.duree,"description": inExtenso.description])
+                var ingredients = [NSDictionary]()
+                for ingredientRecette in inExtenso.ingredients {
+                    let ingredient = ingredientRecette.ingredient
+                    if ingredient.nomCatAllerg != nil{
+                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"nomCatAllerg": ingredient.nomCatAllerg ?? "","unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                    }
+                    else{
+                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                        
+                    }
+                }
+                steps.append(["nomEtape": inExtenso.nomEtape ?? "","duree": inExtenso.duree,"description": inExtenso.description,"ingredients":ingredients])
             }
             
             //case Recipe
@@ -84,10 +95,21 @@ class RecipeListViewModel : ObservableObject, Subscriber {
     func addRecipe(recipe: Recette){
         var steps = [NSDictionary]()
         for step in recipe.etapes {
-            
+
             //case InExtenso
             if let inExtenso = step as? InExtensoStep {
-                steps.append(["nomEtape": inExtenso.nomEtape,"duree": inExtenso.duree,"description": inExtenso.description])
+                var ingredients = [NSDictionary]()
+                for ingredientRecette in inExtenso.ingredients {
+                    let ingredient = ingredientRecette.ingredient
+                    if ingredient.nomCatAllerg != nil{
+                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"nomCatAllerg": ingredient.nomCatAllerg ?? "","unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                    }
+                    else{
+                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                        
+                    }
+                }
+                steps.append(["nomEtape": inExtenso.nomEtape ?? "","duree": inExtenso.duree,"description": inExtenso.description,"ingredients":ingredients])
                 
                 // Ajouter les ingrédients
             }
@@ -116,7 +138,21 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                 return getRecipeFromNSDictionary(recipe: step)
             }
             else{
-                return InExtensoStep(nomEtape: step["nomEtape"] as? String ?? "", duree: step["duree"] as? Int ?? 0, description: step["description"] as? String ?? "",id: UUID().uuidString)
+                let ingredientsDocument = step["ingredients"] as? [NSDictionary] ?? []
+                let ingredients = ingredientsDocument.map{
+                    (ingredient) -> RecipeIngredient in
+                    if ingredient["nomCatAllerg"] != nil{
+                        let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "", nomCatAllerg: ingredient["nomCatAllerg"] as? String ?? nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                        return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
+                    }
+                    else{
+                        let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "",nomCatAllerg: nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                        return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
+                    }
+                    
+                }
+                
+                return InExtensoStep(nomEtape: step["nomEtape"] as? String ?? "", duree: step["duree"] as? Int ?? 0, description: step["description"] as? String ?? "",ingredients:ingredients,id: UUID().uuidString)
             }
             
         }
@@ -142,8 +178,21 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                         else{
                             
                             // Ajouter les ingrédients
+                            let ingredientsDocument = step["ingredients"] as? [NSDictionary] ?? []
+                            let ingredients = ingredientsDocument.map{
+                                (ingredient) -> RecipeIngredient in
+                                if ingredient["nomCatAllerg"] != nil{
+                                    let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "", nomCatAllerg: ingredient["nomCatAllerg"] as? String ?? "", unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                                    return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
+                                }
+                                else{
+                                    let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "",nomCatAllerg: nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                                    return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
+                                }
+                                
+                            }
                             
-                            return InExtensoStep(nomEtape: step["nomEtape"] as? String ?? "", duree: step["duree"] as? Int ?? 0, description: step["description"] as? String ?? "",id: UUID().uuidString)
+                            return InExtensoStep(nomEtape: step["nomEtape"] as? String ?? "", duree: step["duree"] as? Int ?? 0, description: step["description"] as? String ?? "",ingredients: ingredients,id: UUID().uuidString)
                         }
                         
                     }
