@@ -72,8 +72,8 @@ struct StocksListView: View {
                                                 .frame(width: 25, height: 25)
                                                 .foregroundColor(.red)
                                         }
-                                        Text("\(ingredient.quantite) \(ingredient.unite)")
-                                            .padding(10)
+                                        Text("\(String(format:"%.1f",ingredient.quantite)) \(ingredient.unite)")
+                                            .frame(width: 75, height: 40)
                                             .background(Color.stockAmountBackground)
                                             .cornerRadius(10)
                                             .foregroundColor(Color.textFieldForeground)
