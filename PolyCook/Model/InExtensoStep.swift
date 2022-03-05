@@ -9,7 +9,7 @@ import Foundation
 
 class Step {
     var id : String
-    var nomEtape : String
+    var nomEtape : String?
     
     init(id: String, nomEtape: String) {
         self.id = id

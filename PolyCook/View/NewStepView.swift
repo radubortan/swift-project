@@ -57,10 +57,12 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Recette").font(.title2)
-                                Picker("Recette", selection: $stepVm.recipe) {
-                                    Text("Sauce tomate").tag("Sauce tomate")
-                                    Text("Crème fromagère").tag("Crème fromagère")
+                                Picker("Recette", selection: $stepVm.selectedRecipe) {
+                                    ForEach(stepVm.recipes) { recipe in
+                                        Text(recipe.nomRecette).tag(recipe)
+                                    }
                                 }
+                                .id(UUID())
                                 .pickerStyle(.menu)
                             }
                             .frame(height: 100, alignment: .center)
@@ -99,12 +101,18 @@ struct NewStepView: View {
                             .padding(.bottom, 5)
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
-                    ForEach(stepVm.ingredients, id: \.id) {ingredient in
+                    ForEach(stepVm.recipeIngredients, id: \.id) {recipeIngredient in
                         HStack {
-                            Text(ingredient.nomIng)
+                            Text(recipeIngredient.ingredient.nomIng)
                             Spacer()
-                            Text("10")
-                                .frame(width: 30, height: 30)
+                            if (recipeIngredient.ingredient.nomCatAllerg != nil) {
+                                Image(systemName: "exclamationmark.circle")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.red)
+                            }
+                            Text("\(String(format: "%.1f", recipeIngredient.quantity / Double(stepVm.selectedRecipe.nbCouverts) * Double(stepVm.subrecipeQuantity))) \(recipeIngredient.ingredient.unite)")
+                                .frame(width: 75, height: 30)
                                 .background(Color.innerTextFieldBackground)
                                 .cornerRadius(10)
                                 .foregroundColor(Color.textFieldForeground)
@@ -187,8 +195,8 @@ struct NewStepView: View {
                             .cornerRadius(10)
                             
                             VStack (spacing: 5) {
-                                Text("Quantité (Kg)").font(.title2)
-                                TextField("Quantité (Kg)", value: $stepVm.quantity, formatter: stepVm.numberFormatter)
+                                Text("Quantité (\(stepVm.selectedIngredient.unite))").font(.title2)
+                                TextField("Quantité", value: $stepVm.quantity, formatter: stepVm.numberFormatter)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.innerTextFieldBackground))
@@ -204,7 +212,7 @@ struct NewStepView: View {
                             .cornerRadius(10)
                         }
                         Button(action: {
-                            stepVm.addIngredient(ingredient: stepVm.selectedIngredient, quantity: stepVm.quantity)
+                            stepVm.addIngredient(ingredient: stepVm.selectedIngredient, quantity: Double(stepVm.quantity))
                         }, label: {
                             HStack {
                                 Image(systemName: "plus")
@@ -247,8 +255,8 @@ struct NewStepView: View {
                                             .frame(width: 20, height: 20)
                                             .foregroundColor(.red)
                                     }
-                                    Text("\(ingredient.quantity) \(ingredient.ingredient.unite)")
-                                        .frame(width: 50, height: 30)
+                                    Text("\(String(format: "%.1f", ingredient.quantity)) \(ingredient.ingredient.unite)")
+                                        .frame(width: 75, height: 30)
                                         .background(Color.innerTextFieldBackground)
                                         .cornerRadius(10)
                                         .foregroundColor(Color.textFieldForeground)

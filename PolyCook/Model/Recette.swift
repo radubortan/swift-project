@@ -5,7 +5,15 @@ protocol RecetteObserver {
     func change (step: Step)
 }
 
-class Recette : Step {
+class Recette : Step, Identifiable, Hashable {
+    static func == (lhs: Recette, rhs: Recette) -> Bool {
+        return lhs === rhs
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     var observer : RecetteObserver?
     
     var nomAuteur : String

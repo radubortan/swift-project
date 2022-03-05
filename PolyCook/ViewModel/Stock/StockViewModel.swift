@@ -17,7 +17,7 @@ class StockViewModel: ObservableObject, IngredientObserver, Subscriber{
     @Published var nomCatAllerg: String?
     @Published var unite: String
     @Published var prixUnitaire: Float
-    @Published var quantite: Int
+    @Published var quantite: Double
     
     init(ingredient: Ingredient){
         self.ingredient = ingredient

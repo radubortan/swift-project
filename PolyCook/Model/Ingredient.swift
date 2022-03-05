@@ -46,9 +46,9 @@ class Ingredient: ObservableObject, Identifiable, Equatable, Hashable {
     
     var prixUnitaire : Float
     
-    var quantite : Int
+    var quantite : Double
     
-    init(id: String,nomIng: String,nomCat: String, nomCatAllerg: String?, unite: String, prixUnitaire : Float = 0.0, quantite: Int = 0){
+    init(id: String,nomIng: String,nomCat: String, nomCatAllerg: String?, unite: String, prixUnitaire : Float = 0.0, quantite: Double = 0){
         self.id = id
         self.nomIng = nomIng
         self.nomCat = nomCat

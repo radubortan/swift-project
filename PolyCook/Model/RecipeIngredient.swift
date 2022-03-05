@@ -8,12 +8,13 @@
 import Foundation
 
 class RecipeIngredient {
-    var id : String = UUID().uuidString
+    var id : String
     var ingredient : Ingredient
-    var quantity : Int
+    var quantity : Double
     
-    init(ingredient: Ingredient, quantity: Int) {
+    init(ingredient: Ingredient, quantity: Double, id : String = UUID().uuidString) {
         self.ingredient = ingredient
         self.quantity = quantity
+        self.id = id
     }
 }

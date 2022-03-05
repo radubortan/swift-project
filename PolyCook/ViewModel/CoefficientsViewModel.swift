@@ -19,7 +19,6 @@ class CoefficientsViewModel : ObservableObject{
         //fetching the data when the view loads
         Task {
             loadCoefficients()
-
         }
     }
     
