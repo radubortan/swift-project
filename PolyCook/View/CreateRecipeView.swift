@@ -164,7 +164,7 @@ struct CreateRecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $createVm.costsSheetIsOn) {
-                            CostsView()
+                            CostsView(costsInfo: CostsInfo())
                         }
                 }
                 .listRowBackground(Color.white.opacity(0))
@@ -223,6 +223,7 @@ struct CreateRecipeView: View {
                         
                         Button(action: {
                             //dismiss the current view
+                            createVm.clearView()
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             Text("Annuler")

@@ -17,6 +17,7 @@
 		664EA16427D3BEA000622540 /* RecipeIngredientListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */; };
 		664EA16627D3C12100622540 /* IngredientExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EA16527D3C12100622540 /* IngredientExtractor.swift */; };
 		664EA16827D3CF3A00622540 /* InExtensoStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */; };
+		6658B1C827D40566005FDADB /* CostsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6658B1C727D40566005FDADB /* CostsInfo.swift */; };
 		666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDA27C02A7E00AA308A /* RecipeView.swift */; };
 		6671283F27C6D08A00012BCB /* InExtensoStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6671283E27C6D08A00012BCB /* InExtensoStepView.swift */; };
 		667D283B27C41A98001BEE8C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283A27C41A98001BEE8C /* CardView.swift */; };
@@ -78,6 +79,7 @@
 		664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeIngredientListViewModel.swift; sourceTree = "<group>"; };
 		664EA16527D3C12100622540 /* IngredientExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientExtractor.swift; sourceTree = "<group>"; };
 		664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InExtensoStepViewModel.swift; sourceTree = "<group>"; };
+		6658B1C727D40566005FDADB /* CostsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostsInfo.swift; sourceTree = "<group>"; };
 		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		6671283E27C6D08A00012BCB /* InExtensoStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InExtensoStepView.swift; sourceTree = "<group>"; };
 		667D283A27C41A98001BEE8C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				FF728B3527C8D9F8009E1DFC /* AllergenCategories.swift */,
 				FFC4A9BB27CA704A00A37C00 /* Unites.swift */,
 				66DCF98D27D0CD96002CD021 /* RecipeIngredient.swift */,
+				6658B1C727D40566005FDADB /* CostsInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				664EA16827D3CF3A00622540 /* InExtensoStepViewModel.swift in Sources */,
 				FF0688E427C830EB00FDC25A /* IngredientCategories.swift in Sources */,
 				664EA16427D3BEA000622540 /* RecipeIngredientListViewModel.swift in Sources */,
+				6658B1C827D40566005FDADB /* CostsInfo.swift in Sources */,
 				66FCC6E627C27EF9002FB4FD /* EditIngredientView.swift in Sources */,
 				66B3448927BEE8B6005821F9 /* StocksListView.swift in Sources */,
 				664EA16627D3C12100622540 /* IngredientExtractor.swift in Sources */,

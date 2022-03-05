@@ -73,4 +73,12 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     func moveStep(from source: IndexSet, to destination: Int) {
             etapes.move(fromOffsets: source, toOffset: destination)
         }
+    
+    func clearView() {
+        mealType = "Entrée"
+        nomRecette = ""
+        nomAuteur = ""
+        dishes = 1
+        etapes = []
+    }
 }

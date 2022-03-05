@@ -271,11 +271,15 @@ struct NewStepView: View {
             Section {
                 HStack (spacing: 20){
                     Button(action: {
-                        if !stepVm.isRecipe {
-                            stepVm.listIntent.intentToAdd(step: InExtensoStep(nomEtape: stepVm.nomEtape, duree: stepVm.duration, description: stepVm.description, ingredients: stepVm.ingredientsList))
+                        if stepVm.isRecipe {
+                            print(stepVm.nomEtape)
+                            let originalRecipe = Recette(nbCouverts: stepVm.subrecipeQuantity, nomAuteur: stepVm.selectedRecipe.nomAuteur, nomCatRecette: stepVm.selectedRecipe.nomCatRecette, nomRecette: stepVm.selectedRecipe.nomRecette, etapes: stepVm.selectedRecipe.etapes, nomEtape: stepVm.nomEtape)
+                            let copiedRecipe = stepVm.copyRecipe(recipe: originalRecipe)
+                            stepVm.multiplyIngredients(steps: copiedRecipe.etapes, multiplier: stepVm.subrecipeQuantity)
+                            stepVm.listIntent.intentToAdd(step: copiedRecipe)
                         }
                         else {
-                            stepVm.listIntent.intentToAdd(step: Recette(nbCouverts: 2, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [], nomEtape: stepVm.nomEtape))
+                            stepVm.listIntent.intentToAdd(step: InExtensoStep(nomEtape: stepVm.nomEtape, duree: stepVm.duration, description: stepVm.description, ingredients: stepVm.ingredientsList))
                         }
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
