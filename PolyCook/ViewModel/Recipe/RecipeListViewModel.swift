@@ -63,7 +63,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
         self.showingDeleteAlert = true
     }
     
-    func addRecipe(recipe: Recette){
+    func getNSDictionaryFromRecipe(recipe: Recette) -> NSDictionary{
         var steps = [NSDictionary]()
         for step in recipe.etapes {
             
@@ -74,7 +74,27 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             
             //case Recipe
             if let recipeStep = step as? Recette{
-                steps.append(["nomRecette":recipeStep.nomRecette,"nomAuteur": recipeStep.nomAuteur , "nomCatRecette": recipeStep.nomCatRecette, "nbCouverts":recipeStep.nbCouverts, "steps" : []])
+                steps.append(getNSDictionaryFromRecipe(recipe: recipeStep))
+            }
+        }
+
+        return ["nomRecette":recipe.nomRecette,"nomAuteur": recipe.nomAuteur , "nomCatRecette": recipe.nomCatRecette, "nbCouverts":recipe.nbCouverts, "steps" : steps]
+    }
+    
+    func addRecipe(recipe: Recette){
+        var steps = [NSDictionary]()
+        for step in recipe.etapes {
+            
+            //case InExtenso
+            if let inExtenso = step as? InExtensoStep {
+                steps.append(["nomEtape": inExtenso.nomEtape,"duree": inExtenso.duree,"description": inExtenso.description])
+                
+                // Ajouter les ingrédients
+            }
+            
+            //case Recipe
+            if let recipeStep = step as? Recette{
+                steps.append(getNSDictionaryFromRecipe(recipe: recipeStep))
             }
         }
         
@@ -86,6 +106,22 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             }
         }
 
+    }
+    
+    func getRecipeFromNSDictionary(recipe: NSDictionary)->Recette{
+        let stepsDocument = recipe["steps"] as? [NSDictionary] ?? []
+        let steps = stepsDocument.map{
+            (step) -> Step in
+            if step["nomRecette"] != nil{
+                return getRecipeFromNSDictionary(recipe: step)
+            }
+            else{
+                return InExtensoStep(nomEtape: step["nomEtape"] as? String ?? "", duree: step["duree"] as? Int ?? 0, description: step["description"] as? String ?? "",id: UUID().uuidString)
+            }
+            
+        }
+        return Recette(
+            nbCouverts: recipe["nbCouverts"] as? Int ?? 0, nomAuteur: recipe["nomAuteur"] as? String ?? "", nomCatRecette: recipe["nomCatRecette"] as? String ?? "", nomRecette: recipe["nomRecette"] as? String ?? "", etapes: steps)
     }
     
     func loadRecipes() {
@@ -101,9 +137,12 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                     let steps = stepsDocument.map{
                         (step) -> Step in
                         if step["nomRecette"] != nil{
-                            return Recette(nbCouverts: step["nbCouverts"] as? Int ?? 0, nomAuteur: step["nomAuteur"] as? String ?? "", nomCatRecette: step["nomCatRecette"] as? String ?? "", nomRecette: step["nomRecette"] as? String ?? "", etapes: [])
+                            return self.getRecipeFromNSDictionary(recipe: step)
                         }
                         else{
+                            
+                            // Ajouter les ingrédients
+                            
                             return InExtensoStep(nomEtape: step["nomEtape"] as? String ?? "", duree: step["duree"] as? Int ?? 0, description: step["description"] as? String ?? "",id: UUID().uuidString)
                         }
                         
