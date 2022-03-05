@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import SwiftUI
 
 class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     
@@ -61,5 +62,23 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
         self.recipe = Recette(nbCouverts: 1, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [])
         self.creationIntent.addObserver(viewModel: self)
         self.recipe.observer = self
+    }
+    
+    func deleteStep(at indexSet: IndexSet) {
+        withAnimation {
+            etapes.remove(atOffsets: indexSet)
+        }
+    }
+    
+    func moveStep(from source: IndexSet, to destination: Int) {
+            etapes.move(fromOffsets: source, toOffset: destination)
+        }
+    
+    func clearView() {
+        mealType = "Entrée"
+        nomRecette = ""
+        nomAuteur = ""
+        dishes = 1
+        etapes = []
     }
 }

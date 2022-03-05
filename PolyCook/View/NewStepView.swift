@@ -57,10 +57,12 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Recette").font(.title2)
-                                Picker("Recette", selection: $stepVm.recipe) {
-                                    Text("Sauce tomate").tag("Sauce tomate")
-                                    Text("Crème fromagère").tag("Crème fromagère")
+                                Picker("Recette", selection: $stepVm.selectedRecipe) {
+                                    ForEach(stepVm.recipes) { recipe in
+                                        Text(recipe.nomRecette).tag(recipe)
+                                    }
                                 }
+                                .id(UUID())
                                 .pickerStyle(.menu)
                             }
                             .frame(height: 100, alignment: .center)
@@ -99,12 +101,18 @@ struct NewStepView: View {
                             .padding(.bottom, 5)
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
-                    ForEach(stepVm.ingredients, id: \.self) {ingredient in
+                    ForEach(stepVm.recipeIngredients, id: \.id) {recipeIngredient in
                         HStack {
-                            Text(ingredient)
+                            Text(recipeIngredient.ingredient.nomIng)
                             Spacer()
-                            Text("10")
-                                .frame(width: 30, height: 30)
+                            if (recipeIngredient.ingredient.nomCatAllerg != nil) {
+                                Image(systemName: "exclamationmark.circle")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.red)
+                            }
+                            Text("\(String(format: "%.1f", recipeIngredient.quantity / Double(stepVm.selectedRecipe.nbCouverts) * Double(stepVm.subrecipeQuantity))) \(recipeIngredient.ingredient.unite)")
+                                .frame(width: 75, height: 30)
                                 .background(Color.innerTextFieldBackground)
                                 .cornerRadius(10)
                                 .foregroundColor(Color.textFieldForeground)
@@ -173,11 +181,12 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Ingrédient").font(.title2)
-                                Picker("Ingrédient", selection: $stepVm.ingredient) {
-                                    Text("Poisson").tag("Poisson")
-                                    Text("Tomate").tag("Tomate")
-                                    Text("Poulet").tag("Poulet")
+                                Picker("Ingrédient", selection: $stepVm.selectedIngredient) {
+                                    ForEach(stepVm.ingredients) { ingredient in
+                                        Text(ingredient.nomIng).tag(ingredient)
+                                    }
                                 }
+                                .id(UUID())
                                 .pickerStyle(.menu)
                             }
                             .frame(height: 100, alignment: .center)
@@ -186,8 +195,8 @@ struct NewStepView: View {
                             .cornerRadius(10)
                             
                             VStack (spacing: 5) {
-                                Text("Quantité (Kg)").font(.title2)
-                                TextField("Quantité (Kg)", value: $stepVm.quantity, formatter: stepVm.numberFormatter)
+                                Text("Quantité (\(stepVm.selectedIngredient.unite))").font(.title2)
+                                TextField("Quantité", value: $stepVm.quantity, formatter: stepVm.numberFormatter)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.innerTextFieldBackground))
@@ -203,7 +212,7 @@ struct NewStepView: View {
                             .cornerRadius(10)
                         }
                         Button(action: {
-                            
+                            stepVm.addIngredient(ingredient: stepVm.selectedIngredient, quantity: Double(stepVm.quantity))
                         }, label: {
                             HStack {
                                 Image(systemName: "plus")
@@ -226,18 +235,35 @@ struct NewStepView: View {
                 
                 //ingredient list
                 Section {
-                    ForEach(stepVm.ingredients, id: \.self) {ingredient in
-                        HStack {
-                            Text(ingredient)
-                            Spacer()
-                            Text("10")
-                                .frame(width: 30, height: 30)
-                                .background(Color.innerTextFieldBackground)
-                                .cornerRadius(10)
-                                .foregroundColor(Color.textFieldForeground)
-                        }
+                    if stepVm.ingredientsList.isEmpty {
+                        Text("Aucun ingrédient")
+                            .font(.system(size: 21))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 20)
+                            .listRowBackground(Color.white.opacity(0))
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
-                    .onDelete(perform: stepVm.deletion)
+                    else {
+                        ForEach(stepVm.ingredientsList, id: \.id) {ingredient in
+                                HStack {
+                                    Text(ingredient.ingredient.nomIng)
+                                    Spacer()
+                                    if (ingredient.ingredient.nomCatAllerg != nil) {
+                                        Image(systemName: "exclamationmark.circle")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.red)
+                                    }
+                                    Text("\(String(format: "%.1f", ingredient.quantity)) \(ingredient.ingredient.unite)")
+                                        .frame(width: 75, height: 30)
+                                        .background(Color.innerTextFieldBackground)
+                                        .cornerRadius(10)
+                                        .foregroundColor(Color.textFieldForeground)
+                                }
+                        }
+                        .onDelete(perform: stepVm.deleteIngredient)
+                    }
                 }
             }
             
@@ -245,11 +271,15 @@ struct NewStepView: View {
             Section {
                 HStack (spacing: 20){
                     Button(action: {
-                        if !stepVm.isRecipe {
-                            stepVm.listIntent.intentToAdd(step: InExtensoStep(nomEtape: stepVm.nomEtape, duree: stepVm.duration, description: stepVm.description))
+                        if stepVm.isRecipe {
+                            print(stepVm.nomEtape)
+                            let originalRecipe = Recette(nbCouverts: stepVm.subrecipeQuantity, nomAuteur: stepVm.selectedRecipe.nomAuteur, nomCatRecette: stepVm.selectedRecipe.nomCatRecette, nomRecette: stepVm.selectedRecipe.nomRecette, etapes: stepVm.selectedRecipe.etapes, nomEtape: stepVm.nomEtape)
+                            let copiedRecipe = stepVm.copyRecipe(recipe: originalRecipe)
+                            stepVm.multiplyIngredients(steps: copiedRecipe.etapes, multiplier: stepVm.subrecipeQuantity)
+                            stepVm.listIntent.intentToAdd(step: copiedRecipe)
                         }
                         else {
-                            stepVm.listIntent.intentToAdd(step: Recette(nbCouverts: 2, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [], nomEtape: stepVm.nomEtape))
+                            stepVm.listIntent.intentToAdd(step: InExtensoStep(nomEtape: stepVm.nomEtape, duree: stepVm.duration, description: stepVm.description, ingredients: stepVm.ingredientsList))
                         }
                         presentationMode.wrappedValue.dismiss()
                     }, label: {

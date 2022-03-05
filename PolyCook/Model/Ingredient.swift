@@ -13,9 +13,13 @@ protocol IngredientObserver: AnyObject {
     func changed(nomCatAllerg: String?)
 }
 
-class Ingredient: ObservableObject, Identifiable, Equatable {
+class Ingredient: ObservableObject, Identifiable, Equatable, Hashable {
     static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
         return lhs === rhs
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     
@@ -42,9 +46,9 @@ class Ingredient: ObservableObject, Identifiable, Equatable {
     
     var prixUnitaire : Float
     
-    var quantite : Int
+    var quantite : Double
     
-    init(id: String,nomIng: String,nomCat: String, nomCatAllerg: String?, unite: String, prixUnitaire : Float = 0.0, quantite: Int = 0){
+    init(id: String,nomIng: String,nomCat: String, nomCatAllerg: String?, unite: String, prixUnitaire : Float = 0.0, quantite: Double = 0){
         self.id = id
         self.nomIng = nomIng
         self.nomCat = nomCat

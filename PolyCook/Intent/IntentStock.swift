@@ -22,8 +22,8 @@ enum StockError: Error, CustomStringConvertible, Equatable{
 
 enum IntentStockState : Equatable {
     case ready
-    case stockDecreasing(Int)
-    case stockIncreasing(Int,Float)
+    case stockDecreasing(Double)
+    case stockIncreasing(Double,Float)
     case editIngredient(Ingredient)
     case updatingStockList
     
@@ -56,11 +56,11 @@ struct IntentStock {
         self.state.send(.updatingStockList)
     }
     
-    func intentToIncreaseStock(quantityToBeAdded: Int, totalPriceOfQuantityAdded: Float){
+    func intentToIncreaseStock(quantityToBeAdded: Double, totalPriceOfQuantityAdded: Float){
         self.state.send(.stockIncreasing(quantityToBeAdded, totalPriceOfQuantityAdded))
         self.state.send(.updatingStockList)
     }
-    func intentToDecreaseStock(quantityToBeRemoved: Int){
+    func intentToDecreaseStock(quantityToBeRemoved: Double){
         
             self.state.send(.stockDecreasing(quantityToBeRemoved))
             self.state.send(.updatingStockList)

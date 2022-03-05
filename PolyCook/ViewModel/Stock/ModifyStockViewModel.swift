@@ -17,10 +17,10 @@ class ModifyStockViewModel: ObservableObject{
     @Published var nomCatAllerg: String?
     @Published var unite: String
     @Published var prixUnitaire: Float
-    @Published var quantite: Int
+    @Published var quantite: Double
     
-    @Published var quantityToAdd: Int
-    @Published var quantityToRemove: Int
+    @Published var quantityToAdd: Double
+    @Published var quantityToRemove: Double
     @Published var totalPriceOfAddedQuantity : Float
     
     init(ingredient: Ingredient){

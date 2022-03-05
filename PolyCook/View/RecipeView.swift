@@ -1,17 +1,16 @@
 import SwiftUI
 
 struct RecipeView: View {
-    let etapes = ["etape 1", "etape 2", "etape 3", "etape 4"]
     let isSheet : Bool
-    
     let recette : Recette
     
     @State var costsSheetIsOn = false
     @State var ingredientsSheetIsOn = false
-    @State var withCosts = false
+    @State var showCosts = false
     @State var quantity = 1
     @State var showStep = false
     @State var showPdf = false
+    @ObservedObject var costsInfo : CostsInfo = CostsInfo()
     
     //formats the entered values
     let numberFormatter = NumberFormatter()
@@ -97,7 +96,7 @@ struct RecipeView: View {
                         Button {
                             showStep.toggle()
                         } label : {
-                            Text(etape.nomEtape).font(.system(size: 21))
+                            Text(etape.nomEtape!).font(.system(size: 21))
                                 .frame(height: 50).foregroundColor(.primary)
                         }
                         .sheet(isPresented: $showStep) {
@@ -105,7 +104,7 @@ struct RecipeView: View {
                                 RecipeView(recette: etape as! Recette, isSheet : true)
                             }
                             else {
-                                InExtensoStepView(etape: etape as! InExtensoStep)
+                                InExtensoStepView(step: etape as! InExtensoStep)
                             }
                         }
                     }
@@ -127,7 +126,7 @@ struct RecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $costsSheetIsOn) {
-                            CostsView()
+                            CostsView(costsInfo: costsInfo)
                         }
                     
                     Button(action: {
@@ -147,7 +146,7 @@ struct RecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $ingredientsSheetIsOn) {
-                            RecipeIngredientListView()
+                            RecipeIngredientListView(steps: recette.etapes)
                         }
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -185,7 +184,7 @@ struct RecipeView: View {
                                 Text("Avec côuts")
                                     .font(.title2)
                                     .multilineTextAlignment(.center)
-                                Toggle("", isOn: $withCosts).labelsHidden()
+                                Toggle("", isOn: $showCosts).labelsHidden()
                             }
                             .frame(height: 100, alignment: .center)
                             .frame(maxWidth: .infinity)
@@ -217,7 +216,7 @@ struct RecipeView: View {
         }
         .background(Color.sheetBackground)
         .sheet(isPresented: $showPdf) {
-            PdfView(withCosts : $withCosts, quantity: $quantity)
+            PdfView(costsInfo: costsInfo, showCosts: $showCosts, quantity: $quantity, recipe: recette)
         }
     }
 }
