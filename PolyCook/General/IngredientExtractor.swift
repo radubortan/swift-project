@@ -9,7 +9,7 @@ import Foundation
 
 class IngredientExtractor {
     //extracts the InExtensoStep nested inside of the recipe
-    private static func extractSteps(steps : [Step]) -> [InExtensoStep] {
+    static func extractSteps(steps : [Step]) -> [InExtensoStep] {
         var extractedSteps : [InExtensoStep] = []
         for step in steps {
             if step is InExtensoStep {
@@ -57,7 +57,7 @@ class IngredientExtractor {
     }
     
     //makes a deep enough copy of the steps so each RecipeIngredient has its own reference in memory
-    private static func copyRecipeIngredients(recipeIngredients : [RecipeIngredient]) -> [RecipeIngredient] {
+    static func copyRecipeIngredients(recipeIngredients : [RecipeIngredient]) -> [RecipeIngredient] {
         var copiedRecipeIngredients : [RecipeIngredient] = []
         for recipeIngredient in recipeIngredients {
             copiedRecipeIngredients.append(RecipeIngredient(ingredient: recipeIngredient.ingredient, quantity: recipeIngredient.quantity))
