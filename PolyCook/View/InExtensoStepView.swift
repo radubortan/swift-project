@@ -18,7 +18,7 @@ struct InExtensoStepView: View {
             List {
                 //step titlet
                 Section {
-                    Text(etape.nomEtape)
+                    Text(etape.nomEtape!)
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)

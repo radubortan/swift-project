@@ -116,7 +116,7 @@ class StockListViewModel : ObservableObject, Subscriber{
                                       nomCatAllerg: doc["nomCatAllerg"] as? String ?? nil,
                                       unite: doc["unite"] as? String ?? "",
                                       prixUnitaire: doc["prixUnitaire"] as? Float ?? 0.0,
-                                      quantite: doc["quantite"] as? Int ?? 0)
+                                      quantite: doc["quantite"] as? Double ?? 0)
                 }
             }
     }

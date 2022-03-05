@@ -97,7 +97,7 @@ struct RecipeView: View {
                         Button {
                             showStep.toggle()
                         } label : {
-                            Text(etape.nomEtape).font(.system(size: 21))
+                            Text(etape.nomEtape!).font(.system(size: 21))
                                 .frame(height: 50).foregroundColor(.primary)
                         }
                         .sheet(isPresented: $showStep) {

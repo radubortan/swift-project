@@ -123,25 +123,35 @@ struct CreateRecipeView: View {
                 
                 //steps list
                 Section {
-                    ForEach(createVm.etapes, id: \.id) {etape in
-                        Button {
-                            createVm.showStep.toggle()
-                        } label : {
-                            Text(etape.nomEtape).font(.system(size: 21))
-                                .frame(height: 50).foregroundColor(.primary)
-                        }
-                        .sheet(isPresented: $createVm.showStep) {
-                            if etape is InExtensoStep {
-                                InExtensoStepView(etape: etape as! InExtensoStep)
-                            }
-                            else {
-                                RecipeView(recette: etape as! Recette, isSheet: true)
-                            }
-                            
-                        }
+                    if createVm.etapes.isEmpty {
+                        Text("Aucune étape")
+                            .font(.system(size: 21))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .listRowBackground(Color.white.opacity(0))
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
-                    .onDelete(perform: fonctionProvisoire)
-                    .onMove { indexSet, index in
+                    else {
+                        ForEach(createVm.etapes, id: \.id) {etape in
+                            Button {
+                                createVm.showStep.toggle()
+                            } label : {
+                                Text(etape.nomEtape!).font(.system(size: 21))
+                                    .frame(height: 50).foregroundColor(.primary)
+                            }
+                            .sheet(isPresented: $createVm.showStep) {
+                                if etape is InExtensoStep {
+                                    InExtensoStepView(etape: etape as! InExtensoStep)
+                                }
+                                else {
+                                    RecipeView(recette: etape as! Recette, isSheet: true)
+                                }
+                                
+                            }
+                        }
+                        .onDelete(perform: fonctionProvisoire)
+                        .onMove { indexSet, index in
+                        }
                     }
                 }
                 
