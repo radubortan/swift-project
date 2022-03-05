@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct InExtensoStepView: View {
-    let etape : InExtensoStep
+    @ObservedObject var vm : InExtensoStepViewModel
     
-    init(etape: InExtensoStep) {
-        self.etape = etape
+    init(step: InExtensoStep) {
+        self.vm = InExtensoStepViewModel(step : step)
     }
     
     var body: some View {
@@ -18,7 +18,7 @@ struct InExtensoStepView: View {
             List {
                 //step titlet
                 Section {
-                    Text(etape.nomEtape!)
+                    Text(vm.step.nomEtape!)
                         .font(.title)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -33,7 +33,7 @@ struct InExtensoStepView: View {
                         Text("Durée")
                             .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                         Divider()
-                        Text("\(etape.duree) min")
+                        Text("\(vm.step.duree) min")
                             .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
                     }
                     .padding(15)
@@ -50,7 +50,7 @@ struct InExtensoStepView: View {
                         Divider()
                             .padding(.horizontal, 15)
                             .padding(.vertical, 5)
-                        Text(etape.description)
+                        Text(vm.step.description)
                             .foregroundColor(Color.textFieldForeground)
                             .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 10)
@@ -80,44 +80,43 @@ struct InExtensoStepView: View {
                 
                 
                 Section (header: Text("Normaux").font(.title2).textCase(.none)) {
-                    ZStack {
+                    if vm.hasNormalIngredients {
+                        VStack {
+                            ForEach(vm.step.ingredients, id: \.id) {ingredient in
+                                if ingredient.ingredient.nomCatAllerg == nil {
+                                    HStack {
+                                        Text(ingredient.ingredient.nomIng)
+                                        Spacer()
+                                        Text("\(String(format: "%.1f", ingredient.quantity)) \(ingredient.ingredient.unite)")
+                                            .frame(width: 75, height: 30)
+                                            .background(Color.innerTextFieldBackground)
+                                            .cornerRadius(10)
+                                            .foregroundColor(Color.textFieldForeground)
+                                    }
+                                    .background(Color.sheetElementBackground)
+                                }
+                            }
+                        }
+                    }
+                    else {
                         Text("Aucun ingrédient")
                             .font(.system(size: 21))
                             .bold()
                             .frame(maxWidth: .infinity)
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                        ForEach(etape.ingredients, id: \.id) {ingredient in
-                            if ingredient.ingredient.nomCatAllerg == nil {
-                                HStack {
-                                    Text(ingredient.ingredient.nomIng)
-                                    Spacer()
-                                    Text("\(ingredient.quantity) \(ingredient.ingredient.unite)")
-                                        .frame(width: 50, height: 30)
-                                        .background(Color.innerTextFieldBackground)
-                                        .cornerRadius(10)
-                                        .foregroundColor(Color.textFieldForeground)
-                                }
-                                .background(Color.sheetElementBackground)
-                            }
-                        }
-                        
+                            .listRowBackground(Color.white.opacity(0))
                     }
                 }
                 
                 Section (header: Text("Allergènes").font(.title2).textCase(.none).padding(.top, 5)) {
-                    ZStack {
-                        Text("Aucun ingrédient")
-                            .font(.system(size: 21))
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                        ForEach(etape.ingredients, id: \.id) {ingredient in
+                    if vm.hasAllergens {
+                        ForEach(vm.step.ingredients, id: \.id) {ingredient in
                             if ingredient.ingredient.nomCatAllerg != nil {
                                 HStack {
                                     Text(ingredient.ingredient.nomIng)
                                     Spacer()
-                                    Text("\(ingredient.quantity) \(ingredient.ingredient.unite)")
-                                        .frame(width: 50, height: 30)
+                                    Text("\(String(format: "%.1f", ingredient.quantity)) \(ingredient.ingredient.unite)")
+                                        .frame(width: 75, height: 30)
                                         .background(Color.innerTextFieldBackground)
                                         .cornerRadius(10)
                                         .foregroundColor(Color.textFieldForeground)
@@ -125,6 +124,14 @@ struct InExtensoStepView: View {
                                 .background(Color.sheetElementBackground)
                             }
                         }
+                    }
+                    else {
+                        Text("Aucun ingrédient")
+                            .font(.system(size: 21))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowBackground(Color.white.opacity(0))
                     }
                 }
             }

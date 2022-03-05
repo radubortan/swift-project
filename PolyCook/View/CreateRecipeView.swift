@@ -7,14 +7,6 @@ struct CreateRecipeView: View {
     @ObservedObject var listVm : RecipeListViewModel
     @ObservedObject var createVm : CreateRecipeViewModel
     
-    func deletion(at indexSet: IndexSet) {
-        
-    }
-    
-    func fonctionProvisoire(at indexSet : IndexSet) {
-        
-    }
-    
     init(listVm : RecipeListViewModel) {
         self.listVm = listVm
         self.createVm = CreateRecipeViewModel(listVm: listVm)
@@ -141,7 +133,7 @@ struct CreateRecipeView: View {
                             }
                             .sheet(isPresented: $createVm.showStep) {
                                 if etape is InExtensoStep {
-                                    InExtensoStepView(etape: etape as! InExtensoStep)
+                                    InExtensoStepView(step: etape as! InExtensoStep)
                                 }
                                 else {
                                     RecipeView(recette: etape as! Recette, isSheet: true)
@@ -149,9 +141,8 @@ struct CreateRecipeView: View {
                                 
                             }
                         }
-                        .onDelete(perform: fonctionProvisoire)
-                        .onMove { indexSet, index in
-                        }
+                        .onDelete(perform: createVm.deleteStep)
+                        .onMove(perform: createVm.moveStep)
                     }
                 }
                 
@@ -198,7 +189,7 @@ struct CreateRecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $createVm.ingredientsSheetIsOn) {
-                            RecipeIngredientListView()
+                            RecipeIngredientListView(steps: createVm.etapes)
                         }
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
