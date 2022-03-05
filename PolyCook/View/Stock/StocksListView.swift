@@ -66,11 +66,13 @@ struct StocksListView: View {
                                     HStack {
                                         Text(ingredient.nomIng).font(.system(size: 21)).truncationMode(.tail).foregroundColor(.primary)
                                         Spacer()
-                                        Image(systemName: "exclamationmark.circle")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .foregroundColor(.red)
-                                        Text("\(String(format: "%.1f", ingredient.quantite)) \(ingredient.unite)")
+                                        if ingredient.nomCatAllerg != nil {
+                                            Image(systemName: "exclamationmark.circle")
+                                                .resizable()
+                                                .frame(width: 25, height: 25)
+                                                .foregroundColor(.red)
+                                        }
+                                        Text("\(String(format:"%.1f",ingredient.quantite)) \(ingredient.unite)")
                                             .frame(width: 75, height: 40)
                                             .background(Color.stockAmountBackground)
                                             .cornerRadius(10)
