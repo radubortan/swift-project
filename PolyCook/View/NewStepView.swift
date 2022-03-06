@@ -7,9 +7,9 @@ struct NewStepView: View {
     @ObservedObject var listVm : CreateRecipeViewModel
     @ObservedObject var stepVm : NewStepViewModel
     
-    init(listVm: CreateRecipeViewModel) {
+    init(listVm: CreateRecipeViewModel, recipes: [Recette]) {
         self.listVm = listVm
-        self.stepVm = NewStepViewModel(listVm: listVm)
+        self.stepVm = NewStepViewModel(listVm: listVm, recipes: recipes)
     }
     
     var body: some View {
@@ -57,13 +57,18 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Recette").font(.title2)
-                                Picker("Recette", selection: $stepVm.selectedRecipe) {
-                                    ForEach(stepVm.recipes) { recipe in
-                                        Text(recipe.nomRecette).tag(recipe)
-                                    }
+                                if stepVm.recipes.isEmpty {
+                                    Text("Aucune recette").foregroundColor(Color.red)
                                 }
-                                .id(UUID())
-                                .pickerStyle(.menu)
+                                else {
+                                    Picker("Recette", selection: $stepVm.selectedRecipe) {
+                                        ForEach(stepVm.recipes) { recipe in
+                                            Text(recipe.nomRecette).tag(recipe)
+                                        }
+                                    }
+                                    .id(UUID())
+                                    .pickerStyle(.menu)
+                                }
                             }
                             .frame(height: 100, alignment: .center)
                             .frame(maxWidth: .infinity)
@@ -93,29 +98,31 @@ struct NewStepView: View {
                 }
                 
                 //ingredient list
-                Section (header: Text("Ingrédients")
-                            .font(.system(size: 30))
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 30)
-                            .padding(.bottom, 5)
-                            .textCase(.none)
-                            .foregroundColor(Color.textFieldForeground)) {
-                    ForEach(stepVm.recipeIngredients, id: \.id) {recipeIngredient in
-                        HStack {
-                            Text(recipeIngredient.ingredient.nomIng)
-                            Spacer()
-                            if (recipeIngredient.ingredient.nomCatAllerg != nil) {
-                                Image(systemName: "exclamationmark.circle")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.red)
+                if !stepVm.recipes.isEmpty {
+                    Section (header: Text("Ingrédients")
+                                .font(.system(size: 30))
+                                .bold()
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 30)
+                                .padding(.bottom, 5)
+                                .textCase(.none)
+                                .foregroundColor(Color.textFieldForeground)) {
+                        ForEach(stepVm.recipeIngredients, id: \.id) {recipeIngredient in
+                            HStack {
+                                Text(recipeIngredient.ingredient.nomIng)
+                                Spacer()
+                                if (recipeIngredient.ingredient.nomCatAllerg != nil) {
+                                    Image(systemName: "exclamationmark.circle")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.red)
+                                }
+                                Text("\(String(format: "%.1f", recipeIngredient.quantity / Double(stepVm.selectedRecipe.nbCouverts) * Double(stepVm.subrecipeQuantity))) \(recipeIngredient.ingredient.unite)")
+                                    .frame(width: 75, height: 30)
+                                    .background(Color.innerTextFieldBackground)
+                                    .cornerRadius(10)
+                                    .foregroundColor(Color.textFieldForeground)
                             }
-                            Text("\(String(format: "%.1f", recipeIngredient.quantity / Double(stepVm.selectedRecipe.nbCouverts) * Double(stepVm.subrecipeQuantity))) \(recipeIngredient.ingredient.unite)")
-                                .frame(width: 75, height: 30)
-                                .background(Color.innerTextFieldBackground)
-                                .cornerRadius(10)
-                                .foregroundColor(Color.textFieldForeground)
                         }
                     }
                 }
@@ -289,9 +296,10 @@ struct NewStepView: View {
                             .padding(12)
                     })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(.blue)
+                        .background(stepVm.isRecipe && stepVm.recipes.isEmpty ? .gray : .blue)
                         .cornerRadius(10)
                         .buttonStyle(BorderlessButtonStyle())
+                        .disabled(stepVm.isRecipe && stepVm.recipes.isEmpty)
                     
                     Button(action: {
                         //dismissed the current view

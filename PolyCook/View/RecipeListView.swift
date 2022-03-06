@@ -90,7 +90,7 @@ struct RecipeListView: View {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             if loginVM.signedIn {
                                 Button{} label: {
-                                    NavigationLink(destination: CreateRecipeView(listVm : self.listVm)){
+                                    NavigationLink(destination: CreateRecipeView(listVm : self.listVm, recipes: listVm.recipes)){
                                         Image(systemName: "text.badge.plus")
                                     }
                                 }
