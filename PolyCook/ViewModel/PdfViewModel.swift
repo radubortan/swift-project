@@ -128,7 +128,6 @@ class PdfViewModel : ObservableObject {
     
     func fetchTotalIngredientsValue() async {
         let ingredients = RecipeManipulator.extractIngredients(steps: self.steps)
-        var totalValue : Double = 0
         
         for ingredient in ingredients {
             ingredient.ingredient.prixUnitaire = await fetchPrixUnitaire(ingredient: ingredient)
@@ -136,10 +135,12 @@ class PdfViewModel : ObservableObject {
         }
         
         for ingredient in ingredients {
-            totalValue += ingredient.quantity * Double(ingredient.ingredient.prixUnitaire)
+            DispatchQueue.main .async {
+                self.totalIngredientsValue += ingredient.quantity * Double(ingredient.ingredient.prixUnitaire)
+            }
+            
         }
         
-        self.totalIngredientsValue = totalValue
     }
     
     func fetchPrixUnitaire(ingredient: RecipeIngredient) async -> Float {
