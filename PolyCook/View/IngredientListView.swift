@@ -29,13 +29,6 @@ struct IngredientListView: View {
         
     }
     
-    func deleteIngredient(at offsets: IndexSet) {
-        ingredientListViewModel.remove(atOffsets: offsets)
-        //        self.ingredientListViewModel.deleteIngredient(ingredient: ingredient)
-        //        self.showingDeleteAlert = true
-    }
-    
-    
     var body: some View {
         NavigationView{
             ZStack {
@@ -100,7 +93,7 @@ struct IngredientListView: View {
                                 }
                             }
                             .onDelete {
-                                self.deleteIngredient(at: $0)
+                                ingredientListViewModel.remove(atOffsets: $0)
                             }
                         }
                     }
