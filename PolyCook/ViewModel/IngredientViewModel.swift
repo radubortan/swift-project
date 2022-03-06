@@ -44,13 +44,10 @@ class IngredientViewModel: ObservableObject, IngredientObserver, Subscriber{
         case .updatingIngredientList:
             break
         case .nomIngChanging(let nomIng):
-            print("vm: change model ingredient name to '\(nomIng)'")
             self.ingredient.nomIng = nomIng
             if nomIng != self.ingredient.nomIng {
-//                self.error = .trackNameError(trackName)
                 self.nomIng = self.ingredient.nomIng
             }
-            print("vm: model ingredient name changed to '\(self.ingredient.nomIng)'")
             self.ingredient.nomIng = nomIng
             break
         case .nomIngChanged(_):
@@ -74,7 +71,6 @@ class IngredientViewModel: ObservableObject, IngredientObserver, Subscriber{
     }
     
     func changed(nomIng: String) {
-        print("vm observer: nomIng changed => self.nomIng = '\(nomIng)'")
         self.nomIng = nomIng
     }
     

@@ -90,7 +90,6 @@ class StockViewModel: ObservableObject, IngredientObserver, Subscriber{
     }
     
     func changed(nomIng: String) {
-        print("vm observer: nomIng changed => self.nomIng = '\(nomIng)'")
         self.nomIng = nomIng
     }
     

@@ -64,7 +64,6 @@ class Ingredient: ObservableObject, Identifiable, Equatable, Hashable {
     
     func add(ingredientObserver: IngredientObserver) {
        self.ingredientObservers.append(ingredientObserver)
-       print("add delegate : \(self.ingredientObservers.count) delagates now")
     }
     
     func remove(ingredientObserver: IngredientObserver) {
