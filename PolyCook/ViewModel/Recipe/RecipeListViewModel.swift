@@ -89,7 +89,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             }
         }
 
-        return ["nomRecette":recipe.nomRecette,"nomAuteur": recipe.nomAuteur , "nomCatRecette": recipe.nomCatRecette, "nbCouverts":recipe.nbCouverts, "steps" : steps]
+        return ["nomRecette":recipe.nomRecette,"nomAuteur": recipe.nomAuteur , "nomCatRecette": recipe.nomCatRecette, "nbCouverts":recipe.nbCouverts,"nomEtape":recipe.nomEtape ?? "", "steps" : steps]
     }
     
     func addRecipe(recipe: Recette){
@@ -121,7 +121,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
         }
         
         
-        firestore.collection("recipes").addDocument(data: ["nomRecette":recipe.nomRecette,"nomAuteur": recipe.nomAuteur , "nomCatRecette": recipe.nomCatRecette, "nbCouverts":recipe.nbCouverts, "steps" : steps]) {
+        firestore.collection("recipes").addDocument(data: ["nomRecette":recipe.nomRecette,"nomAuteur": recipe.nomAuteur , "nomCatRecette": recipe.nomCatRecette, "nbCouverts":recipe.nbCouverts,"nomEtape":recipe.nomEtape ?? "", "steps" : steps]) {
             error in
             if error == nil {
                 // no error
@@ -157,7 +157,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             
         }
         return Recette(
-            nbCouverts: recipe["nbCouverts"] as? Int ?? 0, nomAuteur: recipe["nomAuteur"] as? String ?? "", nomCatRecette: recipe["nomCatRecette"] as? String ?? "", nomRecette: recipe["nomRecette"] as? String ?? "", etapes: steps)
+            nbCouverts: recipe["nbCouverts"] as? Int ?? 0, nomAuteur: recipe["nomAuteur"] as? String ?? "", nomCatRecette: recipe["nomCatRecette"] as? String ?? "", nomRecette: recipe["nomRecette"] as? String ?? "", etapes: steps, nomEtape: recipe["nomEtape"] as? String ?? "")
     }
     
     func loadRecipes() {
@@ -197,7 +197,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                         
                     }
                     return Recette(
-                        nbCouverts: doc["nbCouverts"] as? Int ?? 0, nomAuteur: doc["nomAuteur"] as? String ?? "", nomCatRecette: doc["nomCatRecette"] as? String ?? "", nomRecette: doc["nomRecette"] as? String ?? "", etapes: steps,id: doc.documentID)
+                        nbCouverts: doc["nbCouverts"] as? Int ?? 0, nomAuteur: doc["nomAuteur"] as? String ?? "", nomCatRecette: doc["nomCatRecette"] as? String ?? "", nomRecette: doc["nomRecette"] as? String ?? "", etapes: steps,nomEtape: doc["nomEtape"] as? String ?? "",id: doc.documentID)
                 }
             }
     }
