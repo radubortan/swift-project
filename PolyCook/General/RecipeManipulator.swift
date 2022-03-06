@@ -98,4 +98,13 @@ class RecipeManipulator {
             }
         }
     }
+    
+    //returns the ingredients as an array of Strings
+    static func getIngredientsString(ingredients: [RecipeIngredient]) -> [String] {
+        var extractedIngredients : [String] = []
+        for ingredient in ingredients {
+            extractedIngredients.append(ingredient.ingredient.nomIng)
+        }
+        return extractedIngredients
+    }
 }

@@ -149,9 +149,5 @@ class CostsViewModel : ObservableObject {
         numberFormatter = NumberFormatter()
         //to format into decimal numbers
         numberFormatter.numberStyle = .decimal
-        
-        Task {
-            await fetchTotalIngredientsValue()
-        }
     }
 }

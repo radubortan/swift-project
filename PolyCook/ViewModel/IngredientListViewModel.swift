@@ -15,10 +15,28 @@ class IngredientListViewModel : ObservableObject, Subscriber{
     private let firestore  = Firestore.firestore()
 
     @Published private(set) var ingredients = [Ingredient]()
-
+    
+    @Published var enteredText : String = ""
+    
+    @Published var toBeDeleted : IndexSet?
+    @Published var showingDeleteAlert = false
+    
+    //show filter states
+    @Published var showCategoryFilter = false
+    @Published var showAllergenFilter = false
+    
+    @Published var showingCreationSheet = false
+    @Published var showingInfoSheet = false
+    
+    //filters
+    @Published var categoryFilters : Filter = Filter(filters: [])
+    @Published var allergenFilters : Filter = Filter(filters: [])
+    
     init(){
         Task{
             loadIngredients()
+            loadCategories()
+            loadAllergens()
         }
     }
     
@@ -61,43 +79,58 @@ class IngredientListViewModel : ObservableObject, Subscriber{
         return
     }
     
-    
-    @Published var filteringOptions = IngredientFilteringOptions()
-    
-    @Published var ingredientsFiltered : [Ingredient] = []
-
-    
-    
-    func filterIngredient(ingredient : Ingredient) -> Bool{
-        if(filteringOptions.patternToMatch != "" && !ingredient.nomIng.lowercased().contains(filteringOptions.patternToMatch.lowercased())){
-            return false
+    var filterResults : [Ingredient] {
+        //extracting the selected categories
+        var checkedCategories : [String] = []
+        for filter in categoryFilters.filters {
+            if filter.checked {
+                checkedCategories.append(filter.title)
+            }
         }
-        if (filteringOptions.categories.count != 0 && !filteringOptions.categories.contains(ingredient.nomCat)) {
-              return false;
+        
+        //extracting the selected allergens
+        var checkedAllergens : [String] = []
+        for filter in allergenFilters.filters {
+            if filter.checked {
+                checkedAllergens.append(filter.title)
             }
-            if (
-                filteringOptions.allergens.count != 0
-            ) {
-                if let allergen = ingredient.nomCatAllerg {
-                    if(!filteringOptions.allergens.contains(allergen)){
-                        return false
-                    }
-                    else {
-                        return true
-                    }
-                }
-                else {
-                    return false
-                }
+        }
+        
+        var filteredByCategory : [Ingredient]
+        
+        //checking if text has been entered in the search bar
+        if enteredText.isEmpty {
+            //filter by category
+            filteredByCategory = ingredients.filter { ingredient in
+                return checkedCategories.contains(ingredient.nomCat) || checkedCategories.isEmpty
             }
-            return true;
+        }
+        else {
+            //filter by search bar
+            let filteredBySearchBar = ingredients.filter { $0.nomIng.lowercased().contains(enteredText.lowercased())}
+            
+            //then filter by category
+            filteredByCategory = filteredBySearchBar.filter { ingredient in
+                return checkedCategories.contains(ingredient.nomCat) || checkedCategories.isEmpty
+            }
+        }
+        
+        let filteredByAllergen = filteredByCategory.filter { ingredient in
+            if checkedAllergens.isEmpty {
+                //no selection so we keep everything
+                return true
+            }
+            if let catAllergen = ingredient.nomCatAllerg {
+                return checkedAllergens.contains(catAllergen)
+            }
+            else {
+                //we have selected an allergen and current ingredient isn't allergenic, so it's removed
+                return false
+            }
+        }
+
+        return filteredByAllergen
     }
-    
-    func filterIngredients() {
-        let filteredList = ingredients.filter(filterIngredient);
-        self.ingredientsFiltered = filteredList
-     };
-    
     
     func remove(atOffsets : IndexSet){
         atOffsets.forEach{
@@ -105,8 +138,6 @@ class IngredientListViewModel : ObservableObject, Subscriber{
             let ingredient = self.ingredients[index]
             self.deleteIngredient(ingredient: ingredient)
         }
-//        self.ingredients.remove(atOffsets: atOffsets)
-
     }
     
     func deleteIngredient(ingredient: Ingredient){
@@ -148,6 +179,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
 
     }
     
+    
     func loadIngredients() {
         firestore.collection("ingredients")
             .addSnapshotListener{
@@ -163,14 +195,42 @@ class IngredientListViewModel : ObservableObject, Subscriber{
                                       nomCatAllerg: doc["nomCatAllerg"] as? String ?? nil,
                                       unite: doc["unite"] as? String ?? "",prixUnitaire: doc["prixUnitaire"] as? Float ?? 0)
                 }
-                self.ingredientsFiltered = documents.map{
-                    (doc) -> Ingredient in
-                    return Ingredient(id: doc.documentID,
-                                      nomIng: doc["nomIng"] as? String ?? "",
-                                      nomCat: doc["nomCat"] as? String ?? "",
-                                      nomCatAllerg: doc["nomCatAllerg"] as? String ?? nil,
-                                      unite: doc["unite"] as? String ?? "",prixUnitaire: doc["prixUnitaire"] as? Float ?? 0 )
+            }
+    }
+    
+    
+    //load recipe categories for category filter
+    func loadCategories() {
+        firestore.collection("categoriesIngredients")
+            .addSnapshotListener{
+                 (data, error) in
+                guard let documents = data?.documents else {
+                   return
                 }
+                var tempCategoryFilters : [FilterItem] = []
+                for document in documents {
+                    let title = document["nomCatIng"] as? String ?? ""
+                    tempCategoryFilters.append(FilterItem(title: title))
+                }
+                self.categoryFilters = Filter(filters: tempCategoryFilters)
+            }
+    }
+    
+    
+    //loads allergens for allergen filter
+    func loadAllergens() {
+        firestore.collection("allergenes")
+            .addSnapshotListener{
+                 (data, error) in
+                guard let documents = data?.documents else {
+                   return
+                }
+                var tempAllergenFilters : [FilterItem] = []
+                for document in documents {
+                    let title = document["nomCatAllerg"] as? String ?? ""
+                    tempAllergenFilters.append(FilterItem(title: title))
+                }
+                self.allergenFilters = Filter(filters: tempAllergenFilters)
             }
     }
     
