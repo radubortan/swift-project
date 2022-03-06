@@ -62,8 +62,6 @@ class RecipeListViewModel : ObservableObject, Subscriber {
     @Published var ingredientFilters : Filter = Filter(filters: [])
 
     
-    var filters: [FilterItem] = []
-    
     //recipes being shown in the list
     var filterResults: [Recette] {
         //extracting the selected meal types
@@ -276,6 +274,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                     return Recette(
                         nbCouverts: doc["nbCouverts"] as? Int ?? 0, nomAuteur: doc["nomAuteur"] as? String ?? "", nomCatRecette: doc["nomCatRecette"] as? String ?? "", nomRecette: doc["nomRecette"] as? String ?? "", etapes: steps,nomEtape: doc["nomEtape"] as? String ?? "",id: doc.documentID)
                 }
+                self.recipes.sort(by: {$0.nomRecette < $1.nomRecette})
             }
     }
     
@@ -287,14 +286,15 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                 guard let documents = data?.documents else {
                    return
                 }
-                self.filters = []
+                var filters : [FilterItem] = []
                 for document in documents {
                     let title = document["nomIng"] as? String ?? ""
-                    if !self.filters.contains(where: {$0.title == title}) {
-                        self.filters.append(FilterItem(title: title))
+                    if !filters.contains(where: {$0.title == title}) {
+                        filters.append(FilterItem(title: title))
                     }
                 }
-                self.ingredientFilters = Filter(filters: self.filters)
+                filters.sort(by: {$0.title < $1.title})
+                self.ingredientFilters = Filter(filters: filters)
             }
     }
 }

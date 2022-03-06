@@ -7,6 +7,7 @@ struct CreateRecipeView: View {
     @ObservedObject var listVm : RecipeListViewModel
     @ObservedObject var createVm : CreateRecipeViewModel
     var recipes : [Recette]
+    @ObservedObject var costsInfo : CostsInfo = CostsInfo()
     
     init(listVm : RecipeListViewModel, recipes: [Recette]) {
         self.listVm = listVm
@@ -47,9 +48,9 @@ struct CreateRecipeView: View {
                                 VStack (spacing: 5) {
                                     Text("Type repas").font(.title2)
                                     Picker("Type repas", selection: $createVm.mealType) {
-                                        Text("Entrée").tag("Entrée")
-                                        Text("Principal").tag("Principal")
                                         Text("Déssert").tag("Déssert")
+                                        Text("Principal").tag("Principal")
+                                        Text("Entrée").tag("Entrée")                                        
                                     }
                                     .pickerStyle(.menu)
                                 }
@@ -165,7 +166,7 @@ struct CreateRecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $createVm.costsSheetIsOn) {
-                            CostsView(costsInfo: CostsInfo(), steps : createVm.etapes, nbCouverts: createVm.recipe.nbCouverts)
+                            CostsView(costsInfo: costsInfo, steps : createVm.etapes, nbCouverts: createVm.recipe.nbCouverts)
                         }
                 }
                 .listRowBackground(Color.white.opacity(0))

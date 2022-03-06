@@ -144,6 +144,7 @@ class StockListViewModel : ObservableObject, Subscriber{
                                       prixUnitaire: doc["prixUnitaire"] as? Float ?? 0.0,
                                       quantite: doc["quantite"] as? Double ?? 0)
                 }
+                self.stocks.sort(by: {$0.nomIng < $1.nomIng})
             }
     }
     
@@ -160,6 +161,7 @@ class StockListViewModel : ObservableObject, Subscriber{
                     let title = document["nomCatIng"] as? String ?? ""
                     tempCategoryFilters.append(FilterItem(title: title))
                 }
+                tempCategoryFilters.sort(by: {$0.title < $1.title})
                 self.categoryFilters = Filter(filters: tempCategoryFilters)
             }
     }
@@ -178,6 +180,7 @@ class StockListViewModel : ObservableObject, Subscriber{
                     let title = document["nomCatAllerg"] as? String ?? ""
                     tempAllergenFilters.append(FilterItem(title: title))
                 }
+                tempAllergenFilters.sort(by: {$0.title < $1.title})
                 self.allergenFilters = Filter(filters: tempAllergenFilters)
             }
     }

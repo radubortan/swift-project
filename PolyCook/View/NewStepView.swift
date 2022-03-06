@@ -188,13 +188,18 @@ struct NewStepView: View {
                         HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Ingrédient").font(.title2)
-                                Picker("Ingrédient", selection: $stepVm.selectedIngredient) {
-                                    ForEach(stepVm.ingredients) { ingredient in
-                                        Text(ingredient.nomIng).tag(ingredient)
-                                    }
+                                if stepVm.ingredients.isEmpty {
+                                    Text("Aucun ingrédient").foregroundColor(Color.red)
                                 }
-                                .id(UUID())
-                                .pickerStyle(.menu)
+                                else {
+                                    Picker("Ingrédient", selection: $stepVm.selectedIngredient) {
+                                        ForEach(stepVm.ingredients) { ingredient in
+                                            Text(ingredient.nomIng).tag(ingredient)
+                                        }
+                                    }
+                                    .id(UUID())
+                                    .pickerStyle(.menu)
+                                }
                             }
                             .frame(height: 100, alignment: .center)
                             .frame(maxWidth: .infinity)
@@ -230,10 +235,11 @@ struct NewStepView: View {
                             }
                         })
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(.blue)
+                            .background(stepVm.ingredients.isEmpty ? .gray : .blue)
                             .cornerRadius(10)
                             .foregroundColor(.white)
                             .buttonStyle(BorderlessButtonStyle())
+                            .disabled(stepVm.ingredients.isEmpty)
                     }
                     .listRowBackground(Color.white.opacity(0))
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
