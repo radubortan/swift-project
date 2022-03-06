@@ -15,16 +15,6 @@ class IngredientListViewModel : ObservableObject, Subscriber{
     private let firestore  = Firestore.firestore()
 
     @Published private(set) var ingredients = [Ingredient]()
-    
-    func remove(atOffsets : IndexSet){
-        atOffsets.forEach{
-            index in
-            let ingredient = self.ingredients[index]
-            self.deleteIngredient(ingredient: ingredient)
-        }
-//        self.ingredients.remove(atOffsets: atOffsets)
-
-    }
 
     init(){
         Task{
@@ -102,16 +92,25 @@ class IngredientListViewModel : ObservableObject, Subscriber{
             }
             return true;
     }
+    
     func filterIngredients() {
         let filteredList = ingredients.filter(filterIngredient);
         self.ingredientsFiltered = filteredList
      };
     
     
+    func remove(atOffsets : IndexSet){
+        atOffsets.forEach{
+            index in
+            let ingredient = self.ingredients[index]
+            self.deleteIngredient(ingredient: ingredient)
+        }
+//        self.ingredients.remove(atOffsets: atOffsets)
+
+    }
     
     func deleteIngredient(ingredient: Ingredient){
         firestore.collection("ingredients").document(ingredient.id).delete()
-        
     }
     
     func editIngredient(ingredient: Ingredient){

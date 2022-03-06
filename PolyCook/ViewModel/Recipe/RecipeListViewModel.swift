@@ -130,6 +130,18 @@ class RecipeListViewModel : ObservableObject, Subscriber {
 
     }
     
+    func remove(atOffsets : IndexSet){
+        atOffsets.forEach{
+            index in
+            let recipe = self.recipes[index]
+            self.deleteRecipe(recipe: recipe)
+        }
+    }
+    
+    func deleteRecipe(recipe: Recette){
+        firestore.collection("recipes").document(recipe.id).delete()
+    }
+    
     func getRecipeFromNSDictionary(recipe: NSDictionary)->Recette{
         let stepsDocument = recipe["steps"] as? [NSDictionary] ?? []
         let steps = stepsDocument.map{

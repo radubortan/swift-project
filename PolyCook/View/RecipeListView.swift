@@ -5,11 +5,6 @@ struct RecipeListView: View {
     
     @ObservedObject var listVm = RecipeListViewModel()
     
-    var recettes = [Recette(nbCouverts: 2, nomAuteur: "Radu", nomCatRecette: "Principal", nomRecette: "Pates", etapes: [
-        InExtensoStep(nomEtape: "Faire cuire pates", duree: 20, description: "Mettre dans de l'eau", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "dgfza", nomIng: "Pates", nomCat: "", nomCatAllerg: nil, unite: "Kg"), quantity: 1), RecipeIngredient(ingredient: Ingredient(id: "zerz", nomIng: "Tomate", nomCat: "Légume", nomCatAllerg: nil, unite: "Kg"), quantity: 0.5)]),
-        InExtensoStep(nomEtape: "Faire cuire pates", duree: 20, description: "Mettre dans de l'eau", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "dgfza", nomIng: "Pates", nomCat: "", nomCatAllerg: nil, unite: "Kg"), quantity: 1), RecipeIngredient(ingredient: Ingredient(id: "zerz", nomIng: "Tomate", nomCat: "Légume", nomCatAllerg: "test", unite: "Kg"), quantity: 0.5)])
-    ])]
-    
     var body: some View {
         NavigationView{
             ZStack {
@@ -79,9 +74,7 @@ struct RecipeListView: View {
                                 ) {
                                     Button("Oui") {
                                         withAnimation {
-                                            for index in self.listVm.toBeDeleted! {
-                                                listVm.recipes.remove(at: index)
-                                            }
+                                            listVm.remove(atOffsets: self.listVm.toBeDeleted!)
                                         }
                                     }
                                     Button("Non", role: .cancel) {}
@@ -114,11 +107,9 @@ struct RecipeListView: View {
     
     var searchResults: [Recette] {
         if listVm.enteredText.isEmpty {
-//            return recettes
             return listVm.recipes
         } else {
             //we need to filter using lowercased names
-//            return recettes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
             return listVm.recipes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
         }
     }
