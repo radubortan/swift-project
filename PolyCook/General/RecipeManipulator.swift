@@ -99,6 +99,7 @@ class RecipeManipulator {
         }
     }
     
+    //returns the ingredients as an array of Strings
     static func getIngredientsString(ingredients: [RecipeIngredient]) -> [String] {
         var extractedIngredients : [String] = []
         for ingredient in ingredients {

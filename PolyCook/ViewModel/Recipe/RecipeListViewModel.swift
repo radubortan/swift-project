@@ -66,6 +66,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
     
     //recipes being shown in the list
     var filterResults: [Recette] {
+        //extracting the selected meal types
         var checkedMealTypes : [String] = []
         for filter in mealFilters.filters {
             if filter.checked {
@@ -73,6 +74,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             }
         }
         
+        //extracting the selected ingredients
         var checkedIngredients : [String] = []
         for filter in ingredientFilters.filters {
             if filter.checked {
@@ -80,103 +82,42 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             }
         }
         
+        var filteredByMealType : [Recette]
+        
+        //checking if text has been entered in the search bar
         if enteredText.isEmpty {
-            var finalResult : [Recette] = []
-            for recipe in recipes {
-                if checkedMealTypes.isEmpty {
-                    if checkedIngredients.isEmpty {
-                        return recipes
-                    }
-                    else {
-                        var contained = true
-                        let extractedIngredients = RecipeManipulator.extractIngredients(steps: recipe.etapes)
-                        let ingredientStrings = RecipeManipulator.getIngredientsString(ingredients: extractedIngredients)
-                        for checkedIngredient in checkedIngredients {
-                            if !ingredientStrings.contains(checkedIngredient) {
-                                contained = false
-                            }
-                        }
-                        if contained {
-                            finalResult.append(recipe)
-                        }
-                    }
-                }
-                else {
-                    if checkedMealTypes.contains(recipe.nomCatRecette) {
-                        finalResult.append(recipe)
-                    }
-                    else {
-                        if checkedIngredients.isEmpty {
-                            return recipes
-                        }
-                        else {
-                            var contained = true
-                            let extractedIngredients = RecipeManipulator.extractIngredients(steps: recipe.etapes)
-                            let ingredientStrings = RecipeManipulator.getIngredientsString(ingredients: extractedIngredients)
-                            for checkedIngredient in checkedIngredients {
-                                if !ingredientStrings.contains(checkedIngredient) {
-                                    contained = false
-                                }
-                            }
-                            if contained {
-                                finalResult.append(recipe)
-                            }
-                        }
-                    }
-                }
+            //filter by meal type
+            filteredByMealType = recipes.filter { recipe in
+                return checkedMealTypes.contains(recipe.nomCatRecette) || checkedMealTypes.isEmpty
             }
-            return finalResult
         }
         else {
-            //we need to filter using lowercased names
+            //filter by search bar
             let filteredBySearchBar = recipes.filter { $0.nomRecette.lowercased().contains(enteredText.lowercased())}
             
-            var finalResult : [Recette] = []
-            for recipe in filteredBySearchBar {
-                if checkedMealTypes.isEmpty {
-                    if checkedIngredients.isEmpty {
-                        return filteredBySearchBar
-                    }
-                    else {
-                        var contained = true
-                        let extractedIngredients = RecipeManipulator.extractIngredients(steps: recipe.etapes)
-                        let ingredientStrings = RecipeManipulator.getIngredientsString(ingredients: extractedIngredients)
-                        for checkedIngredient in checkedIngredients {
-                            if !ingredientStrings.contains(checkedIngredient) {
-                                contained = false
-                            }
-                        }
-                        if contained {
-                            finalResult.append(recipe)
-                        }
-                    }
-                }
-                else {
-                    if checkedMealTypes.contains(recipe.nomCatRecette) {
-                        finalResult.append(recipe)
-                    }
-                    else {
-                        if checkedIngredients.isEmpty {
-                            return recipes
-                        }
-                        else {
-                            var contained = true
-                            let extractedIngredients = RecipeManipulator.extractIngredients(steps: recipe.etapes)
-                            let ingredientStrings = RecipeManipulator.getIngredientsString(ingredients: extractedIngredients)
-                            for checkedIngredient in checkedIngredients {
-                                if !ingredientStrings.contains(checkedIngredient) {
-                                    contained = false
-                                }
-                            }
-                            if contained {
-                                finalResult.append(recipe)
-                            }
-                        }
-                    }
+            //then filter by meal type
+            filteredByMealType = filteredBySearchBar.filter { recipe in
+                return checkedMealTypes.contains(recipe.nomCatRecette) || checkedMealTypes.isEmpty
+            }
+        }
+        var finalResult : [Recette] = []
+        
+        //then filter by ingredient
+        for recipe in filteredByMealType {
+            var contained = true
+            let extractedIngredients = RecipeManipulator.extractIngredients(steps: recipe.etapes)
+            let ingredientStrings = RecipeManipulator.getIngredientsString(ingredients: extractedIngredients)
+            for checkedIngredient in checkedIngredients {
+                if !ingredientStrings.contains(checkedIngredient) {
+                    contained = false
                 }
             }
-            return finalResult
+            if contained {
+                finalResult.append(recipe)
+            }
         }
+        
+        return finalResult
     }
     
     func showConfirmation(at indexSet : IndexSet) {
@@ -357,6 +298,5 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             }
     }
 }
-
 
 

@@ -4,29 +4,9 @@ struct IngredientListView: View {
     @ObservedObject var ingredientListViewModel = IngredientListViewModel()
     var intentIngredient: IntentIngredient
     
-    
-    @State private var enteredText : String = ""
-    
-    @State var toBeDeleted : IndexSet?
-    @State var showingDeleteAlert = false
-    
-    //filter states
-    @State private var multiSelection = Set<UUID>()
-    
-    @State var showCategoryFilter = false
-    @State var showAllergenFilter = false
-    @ObservedObject var ingredientCategories = IngredientCategories()
-    @ObservedObject var allergenCategories = AllergenCategories()
-    
-    @State private var showingCreationSheet = false
-    @State private var showingInfoSheet = false
-    
-    
-    
     init(){
         self.intentIngredient = IntentIngredient()
         self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
-        
     }
     
     var body: some View {
@@ -37,7 +17,7 @@ struct IngredientListView: View {
                         Section {
                             HStack(spacing: 15) {
                                 Button (action: {
-                                    withAnimation{showCategoryFilter.toggle()}
+                                    withAnimation{ingredientListViewModel.showCategoryFilter.toggle()}
                                 }, label: {
                                     Text("Catégorie").font(.system(size: 21))
                                 })
@@ -48,7 +28,7 @@ struct IngredientListView: View {
                                     .buttonStyle(BorderlessButtonStyle())
                                 
                                 Button (action: {
-                                    withAnimation{showAllergenFilter.toggle()}
+                                    withAnimation{ingredientListViewModel.showAllergenFilter.toggle()}
                                 }, label: {
                                     Text("Allergène").font(.system(size: 21))
                                 })
@@ -63,7 +43,7 @@ struct IngredientListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
-                            if ingredientListViewModel.ingredientsFiltered.count == 0 {
+                            if ingredientListViewModel.filterResults.count == 0 {
                                 Text("Aucun ingrédient")
                                     .font(.system(size: 21))
                                     .bold()
@@ -72,9 +52,9 @@ struct IngredientListView: View {
                                     .listRowBackground(Color.white.opacity(0))
                                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }
-                            ForEach(ingredientListViewModel.ingredientsFiltered, id: \.id) {ingredient in
+                            ForEach(ingredientListViewModel.filterResults, id: \.id) {ingredient in
                                 Button {
-                                    showingInfoSheet.toggle()
+                                    ingredientListViewModel.showingInfoSheet.toggle()
                                 }
                                 label : {
                                     HStack {
@@ -88,7 +68,7 @@ struct IngredientListView: View {
                                         }
                                     }.frame(height: 50)
                                 }
-                                .sheet(isPresented : $showingInfoSheet) {
+                                .sheet(isPresented : $ingredientListViewModel.showingInfoSheet) {
                                     IngredientView(ingredientViewModel: IngredientViewModel(ingredient: ingredient), ingredientListViewModel: self.ingredientListViewModel)
                                 }
                             }
@@ -97,52 +77,26 @@ struct IngredientListView: View {
                             }
                         }
                     }
-                    .searchable(text: $enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche ingrédient").onChange(of: enteredText, perform: { newValue in
-                        ingredientListViewModel.filteringOptions.patternToMatch = newValue
-                        ingredientListViewModel.filterIngredients()
-                        
-                    })
+                    .searchable(text: $ingredientListViewModel.enteredText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Recherche ingrédient")
                     .navigationTitle("Ingrédients")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button{
-                                showingCreationSheet.toggle()
+                                ingredientListViewModel.showingCreationSheet.toggle()
                             } label: {
                                 Image(systemName: "cart.badge.plus")
                             }
                         }
                     }
-                    .sheet(isPresented : $showingCreationSheet) {
+                    .sheet(isPresented : $ingredientListViewModel.showingCreationSheet) {
                         CreateIngredientView(ingredientListViewModel: self.ingredientListViewModel,ingredient:Ingredient(id: UUID().uuidString, nomIng: "",nomCat:"Crustacés", nomCatAllerg: nil, unite: "Kg"))
                     }
                 }
-//                FilterMenu(title: "Catégorie", height: 250, isOn: $showCategoryFilter, filters: $ingredientCategories.ingredientCategoryFilter)
-//                FilterMenu(title: "Type Allergène", height: 250, isOn: $showAllergenFilter, filters: $allergenCategories.allergenCategoryFilter)
-                
-                
+                FilterMenu(title: "Catégorie", height: 250, isOn: $ingredientListViewModel.showCategoryFilter, filter: ingredientListViewModel.categoryFilters)
+                FilterMenu(title: "Type Allergène", height: 250, isOn: $ingredientListViewModel.showAllergenFilter, filter: ingredientListViewModel.allergenFilters) 
             }
         }
         .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
-    }
-    
-    var searchResults: [Ingredient] {
-        var ingredientsFiltered = ingredientListViewModel.ingredients
-        if !enteredText.isEmpty {
-            ingredientsFiltered = ingredientsFiltered.filter { $0.nomIng.lowercased().contains(enteredText.lowercased())
-            }
-        }
-        //we need to filter using lowercased names
-        
-        if !ingredientCategories.hasNoCheckedFilter {
-            ingredientsFiltered = ingredientsFiltered.filter {
-                print($0.nomCat)
-                return ingredientCategories.nomCatIsChecked(nomCat: $0.nomCat)
-            }
-        }
-        
-        print(ingredientsFiltered)
-        return ingredientsFiltered
-        
     }
 }
 

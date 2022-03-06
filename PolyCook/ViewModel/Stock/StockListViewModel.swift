@@ -11,16 +11,27 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class StockListViewModel : ObservableObject, Subscriber{
-    
-    
     private let firestore  = Firestore.firestore()
 
     @Published private(set) var stocks = [Ingredient]()
-
-
+    
+    @Published var enteredText : String = ""
+    
+    //filter states
+    @Published var showCategoryFilter = false
+    @Published var showAllergenFilter = false
+    
+    @Published var showingSheet = false
+    
+    //filters
+    @Published var categoryFilters : Filter = Filter(filters: [])
+    @Published var allergenFilters : Filter = Filter(filters: [])
+    
     init(){
         Task{
             loadStocks()
+            loadCategories()
+            loadAllergens()
         }
     }
     
@@ -53,43 +64,58 @@ class StockListViewModel : ObservableObject, Subscriber{
         return
     }
     
-    
-    @Published var filteringOptions = IngredientFilteringOptions()
-    
-    @Published var ingredientsFiltered : [Ingredient] = []
-
-    
-    
-    func filterIngredient(ingredient : Ingredient) -> Bool{
-        if(filteringOptions.patternToMatch != "" && !ingredient.nomIng.lowercased().contains(filteringOptions.patternToMatch.lowercased())){
-            return false
+    var filterResults : [Ingredient] {
+        //extracting the selected categories
+        var checkedCategories : [String] = []
+        for filter in categoryFilters.filters {
+            if filter.checked {
+                checkedCategories.append(filter.title)
+            }
         }
-        if (filteringOptions.categories.count != 0 && !filteringOptions.categories.contains(ingredient.nomCat)) {
-              return false;
+        
+        //extracting the selected allergens
+        var checkedAllergens : [String] = []
+        for filter in allergenFilters.filters {
+            if filter.checked {
+                checkedAllergens.append(filter.title)
             }
-            if (
-                filteringOptions.allergens.count != 0
-            ) {
-                if let allergen = ingredient.nomCatAllerg {
-                    if(!filteringOptions.allergens.contains(allergen)){
-                        return false
-                    }
-                    else {
-                        return true
-                    }
-                }
-                else {
-                    return false
-                }
+        }
+        
+        var filteredByCategory : [Ingredient]
+        
+        //checking if text has been entered in the search bar
+        if enteredText.isEmpty {
+            //filter by category
+            filteredByCategory = stocks.filter { ingredient in
+                return checkedCategories.contains(ingredient.nomCat) || checkedCategories.isEmpty
             }
-            return true;
+        }
+        else {
+            //filter by search bar
+            let filteredBySearchBar = stocks.filter { $0.nomIng.lowercased().contains(enteredText.lowercased())}
+            
+            //then filter by category
+            filteredByCategory = filteredBySearchBar.filter { ingredient in
+                return checkedCategories.contains(ingredient.nomCat) || checkedCategories.isEmpty
+            }
+        }
+        
+        let filteredByAllergen = filteredByCategory.filter { ingredient in
+            if checkedAllergens.isEmpty {
+                //no selection so we keep everything
+                return true
+            }
+            if let catAllergen = ingredient.nomCatAllerg {
+                return checkedAllergens.contains(catAllergen)
+            }
+            else {
+                //we have selected an allergen and current ingredient isn't allergenic, so it's removed
+                return false
+            }
+        }
+
+        return filteredByAllergen
     }
-    func filterIngredients() {
-        let filteredList = stocks.filter(filterIngredient);
-        self.ingredientsFiltered = filteredList
-     };
-    
-    
     
     
     func editIngredient(ingredient: Ingredient){
@@ -118,6 +144,41 @@ class StockListViewModel : ObservableObject, Subscriber{
                                       prixUnitaire: doc["prixUnitaire"] as? Float ?? 0.0,
                                       quantite: doc["quantite"] as? Double ?? 0)
                 }
+            }
+    }
+    
+    //load recipe categories for category filter
+    func loadCategories() {
+        firestore.collection("categoriesIngredients")
+            .addSnapshotListener{
+                 (data, error) in
+                guard let documents = data?.documents else {
+                   return
+                }
+                var tempCategoryFilters : [FilterItem] = []
+                for document in documents {
+                    let title = document["nomCatIng"] as? String ?? ""
+                    tempCategoryFilters.append(FilterItem(title: title))
+                }
+                self.categoryFilters = Filter(filters: tempCategoryFilters)
+            }
+    }
+    
+    
+    //loads allergens for allergen filter
+    func loadAllergens() {
+        firestore.collection("allergenes")
+            .addSnapshotListener{
+                 (data, error) in
+                guard let documents = data?.documents else {
+                   return
+                }
+                var tempAllergenFilters : [FilterItem] = []
+                for document in documents {
+                    let title = document["nomCatAllerg"] as? String ?? ""
+                    tempAllergenFilters.append(FilterItem(title: title))
+                }
+                self.allergenFilters = Filter(filters: tempAllergenFilters)
             }
     }
     
