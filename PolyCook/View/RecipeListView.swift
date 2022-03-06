@@ -4,8 +4,9 @@ struct RecipeListView: View {
     @EnvironmentObject var loginVM : LoginViewModel
     
     @ObservedObject var listVm = RecipeListViewModel()
-    @ObservedObject var mealFilters = Filter(filters: [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")])
-    @ObservedObject var ingredientFilters = Filter(filters: [FilterItem(title: "Pomme"), FilterItem(title: "Oeuf"), FilterItem(title: "Pâtes"), FilterItem(title: "Poisson"), FilterItem(title: "Tomate"), FilterItem(title: "Oignon"), FilterItem(title: "Courgette")])
+    
+//    @ObservedObject var mealFilters = Filter(filters: [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")])
+//    @ObservedObject var ingredientFilters = Filter(filters: listVm.ingredientFilter)
     
     var body: some View {
         NavigationView{
@@ -41,7 +42,7 @@ struct RecipeListView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         
                         Section {
-                            if searchResults.isEmpty {
+                            if listVm.filterResults.isEmpty {
                                 Text("Aucune recette")
                                     .font(.system(size: 21))
                                     .bold()
@@ -51,7 +52,7 @@ struct RecipeListView: View {
                                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }
                             else {
-                                ForEach(searchResults, id: \.id) {recette in
+                                ForEach(listVm.filterResults, id: \.id) {recette in
                                     ZStack {
                                         NavigationLink(destination: RecipeView(recette: recette, isSheet: false)) {
                                             EmptyView()
@@ -100,54 +101,11 @@ struct RecipeListView: View {
                         }
                     }
                 }
-                FilterMenu(title: "Type Repas", height: 125, isOn: $listVm.showMealFilter, filter: mealFilters)
-                FilterMenu(title: "Ingrédients", height: 250, isOn: $listVm.showIngredientFilter, filter: ingredientFilters)
+                FilterMenu(title: "Type Repas", height: 125, isOn: $listVm.showMealFilter, filter: listVm.mealFilters)
+                FilterMenu(title: "Ingrédients", height: 250, isOn: $listVm.showIngredientFilter, filter: listVm.ingredientFilters)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle()) //to fix constraints error that appear in the console due to navigationTitle
-    }
-    
-    var searchResults: [Recette] {
-        var checkedMealTypes : [String] = []
-        for filter in mealFilters.filters {
-            if filter.checked {
-                checkedMealTypes.append(filter.title)
-            }
-        }
-        
-        if listVm.enteredText.isEmpty {
-            var finalResult : [Recette] = []
-            for recipe in listVm.recipes {
-                if checkedMealTypes.isEmpty {
-                    return listVm.recipes
-                }
-                else {
-                    if checkedMealTypes.contains(recipe.nomCatRecette) {
-                        finalResult.append(recipe)
-                    }
-                }
-            }
-            return finalResult
-        }
-        else {
-            //we need to filter using lowercased names
-            let filteredBySearchBar = listVm.recipes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
-            
-            var finalResult : [Recette] = []
-            for recipe in filteredBySearchBar {
-                if checkedMealTypes.isEmpty {
-                    return filteredBySearchBar
-                }
-                else {
-                    if checkedMealTypes.contains(recipe.nomCatRecette) {
-                        finalResult.append(recipe)
-                    }
-                }
-            }
-            return finalResult
-            
-//            return listVm.recipes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
-        }
     }
 }
 

@@ -40,36 +40,25 @@ class CostsViewModel : ObservableObject {
 //        self.totalIngredientsValue = totalValue
 //    }
     
-    func fetchTotalIngredientsValue() async {
-        let ingredients = RecipeManipulator.extractIngredients(steps: self.steps)
-        var totalValue : Double = 0
-        
-        await fetchPrixUnitaire(ingredients : ingredients)
-        
-        for ingredient in ingredients {
-            print("apres fonction \(ingredient.ingredient.prixUnitaire)")
-            totalValue += ingredient.quantity * Double(ingredient.ingredient.prixUnitaire)
-        }
-        
-        self.totalIngredientsValue = totalValue
-    }
-    
-    func fetchPrixUnitaire(ingredients: [RecipeIngredient]) async {
-        for ingredient in ingredients {
-            firestore.collection("ingredients").document(ingredient.ingredient.id).getDocument { (document, error) in
-                if let document = document, document.exists {
-                    let docData = document.data()
-                    ingredient.ingredient.prixUnitaire = Float(docData!["prixUnitaire"] as? Double ?? 0)
-                    print("\(ingredient.ingredient.prixUnitaire)")
-                }
-            }
-        }
-    }
-    
-//    func fetchPrixUnitaire(id: String) async -> Double {
+//    func fetchTotalIngredientsValue() async {
+//        let ingredients = RecipeManipulator.extractIngredients(steps: self.steps)
+//        var totalValue : Double = 0
+//
+//        for ingredient in ingredients {
+//            ingredient.ingredient.prixUnitaire = Float(fetchPrixUnitaire(ingredient: ingredient))
+//        }
+//
+//        for ingredient in ingredients {
+//            totalValue += ingredient.quantity * Double(ingredient.ingredient.prixUnitaire)
+//        }
+//
+//        self.totalIngredientsValue = totalValue
+//    }
+//
+//    func fetchPrixUnitaire(ingredient: RecipeIngredient) async -> Double {
 //        var result : Double = 2
 //        //il faut attendre que cette requete soit finie
-//        firestore.collection("ingredients").document(id).getDocument { (document, error) in
+//        firestore.collection("ingredients").document(ingredient.ingredient.id).getDocument { (document, error) in
 //            if let document = document, document.exists {
 //                let docData = document.data()
 //                result = docData!["prixUnitaire"] as? Double ?? 0
@@ -87,8 +76,8 @@ class CostsViewModel : ObservableObject {
         //to format into decimal numbers
         numberFormatter.numberStyle = .decimal
         
-        Task {
-            await fetchTotalIngredientsValue()
-        }
+//        Task {
+//            await fetchTotalIngredientsValue()
+//        }
     }
 }
