@@ -73,10 +73,10 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                 for ingredientRecette in inExtenso.ingredients {
                     let ingredient = ingredientRecette.ingredient
                     if ingredient.nomCatAllerg != nil{
-                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"nomCatAllerg": ingredient.nomCatAllerg ?? "","unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                        ingredients.append(["id": ingredient.id,"nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"nomCatAllerg": ingredient.nomCatAllerg ?? "","unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
                     }
                     else{
-                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                        ingredients.append(["id": ingredient.id,"nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
                         
                     }
                 }
@@ -102,10 +102,10 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                 for ingredientRecette in inExtenso.ingredients {
                     let ingredient = ingredientRecette.ingredient
                     if ingredient.nomCatAllerg != nil{
-                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"nomCatAllerg": ingredient.nomCatAllerg ?? "","unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                        ingredients.append(["id": ingredient.id,"nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"nomCatAllerg": ingredient.nomCatAllerg ?? "","unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
                     }
                     else{
-                        ingredients.append(["nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
+                        ingredients.append(["id": ingredient.id, "nomIng": ingredient.nomIng,"nomCat": ingredient.nomCat,"unite":ingredient.unite,"prixUnitaire":ingredient.prixUnitaire,"quantite": ingredientRecette.quantity])
                         
                     }
                 }
@@ -154,11 +154,11 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                 let ingredients = ingredientsDocument.map{
                     (ingredient) -> RecipeIngredient in
                     if ingredient["nomCatAllerg"] != nil{
-                        let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "", nomCatAllerg: ingredient["nomCatAllerg"] as? String ?? nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                        let ingredientModel = Ingredient(id: ingredient["id"] as? String ?? UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "", nomCatAllerg: ingredient["nomCatAllerg"] as? String ?? nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
                         return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
                     }
                     else{
-                        let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "",nomCatAllerg: nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                        let ingredientModel = Ingredient(id: ingredient["id"] as? String ?? UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "",nomCatAllerg: nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
                         return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
                     }
                     
@@ -194,11 +194,11 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                             let ingredients = ingredientsDocument.map{
                                 (ingredient) -> RecipeIngredient in
                                 if ingredient["nomCatAllerg"] != nil{
-                                    let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "", nomCatAllerg: ingredient["nomCatAllerg"] as? String ?? "", unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                                    let ingredientModel = Ingredient(id: ingredient["id"] as? String ?? UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "", nomCatAllerg: ingredient["nomCatAllerg"] as? String ?? "", unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
                                     return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
                                 }
                                 else{
-                                    let ingredientModel = Ingredient(id: UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "",nomCatAllerg: nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
+                                    let ingredientModel = Ingredient(id: ingredient["id"] as? String ?? UUID().uuidString, nomIng: ingredient["nomIng"] as? String ?? "", nomCat: ingredient["nomCat"] as? String ?? "",nomCatAllerg: nil, unite: ingredient["unite"] as? String ?? "", prixUnitaire: ingredient["prixUnitaire"] as? Float ?? 0.0, quantite: ingredient["quantite"] as? Double ?? 0.0)
                                     return RecipeIngredient(ingredient: ingredientModel, quantity: ingredient["quantite"] as? Double ?? 0.0, id: UUID().uuidString)
                                 }
                                 
