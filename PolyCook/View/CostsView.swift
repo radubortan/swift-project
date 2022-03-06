@@ -1,17 +1,10 @@
 import SwiftUI
 
 struct CostsView: View {
+    @ObservedObject var vm : CostsViewModel
     
-    let numberFormatter : NumberFormatter
-    
-    @ObservedObject var costsInfo : CostsInfo
-    
-    init(costsInfo: CostsInfo){
-        self.costsInfo = costsInfo
-        
-        numberFormatter = NumberFormatter()
-        //to format into decimal numbers
-        numberFormatter.numberStyle = .decimal
+    init(costsInfo: CostsInfo, steps: [Step]){
+        self.vm = CostsViewModel(costsInfo: costsInfo, steps: steps)
     }
     
     //used for dismissing the keyboard
@@ -34,13 +27,13 @@ struct CostsView: View {
                 .listRowBackground(Color.white.opacity(0))
                 
                 Section {
-                    Toggle("Paramètres particuliers", isOn: $costsInfo.customParams.animation(.linear(duration: 0.3))).font(.title2).padding(.bottom, costsInfo.customParams ? 10 : 0)
-                    if costsInfo.customParams{
+                    Toggle("Paramètres particuliers", isOn: $vm.costsInfo.customParams.animation(.linear(duration: 0.3))).font(.title2).padding(.bottom, vm.costsInfo.customParams ? 10 : 0)
+                    if vm.costsInfo.customParams{
                         VStack (spacing: 20)  {
                             HStack (spacing: 20){
                                 VStack (spacing: 5) {
                                     Text("Coût horaire moyen (€)").frame(maxWidth: .infinity, alignment: .leading).font(.title2)
-                                    TextField("Coût horaire moyen (€)", value: $costsInfo.customCoutHoraireMoyen, formatter: numberFormatter)
+                                    TextField("Coût horaire moyen (€)", value: $vm.costsInfo.customCoutHoraireMoyen, formatter: vm.numberFormatter)
                                         .padding(10)
                                         .background(RoundedRectangle(cornerRadius: 10)
                                                         .fill(Color.innerTextFieldBackground))
@@ -57,7 +50,7 @@ struct CostsView: View {
                                 
                                 VStack (spacing: 5) {
                                     Text("Coût horaire forfaitaire (€)").frame(maxWidth: .infinity, alignment: .leading).font(.title2)
-                                    TextField("Coût horaire forfaitaire (€)", value: $costsInfo.customCoutHoraireForfaitaire, formatter: numberFormatter)
+                                    TextField("Coût horaire forfaitaire (€)", value: $vm.costsInfo.customCoutHoraireForfaitaire, formatter: vm.numberFormatter)
                                         .padding(10)
                                         .background(RoundedRectangle(cornerRadius: 10)
                                                         .fill(Color.innerTextFieldBackground))
@@ -76,7 +69,7 @@ struct CostsView: View {
                             HStack (spacing: 20){
                                 VStack (spacing: 5) {
                                     Text("Coeff. sans évaluation").frame(maxWidth: .infinity, alignment: .leading).font(.title2)
-                                    TextField("Coeff. sans évaluation", value: $costsInfo.customCoeffMultiSans, formatter: numberFormatter)
+                                    TextField("Coeff. sans évaluation", value: $vm.costsInfo.customCoeffMultiSans, formatter: vm.numberFormatter)
                                         .padding(10)
                                         .background(RoundedRectangle(cornerRadius: 10)
                                                         .fill(Color.innerTextFieldBackground))
@@ -93,7 +86,7 @@ struct CostsView: View {
                                 
                                 VStack (spacing: 5) {
                                     Text("Coeff. avec évaluation").frame(maxWidth: .infinity, alignment: .leading).font(.title2)
-                                    TextField("Coeff. avec évaluation", value: $costsInfo.customCoeffMultiAvec, formatter: numberFormatter)
+                                    TextField("Coeff. avec évaluation", value: $vm.costsInfo.customCoeffMultiAvec, formatter: vm.numberFormatter)
                                         .padding(10)
                                         .background(RoundedRectangle(cornerRadius: 10)
                                                         .fill(Color.innerTextFieldBackground))
@@ -121,13 +114,13 @@ struct CostsView: View {
                         HStack {
                             Spacer()
                             Text("Défaut (5%)")
-                            Toggle("", isOn: $costsInfo.customAssaisonnement.animation(.linear(duration: 0.3))).labelsHidden()
+                            Toggle("", isOn: $vm.costsInfo.customAssaisonnement.animation(.linear(duration: 0.3))).labelsHidden()
                             Text("Particulier")
                             Spacer()
                         }
-                        if costsInfo.customAssaisonnement {
+                        if vm.costsInfo.customAssaisonnement {
                             HStack {
-                                TextField("Assaisonnement (€)", value: $costsInfo.customAssaissonnementValue, formatter: numberFormatter)
+                                TextField("Assaisonnement (€)", value: $vm.costsInfo.customAssaissonnementValue, formatter: vm.numberFormatter)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.innerTextFieldBackground))
@@ -140,18 +133,18 @@ struct CostsView: View {
                         }
                     }
                     .padding(15)
-                    .frame(height: costsInfo.customAssaisonnement ? 140 : 100, alignment: .center)
+                    .frame(height: vm.costsInfo.customAssaisonnement ? 140 : 100, alignment: .center)
                     .frame(maxWidth: .infinity)
                     .background(Color.sheetElementBackground)
                     .cornerRadius(10)
                 }
                 .listRowBackground(Color.white.opacity(0))
-                .padding(.top, costsInfo.customParams ? 30 : 0)
+                .padding(.top, vm.costsInfo.customParams ? 30 : 0)
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 2))
                 
                 Section {
-                    Toggle("Charges", isOn: $costsInfo.withCharges.animation(.linear(duration: 0.3))).font(.title2).padding(.top, costsInfo.withCharges ? 10 : 0)
-                    if costsInfo.withCharges {
+                    Toggle("Charges", isOn: $vm.costsInfo.withCharges.animation(.linear(duration: 0.3))).font(.title2).padding(.top, vm.costsInfo.withCharges ? 10 : 0)
+                    if vm.costsInfo.withCharges {
                         HStack (spacing: 20) {
                             VStack (spacing: 10) {
                                 Text("Coût horaire moyen")
@@ -194,7 +187,7 @@ struct CostsView: View {
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
                     VStack (spacing: 20) {
-                        if costsInfo.withCharges {
+                        if vm.costsInfo.withCharges {
                             HStack (spacing: 20) {
                                 VStack (spacing: 10) {
                                     Text("Coût       matière")

@@ -28,7 +28,6 @@ class RecipeManipulator {
     
     //extracts the ingredients of a recipe
     static func extractIngredients(steps : [Step]) -> [RecipeIngredient] {
-        //
         let extractedSteps = extractSteps(steps: steps)
         
         //making a deep copy of the steps because quantity will be modified but we don't want to modify the quantities in the original recipe

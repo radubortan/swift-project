@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		660CB4E527D4DB50001F0B7C /* CostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660CB4E427D4DB50001F0B7C /* CostsViewModel.swift */; };
 		661CBC9727C81D17001DDE25 /* CoefficientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CBC9627C81D17001DDE25 /* CoefficientsViewModel.swift */; };
 		661CBC9A27C81E5C001DDE25 /* Coefficients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661CBC9927C81E5C001DDE25 /* Coefficients.swift */; };
 		663E9F7227C119090030EEFF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 663E9F7127C119090030EEFF /* FirebaseAuth */; };
@@ -72,6 +73,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		660CB4E427D4DB50001F0B7C /* CostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostsViewModel.swift; sourceTree = "<group>"; };
 		661CBC9627C81D17001DDE25 /* CoefficientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoefficientsViewModel.swift; sourceTree = "<group>"; };
 		661CBC9927C81E5C001DDE25 /* Coefficients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coefficients.swift; sourceTree = "<group>"; };
 		663E9F7727C11FF90030EEFF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = ../LoginViewModel.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				FF9CA05F27CBB4FB0035C0C4 /* AddIngredientViewModel.swift */,
 				664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */,
 				664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */,
+				660CB4E427D4DB50001F0B7C /* CostsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				FF816CCC27D0F5EF0044F493 /* ModifyStockViewModel.swift in Sources */,
 				FFA4F42C27C787E10004AACB /* EditIngredientViewModel.swift in Sources */,
 				FFC6EBB727C5388600346CF5 /* IngredientViewModel.swift in Sources */,
+				660CB4E527D4DB50001F0B7C /* CostsViewModel.swift in Sources */,
 				667D283F27C422FD001BEE8C /* FilterMenu.swift in Sources */,
 				66B3448D27BEE8E8005821F9 /* SettingsView.swift in Sources */,
 				66AE7A7027C97790002CEF4C /* PdfGenerator.swift in Sources */,
