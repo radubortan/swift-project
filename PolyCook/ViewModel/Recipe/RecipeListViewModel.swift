@@ -11,16 +11,16 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class RecipeListViewModel : ObservableObject, Subscriber {
+    private let firestore  = Firestore.firestore()
     
     init(){
         Task{
             loadRecipes()
+            loadIngredients()
         }
     }
     
-    private let firestore  = Firestore.firestore()
-
-    
+    //MARK: - Intent
     typealias Input = RecipeListIntentState
     
     typealias Failure = Never
@@ -45,6 +45,8 @@ class RecipeListViewModel : ObservableObject, Subscriber {
         return
     }
     
+    
+    //MARK: - Published
     @Published var recipes : [Recette] = []
     @Published var enteredText : String = ""
     
@@ -55,6 +57,68 @@ class RecipeListViewModel : ObservableObject, Subscriber {
     @Published var showMealFilter = false
     @Published var showIngredientFilter = false
     
+    
+    @Published var mealFilters = Filter(filters: [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")])
+    @Published var ingredientFilters : Filter = Filter(filters: [])
+
+    
+    var filters: [FilterItem] = []
+    
+    //recipes being shown in the list
+    var filterResults: [Recette] {
+        //extracting the selected meal types
+        var checkedMealTypes : [String] = []
+        for filter in mealFilters.filters {
+            if filter.checked {
+                checkedMealTypes.append(filter.title)
+            }
+        }
+        
+        //extracting the selected ingredients
+        var checkedIngredients : [String] = []
+        for filter in ingredientFilters.filters {
+            if filter.checked {
+                checkedIngredients.append(filter.title)
+            }
+        }
+        
+        var filteredByMealType : [Recette]
+        
+        //checking if text has been entered in the search bar
+        if enteredText.isEmpty {
+            //filter by meal type
+            filteredByMealType = recipes.filter { recipe in
+                return checkedMealTypes.contains(recipe.nomCatRecette) || checkedMealTypes.isEmpty
+            }
+        }
+        else {
+            //filter by search bar
+            let filteredBySearchBar = recipes.filter { $0.nomRecette.lowercased().contains(enteredText.lowercased())}
+            
+            //then filter by meal type
+            filteredByMealType = filteredBySearchBar.filter { recipe in
+                return checkedMealTypes.contains(recipe.nomCatRecette) || checkedMealTypes.isEmpty
+            }
+        }
+        var finalResult : [Recette] = []
+        
+        //then filter by ingredient
+        for recipe in filteredByMealType {
+            var contained = true
+            let extractedIngredients = RecipeManipulator.extractIngredients(steps: recipe.etapes)
+            let ingredientStrings = RecipeManipulator.getIngredientsString(ingredients: extractedIngredients)
+            for checkedIngredient in checkedIngredients {
+                if !ingredientStrings.contains(checkedIngredient) {
+                    contained = false
+                }
+            }
+            if contained {
+                finalResult.append(recipe)
+            }
+        }
+        
+        return finalResult
+    }
     
     func showConfirmation(at indexSet : IndexSet) {
         self.toBeDeleted = indexSet
@@ -128,6 +192,8 @@ class RecipeListViewModel : ObservableObject, Subscriber {
 
     }
     
+    
+    //removes recipe
     func remove(atOffsets : IndexSet){
         atOffsets.forEach{
             index in
@@ -170,6 +236,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
             nbCouverts: recipe["nbCouverts"] as? Int ?? 0, nomAuteur: recipe["nomAuteur"] as? String ?? "", nomCatRecette: recipe["nomCatRecette"] as? String ?? "", nomRecette: recipe["nomRecette"] as? String ?? "", etapes: steps, nomEtape: recipe["nomEtape"] as? String ?? "")
     }
     
+    //loads recipes
     func loadRecipes() {
         firestore.collection("recipes")
             .addSnapshotListener{
@@ -211,4 +278,25 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                 }
             }
     }
+    
+    //load ingredients for the filter by ingredients
+    func loadIngredients() {
+        firestore.collection("ingredients")
+            .addSnapshotListener{
+                 (data, error) in
+                guard let documents = data?.documents else {
+                   return
+                }
+                self.filters = []
+                for document in documents {
+                    let title = document["nomIng"] as? String ?? ""
+                    if !self.filters.contains(where: {$0.title == title}) {
+                        self.filters.append(FilterItem(title: title))
+                    }
+                }
+                self.ingredientFilters = Filter(filters: self.filters)
+            }
+    }
 }
+
+
