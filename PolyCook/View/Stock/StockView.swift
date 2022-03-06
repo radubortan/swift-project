@@ -64,7 +64,7 @@ struct StockView: View {
                     Text("Quantité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("\(stockViewModel.quantite)")
+                    Text("\(String(format: "%.1f", stockViewModel.quantite))")
                         .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
