@@ -47,7 +47,7 @@ struct ModifyStockView: View {
                     Text("Quantité actuelle")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("\(modifyStockViewModel.quantite) \(modifyStockViewModel.unite)")
+                    Text("\(String(format: "%.1f", modifyStockViewModel.quantite)) \(modifyStockViewModel.unite)")
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -60,7 +60,7 @@ struct ModifyStockView: View {
                     Text("Nouvelle quantité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("\(modifyStockViewModel.quantite + (isAdding ? modifyStockViewModel.quantityToAdd :  -modifyStockViewModel.quantityToRemove)) \(modifyStockViewModel.unite)")
+                    Text("\(String(format: "%.1f", modifyStockViewModel.quantite + (isAdding ? modifyStockViewModel.quantityToAdd :  -modifyStockViewModel.quantityToRemove))) \(modifyStockViewModel.unite)")
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
