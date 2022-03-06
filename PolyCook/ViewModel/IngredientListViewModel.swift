@@ -161,7 +161,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
                                       nomIng: doc["nomIng"] as? String ?? "",
                                       nomCat: doc["nomCat"] as? String ?? "",
                                       nomCatAllerg: doc["nomCatAllerg"] as? String ?? nil,
-                                      unite: doc["unite"] as? String ?? "" )
+                                      unite: doc["unite"] as? String ?? "",prixUnitaire: doc["prixUnitaire"] as? Float ?? 0)
                 }
                 self.ingredientsFiltered = documents.map{
                     (doc) -> Ingredient in
@@ -169,7 +169,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
                                       nomIng: doc["nomIng"] as? String ?? "",
                                       nomCat: doc["nomCat"] as? String ?? "",
                                       nomCatAllerg: doc["nomCatAllerg"] as? String ?? nil,
-                                      unite: doc["unite"] as? String ?? "" )
+                                      unite: doc["unite"] as? String ?? "",prixUnitaire: doc["prixUnitaire"] as? Float ?? 0 )
                 }
             }
     }

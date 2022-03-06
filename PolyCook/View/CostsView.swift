@@ -3,8 +3,8 @@ import SwiftUI
 struct CostsView: View {
     @ObservedObject var vm : CostsViewModel
     
-    init(costsInfo: CostsInfo, steps: [Step]){
-        self.vm = CostsViewModel(costsInfo: costsInfo, steps: steps)
+    init(costsInfo: CostsInfo, steps: [Step], nbCouverts: Int){
+        self.vm = CostsViewModel(costsInfo: costsInfo, steps: steps, nbCouverts: nbCouverts)
     }
     
     //used for dismissing the keyboard
@@ -150,8 +150,8 @@ struct CostsView: View {
                                 Text("Coût horaire moyen")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
-                                Text("2.00€")
-                                    .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
+                                Text(String(format: "%.2f€", self.vm.coutHoraireMoyen))
+                                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(15)
                             .frame(height: 130, alignment: .center)
@@ -163,8 +163,8 @@ struct CostsView: View {
                                 Text("Coût horaire forfaitaire")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
-                                Text("2.00€")
-                                    .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
+                                Text(String(format: "%.2f€", self.vm.coutHoraireForfaitaire))
+                                        .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(15)
                             .frame(height: 130, alignment: .center)
@@ -190,10 +190,10 @@ struct CostsView: View {
                         if vm.costsInfo.withCharges {
                             HStack (spacing: 20) {
                                 VStack (spacing: 10) {
-                                    Text("Coût       matière")
+                                    Text("Coût matière")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("\(vm.totalIngredientsValue)")
+                                    Text(String(format: "%.2f€", vm.coutMatiere))
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -206,7 +206,7 @@ struct CostsView: View {
                                     Text("Coût des charges")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("2.00€")
+                                    Text(String(format: "%.2f€", self.vm.coutCharges))
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -221,7 +221,7 @@ struct CostsView: View {
                                     Text("Coût du personnel")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("2.00€")
+                                    Text(String(format: "%.2f€", self.vm.coutPersonnel))
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -234,7 +234,7 @@ struct CostsView: View {
                                     Text("Coût des fluides")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("2.00€")
+                                    Text(String(format: "%.2f€", self.vm.coutFluide))
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -248,7 +248,7 @@ struct CostsView: View {
                                 Text("Coût de production")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                                 Divider()
-                                Text("2.00€")
+                                Text(String(format: "%.2f€", vm.coutProduction))
                                     .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
                             }
                             .padding(15)
@@ -260,10 +260,10 @@ struct CostsView: View {
                         else {
                             HStack (spacing: 20) {
                                 VStack (spacing: 10) {
-                                    Text("Coût    matière")
+                                    Text("Coût matière")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("\(vm.totalIngredientsValue)")
+                                    Text(String(format: "%.2f€", vm.coutMatiere))
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -276,7 +276,7 @@ struct CostsView: View {
                                     Text("Coût de production")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("2.00€")
+                                    Text(String(format: "%.2f€", vm.coutProduction))
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -293,7 +293,7 @@ struct CostsView: View {
                             Text("Prix de vente total")
                                 .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                             Divider()
-                            Text("2.00€")
+                            Text(String(format: "%.2f€", vm.coutVente))
                                 .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
                         }
                         .padding(15)
@@ -306,7 +306,7 @@ struct CostsView: View {
                             Text("Bénéfice par portion")
                                 .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                             Divider()
-                            Text("2.00€")
+                            Text(String(format: "%.2f€", vm.coutVenteParPortion))
                                 .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .center)
                         }
                         .padding(15)
