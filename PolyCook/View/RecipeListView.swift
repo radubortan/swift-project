@@ -112,12 +112,12 @@ struct RecipeListView: View {
     
     var searchResults: [Recette] {
         if listVm.enteredText.isEmpty {
-            return recettes
-//            return listVm.recipes
+//            return recettes
+            return listVm.recipes
         } else {
             //we need to filter using lowercased names
-            return recettes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
-//            return listVm.recipes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
+//            return recettes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
+            return listVm.recipes.filter { $0.nomRecette.lowercased().contains(listVm.enteredText.lowercased())}
         }
     }
 }
