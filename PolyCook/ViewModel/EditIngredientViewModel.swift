@@ -56,6 +56,7 @@ class EditIngredientViewModel: ObservableObject, IngredientObserver{
     
     func changed(nomIng: String) {
         self.nomIng = nomIng
+        print("vm observer: nomIng changed => self.nomIng = '\(nomIng)'")
         self.intentIngredientState = .nomIngChanged(nomIng)
     }
     

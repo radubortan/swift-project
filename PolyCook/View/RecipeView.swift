@@ -1,30 +1,22 @@
 import SwiftUI
 
 struct RecipeView: View {
-    let isSheet : Bool
-    let recette : Recette
-    
-    @State var costsSheetIsOn = false
-    @State var ingredientsSheetIsOn = false
-    @State var showCosts = false
-    @State var quantity = 1
-    @State var showStep = false
-    @State var showPdf = false
+    @ObservedObject var vm : RecipeViewModel
     @ObservedObject var costsInfo : CostsInfo = CostsInfo()
     
     //formats the entered values
     let numberFormatter = NumberFormatter()
     
     init(recette: Recette, isSheet: Bool) {
-        self.recette = recette
-        self.isSheet = isSheet
+        self.vm = RecipeViewModel(recipe: recette, isSheet: isSheet)
+
         //to have no spacing between sections
         UITableView.appearance().sectionFooterHeight = 0
     }
     
     var body: some View {
         VStack (spacing: 20) {
-            if isSheet {
+            if vm.isSheet {
                 Capsule()
                     .fill(Color.secondary)
                     .frame(width: 35, height: 5)
@@ -34,7 +26,7 @@ struct RecipeView: View {
             
             List {
                 Section {
-                    Text(recette.nomRecette).font(.system(size: 40)).bold().frame(maxWidth: .infinity, alignment: .center).multilineTextAlignment(.center)
+                    Text(vm.recette.nomRecette).font(.system(size: 40)).bold().frame(maxWidth: .infinity, alignment: .center).multilineTextAlignment(.center)
                 }
                 .listRowBackground(Color.white.opacity(0))
                 
@@ -43,12 +35,12 @@ struct RecipeView: View {
                         VStack {
                             Text("Auteur(e) du plat: ").font(.title2).frame(maxWidth: .infinity, alignment: .center)
                             Divider()
-                            Text(recette.nomAuteur).font(.title2).frame(maxWidth: .infinity, alignment: .center)
+                            Text(vm.recette.nomAuteur).font(.title2).frame(maxWidth: .infinity, alignment: .center)
                         }
                         .padding(15)
                         .frame(height: 110, alignment: .center)
                         .frame(maxWidth: .infinity)
-                        .background(isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
+                        .background(vm.isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
                         .cornerRadius(10)
                         
                         HStack (spacing: 20) {
@@ -56,26 +48,26 @@ struct RecipeView: View {
                                 Text("Catégorie recette")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
-                                Text(recette.nomCatRecette)
+                                Text(vm.recette.nomCatRecette)
                                     .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(15)
                             .frame(maxWidth: .infinity)
                             .frame(height: 130)
-                            .background(isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
+                            .background(vm.isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
                             .cornerRadius(10)
                             
                             VStack (spacing: 10) {
                                 Text("N°        couverts")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
-                                Text("\(recette.nbCouverts)")
+                                Text("\(vm.recette.nbCouverts)")
                                     .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .padding(15)
                             .frame(maxWidth: .infinity)
                             .frame(height: 130)
-                            .background(isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
+                            .background(vm.isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
                             .cornerRadius(10)
                         }
                         
@@ -92,19 +84,29 @@ struct RecipeView: View {
                             .padding(.bottom, 5)
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
-                    ForEach(recette.etapes, id: \.id) {etape in
-                        Button {
-                            showStep.toggle()
-                        } label : {
-                            Text(etape.nomEtape!).font(.system(size: 21))
-                                .frame(height: 50).foregroundColor(.primary)
-                        }
-                        .sheet(isPresented: $showStep) {
-                            if etape is Recette {
-                                RecipeView(recette: etape as! Recette, isSheet : true)
+                    if vm.recette.etapes.isEmpty {
+                        Text("Aucune étape")
+                            .font(.system(size: 21))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .listRowBackground(Color.white.opacity(0))
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    }
+                    else {
+                        ForEach(vm.recette.etapes, id: \.id) {etape in
+                            Button {
+                                vm.showStep.toggle()
+                            } label : {
+                                Text(etape.nomEtape!).font(.system(size: 21))
+                                    .frame(height: 50).foregroundColor(.primary)
                             }
-                            else {
-                                InExtensoStepView(step: etape as! InExtensoStep)
+                            .sheet(isPresented: $vm.showStep) {
+                                if etape is Recette {
+                                    RecipeView(recette: etape as! Recette, isSheet : true)
+                                }
+                                else {
+                                    InExtensoStepView(step: etape as! InExtensoStep)
+                                }
                             }
                         }
                     }
@@ -112,7 +114,7 @@ struct RecipeView: View {
                 
                 VStack (spacing: 20) {
                     Button(action: {
-                        costsSheetIsOn.toggle()
+                        vm.costsSheetIsOn.toggle()
                     }, label: {
                         HStack {
                             Text("Coûts")
@@ -125,12 +127,12 @@ struct RecipeView: View {
                         .cornerRadius(10)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
-                        .sheet(isPresented: $costsSheetIsOn) {
-                            CostsView(costsInfo: costsInfo, steps : recette.etapes, nbCouverts : recette.nbCouverts)
+                        .sheet(isPresented: $vm.costsSheetIsOn) {
+                            CostsView(costsInfo: costsInfo, steps : vm.recette.etapes, nbCouverts : vm.recette.nbCouverts)
                         }
                     
                     Button(action: {
-                        ingredientsSheetIsOn.toggle()
+                        vm.ingredientsSheetIsOn.toggle()
                     }, label: {
                         HStack {
                             Image(systemName: "cart")
@@ -145,8 +147,8 @@ struct RecipeView: View {
                         .cornerRadius(10)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
-                        .sheet(isPresented: $ingredientsSheetIsOn) {
-                            RecipeIngredientListView(steps: recette.etapes)
+                        .sheet(isPresented: $vm.ingredientsSheetIsOn) {
+                            RecipeIngredientListView(steps: vm.recette.etapes)
                         }
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -165,10 +167,10 @@ struct RecipeView: View {
                         HStack (spacing: 20) {
                             VStack (spacing: 5) {
                                 Text("N° Couverts").font(.title2)
-                                TextField("N° Couverts", value: $quantity, formatter: numberFormatter)
+                                TextField("N° Couverts", value: $vm.quantity, formatter: numberFormatter)
                                     .padding(10)
                                     .background(RoundedRectangle(cornerRadius: 10)
-                                                    .fill(isSheet ? Color.innerTextFieldBackground : Color.pageInnerTextFieldBackground))
+                                                    .fill(vm.isSheet ? Color.innerTextFieldBackground : Color.pageInnerTextFieldBackground))
                                     .foregroundColor(Color.textFieldForeground)
                                     .disableAutocorrection(true)
                                     .autocapitalization(.none)
@@ -177,23 +179,23 @@ struct RecipeView: View {
                             .padding(15)
                             .frame(height: 100, alignment: .center)
                             .frame(maxWidth: .infinity)
-                            .background(isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
+                            .background(vm.isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
                             .cornerRadius(10)
                             
                             VStack (spacing: 10) {
                                 Text("Avec côuts")
                                     .font(.title2)
                                     .multilineTextAlignment(.center)
-                                Toggle("", isOn: $showCosts).labelsHidden()
+                                Toggle("", isOn: $vm.showCosts).labelsHidden()
                             }
                             .frame(height: 100, alignment: .center)
                             .frame(maxWidth: .infinity)
-                            .background(isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
+                            .background(vm.isSheet ? Color.sheetElementBackground : Color.pageElementBackground)
                             .cornerRadius(10)
                         }
                         
                         Button(action: {
-                            showPdf.toggle()
+                            vm.showPdf.toggle()
                         }, label: {
                             HStack {
                                 Image(systemName: "printer")
@@ -215,8 +217,8 @@ struct RecipeView: View {
             }
         }
         .background(Color.sheetBackground)
-        .sheet(isPresented: $showPdf) {
-            PdfView(costsInfo: costsInfo, showCosts: $showCosts, quantity: $quantity, recipe: recette)
+        .sheet(isPresented: $vm.showPdf) {
+            PdfView(costsInfo: costsInfo, showCosts: $vm.showCosts, quantity: $vm.quantity, recipe: vm.recette)
         }
     }
 }

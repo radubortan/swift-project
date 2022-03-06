@@ -8,8 +8,6 @@ struct EditIngredientView: View {
     @ObservedObject var editIngredientViewModel: EditIngredientViewModel
     var intentIngredient: IntentIngredient
     
-    @State var selected : String = ""
-    @State var selectedModel : String = "Kg"
     @State private var isAllergene : Bool = false
     
     @State var selectedAllergenCategory : String = "Crustacés"

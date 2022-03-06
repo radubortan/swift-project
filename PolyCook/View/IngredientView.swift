@@ -1,15 +1,9 @@
 import SwiftUI
 
 struct IngredientView: View {
-    let bigText = CGFloat(25)
-    let smallText = CGFloat(20)
-    
-    @State private var showingSheet = false
-    
     @ObservedObject var ingredientViewModel : IngredientViewModel
     @ObservedObject var ingredientListViewModel : IngredientListViewModel
     var intentIngredient: IntentIngredient
-    
     
     init(ingredientViewModel: IngredientViewModel, ingredientListViewModel: IngredientListViewModel){
         self.ingredientViewModel = ingredientViewModel
@@ -61,7 +55,7 @@ struct IngredientView: View {
                     .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                 Divider()
                 Text(ingredientViewModel.nomCat)
-                    .font(.system(size: smallText))
+                    .font(.system(size: ingredientViewModel.smallText))
             }
             .frame(maxWidth: .infinity)
             .frame(height: 100)
@@ -72,10 +66,10 @@ struct IngredientView: View {
             if let currentAllergCategory = ingredientViewModel.nomCatAllerg {
                 VStack (spacing: 10) {
                     Text("Catégorie d'allergène")
-                        .font(.system(size: bigText))
+                        .font(.system(size: ingredientViewModel.bigText))
                     Divider()
                     Text(currentAllergCategory)
-                        .font(.system(size: smallText))
+                        .font(.system(size: ingredientViewModel.smallText))
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 100)
@@ -83,14 +77,14 @@ struct IngredientView: View {
                 .cornerRadius(10)
             }
             Button(action: {
-                showingSheet.toggle()
+                ingredientViewModel.showingSheet.toggle()
             }, label: {
                 Text("Modifier ingrédient")
                     .font(.title2)
                     .foregroundColor(.white)
                     .padding(12)
             }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
-                .sheet(isPresented : $showingSheet) {
+                .sheet(isPresented : $ingredientViewModel.showingSheet) {
                     EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)                            }
             
             Spacer()

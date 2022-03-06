@@ -6,13 +6,11 @@ struct CreateRecipeView: View {
     
     @ObservedObject var listVm : RecipeListViewModel
     @ObservedObject var createVm : CreateRecipeViewModel
-    var recipes : [Recette]
     @ObservedObject var costsInfo : CostsInfo = CostsInfo()
     
     init(listVm : RecipeListViewModel, recipes: [Recette]) {
         self.listVm = listVm
-        self.createVm = CreateRecipeViewModel(listVm: listVm)
-        self.recipes = recipes
+        self.createVm = CreateRecipeViewModel(listVm: listVm, recipes: recipes)
         //to have no spacing between sections
         UITableView.appearance().sectionFooterHeight = 0
     }
@@ -110,7 +108,7 @@ struct CreateRecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $createVm.newStepSheetIsOn) {
-                            NewStepView(listVm : createVm, recipes : recipes)
+                            NewStepView(listVm : createVm, recipes : createVm.recipes)
                         }
                 }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))

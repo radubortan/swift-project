@@ -6,15 +6,6 @@ struct CoefficientsView: View {
     
     @ObservedObject var viewM = CoefficientsViewModel()
     
-    //formats the entered values
-    let numberFormatter : NumberFormatter
-    
-    init(){
-        numberFormatter = NumberFormatter()
-        //to format into decimal numbers
-        numberFormatter.numberStyle = .decimal
-    }
-    
     var body: some View {
         ScrollView {
             VStack{
@@ -27,7 +18,7 @@ struct CoefficientsView: View {
                         Text("Coûts horaires").font(.system(size: 25)).bold()
                         VStack (spacing: 5) {
                             Text("Coût horaire moyen (€)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Coût horaire moyen", value: $viewM.coutHoraireMoyen, formatter: numberFormatter)
+                            TextField("Coût horaire moyen", value: $viewM.coutHoraireMoyen, formatter: viewM.numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -39,7 +30,7 @@ struct CoefficientsView: View {
                         
                         VStack (spacing: 5) {
                             Text("Coût horaire forfaitaire (€)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Coût horaire forfaitaire", value: $viewM.coutHoraireForfaitaire, formatter: numberFormatter)
+                            TextField("Coût horaire forfaitaire", value: $viewM.coutHoraireForfaitaire, formatter: viewM.numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -56,7 +47,7 @@ struct CoefficientsView: View {
                         Text("Coefficients multiplicateurs").font(.system(size: 25)).bold()
                         VStack (spacing: 5) {
                             Text("Sans évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Sans évalution", value: $viewM.coeffMultiSans, formatter: numberFormatter)
+                            TextField("Sans évalution", value: $viewM.coeffMultiSans, formatter: viewM.numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))
@@ -68,7 +59,7 @@ struct CoefficientsView: View {
                         
                         VStack (spacing: 5) {
                             Text("Avec évalution").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                            TextField("Avec évalution", value: $viewM.coeffMultiAvec, formatter: numberFormatter)
+                            TextField("Avec évalution", value: $viewM.coeffMultiAvec, formatter: viewM.numberFormatter)
                                 .padding(10)
                                 .background(RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.pageElementBackground))

@@ -5,9 +5,6 @@ struct RecipeListView: View {
     
     @ObservedObject var listVm = RecipeListViewModel()
     
-//    @ObservedObject var mealFilters = Filter(filters: [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")])
-//    @ObservedObject var ingredientFilters = Filter(filters: listVm.ingredientFilter)
-    
     var body: some View {
         NavigationView{
             ZStack {

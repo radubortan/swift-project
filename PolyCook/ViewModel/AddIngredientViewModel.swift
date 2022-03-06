@@ -7,9 +7,9 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class AddIngredientViewModel: ObservableObject,IngredientObserver {
-    
     @Published var nomIngIsTooShort : Bool
     
     @Published var intentIngredientState : IntentIngredientState = .ready {
@@ -59,6 +59,15 @@ class AddIngredientViewModel: ObservableObject,IngredientObserver {
             self.ingredient.unite = self.unite
         }
     }
+    
+    @Published var nom : String = ""
+    @Published var selectedUnit : String = "U"
+    @Published var selectedCategory : String = "Poisson"
+    @Published var selectedAllergen : String = "Crustacés"
+    @Published var isAllergene : Bool = false
+    @Published var selectedIngredientCategory : String = "Crustacés"
+    @Published var selectedAllergenCategory : String = "Crustacés"
+    @Published var selectedUnite : String = "Kg"
     
     init(ingredient: Ingredient){
         self.nomIngIsTooShort = false

@@ -7,10 +7,14 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class StockViewModel: ObservableObject, IngredientObserver, Subscriber{
 
     private(set) var ingredient : Ingredient
+    
+    let bigText = CGFloat(25)
+    let smallText = CGFloat(20)
     
     @Published var nomIng: String
     @Published var nomCat: String
@@ -18,6 +22,7 @@ class StockViewModel: ObservableObject, IngredientObserver, Subscriber{
     @Published var unite: String
     @Published var prixUnitaire: Float
     @Published var quantite: Double
+    @Published var showingSheet = false
     
     init(ingredient: Ingredient){
         self.ingredient = ingredient

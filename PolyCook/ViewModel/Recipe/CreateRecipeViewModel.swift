@@ -41,6 +41,7 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     @Published var showSubmitError = false
     
     @Published var etapes : [Step] = []
+    @Published var recipes : [Recette]
     
     func change(nbCouverts: Int) {
         self.dishes = nbCouverts
@@ -55,13 +56,15 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     //formats the entered values
     let numberFormatter = NumberFormatter()
     
-    init(listVm : RecipeListViewModel) {
+    init(listVm : RecipeListViewModel, recipes: [Recette]) {
         self.listIntent = RecipeListIntent()
         self.listIntent.addObserver(viewModel : listVm)
         self.creationIntent = CreateRecipeIntent()
         self.recipe = Recette(nbCouverts: 1, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [])
+        self.recipes = recipes
         self.creationIntent.addObserver(viewModel: self)
         self.recipe.observer = self
+        
     }
     
     func deleteStep(at indexSet: IndexSet) {

@@ -4,22 +4,10 @@ struct CreateIngredientView: View {
     //to make the back button dismiss the current view
     @Environment(\.presentationMode) var presentationMode
     
-    @State var nom : String = ""
-    @State var selectedUnit : String = "U"
-    @State var selectedCategory : String = "Poisson"
-    @State var selectedAllergen : String = "Crustacés"
-    @State var isAllergene : Bool = false
-    
-    
     @ObservedObject var addIngredientViewModel : AddIngredientViewModel
-    
     @ObservedObject var ingredientCategoryList = IngredientCategories()
     @ObservedObject var allergenCategoryList = AllergenCategories()
     @ObservedObject var uniteList = Unites()
-    
-    @State var selectedIngredientCategory : String = "Crustacés"
-    @State var selectedAllergenCategory : String = "Crustacés"
-    @State var selectedUnite : String = "Kg"
     
     var intentIngredient: IntentIngredient
     
@@ -27,7 +15,7 @@ struct CreateIngredientView: View {
         self.addIngredientViewModel = AddIngredientViewModel(ingredient: ingredient)
         self.intentIngredient = IntentIngredient()
         self.intentIngredient.addObserver(viewModel: ingredientListViewModel)
-        self.addIngredientViewModel.nomCat = selectedIngredientCategory
+        self.addIngredientViewModel.nomCat = addIngredientViewModel.selectedIngredientCategory
     }
     
     var body: some View {
@@ -58,13 +46,13 @@ struct CreateIngredientView: View {
             HStack (spacing: 20){
                 VStack (spacing: 5) {
                     Text("Unité").font(.title2)
-                    Picker("Catégorie", selection: $selectedUnite) {
+                    Picker("Catégorie", selection: $addIngredientViewModel.selectedUnite) {
                         ForEach(Array(uniteList), id: \.self.id) { unite in
                             Text(unite.nomUnite).tag(unite.nomUnite)
                         }
                     }
                     .pickerStyle(.menu)
-                    .onChange(of: selectedUnite){ selectedUnite in
+                    .onChange(of: addIngredientViewModel.selectedUnite){ selectedUnite in
                         self.addIngredientViewModel.unite = selectedUnite
                     }
                 }
@@ -75,13 +63,13 @@ struct CreateIngredientView: View {
                 
                 VStack (spacing: 5) {
                     Text("Catégorie").font(.title2)
-                    Picker("Catégorie", selection: $selectedIngredientCategory) {
+                    Picker("Catégorie", selection: $addIngredientViewModel.selectedIngredientCategory) {
                         ForEach(Array(ingredientCategoryList), id: \.self.id) { ingredientCategory in
                             Text(ingredientCategory.nomCatIng).tag(ingredientCategory.nomCatIng)
                         }
                     }
                     .pickerStyle(.menu)
-                    .onChange(of: selectedIngredientCategory){ selectedIngredientCategory in
+                    .onChange(of: addIngredientViewModel.selectedIngredientCategory){ selectedIngredientCategory in
                         self.addIngredientViewModel.nomCat = selectedIngredientCategory
                     }
                 }
@@ -92,26 +80,26 @@ struct CreateIngredientView: View {
             }
             
             VStack {
-                Toggle("Allergène", isOn: $isAllergene).font(.title2).onChange(of: isAllergene){
+                Toggle("Allergène", isOn: $addIngredientViewModel.isAllergene).font(.title2).onChange(of: addIngredientViewModel.isAllergene){
                     newValue in
                     if(newValue){
-                        self.addIngredientViewModel.nomCatAllerg = selectedAllergenCategory
+                        self.addIngredientViewModel.nomCatAllerg = addIngredientViewModel.selectedAllergenCategory
 
                     }else{
                         self.addIngredientViewModel.nomCatAllerg = nil
                     }
                 }
                 
-                if isAllergene {
+                if addIngredientViewModel.isAllergene {
                     VStack (spacing: 5) {
                         Text("Catégorie Allergène").font(.title2)
-                        Picker("Catégorie Allergène", selection: $selectedAllergenCategory) {
+                        Picker("Catégorie Allergène", selection: $addIngredientViewModel.selectedAllergenCategory) {
                             ForEach(Array(allergenCategoryList), id: \.self.id) { allergenCategory in
                                 Text(allergenCategory.nomCatAllerg)
                             }
                         }
                         .pickerStyle(.menu)
-                        .onChange(of: selectedAllergenCategory){ selectedAllergenCategory in
+                        .onChange(of: addIngredientViewModel.selectedAllergenCategory){ selectedAllergenCategory in
                             self.addIngredientViewModel.nomCatAllerg = selectedAllergenCategory
                         }
                     }

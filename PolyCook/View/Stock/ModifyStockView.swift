@@ -7,24 +7,12 @@ struct ModifyStockView: View {
     @ObservedObject var modifyStockViewModel: ModifyStockViewModel
     
     var intentStock: IntentStock
-
-    
-    @State var isAdding : Bool = false
-    @State var increase : Double = 0
-    @State var decrease : Double = 0
-    @State var price : Double = 0
-    
-    //formats the entered values
-    let numberFormatter : NumberFormatter
     
     init(modifyStockViewModel: ModifyStockViewModel,stockListViewModel: StockListViewModel,stockViewModel: StockViewModel){
         self.modifyStockViewModel = modifyStockViewModel
         self.intentStock = IntentStock()
         self.intentStock.addObserver(viewModel: stockListViewModel)
         self.intentStock.addObserver(viewModel: stockViewModel)
-        numberFormatter = NumberFormatter()
-        //to format into decimal numbers
-        numberFormatter.numberStyle = .decimal
     }
     
     var body: some View {
@@ -38,7 +26,7 @@ struct ModifyStockView: View {
             
             HStack {
                 Text("Enlever")
-                Toggle("", isOn: $isAdding.animation(.linear(duration: 0.3))).labelsHidden()
+                Toggle("", isOn: $modifyStockViewModel.isAdding.animation(.linear(duration: 0.3))).labelsHidden()
                 Text("Ajouter")
             }
             
@@ -60,7 +48,7 @@ struct ModifyStockView: View {
                     Text("Nouvelle quantité")
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                    Text("\(String(format: "%.1f", modifyStockViewModel.quantite + (isAdding ? modifyStockViewModel.quantityToAdd :  -modifyStockViewModel.quantityToRemove))) \(modifyStockViewModel.unite)")
+                    Text("\(String(format: "%.1f", modifyStockViewModel.quantite + (modifyStockViewModel.isAdding ? modifyStockViewModel.quantityToAdd :  -modifyStockViewModel.quantityToRemove))) \(modifyStockViewModel.unite)")
                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
@@ -70,10 +58,10 @@ struct ModifyStockView: View {
                 .cornerRadius(10)
             }
             
-            if isAdding {
+            if modifyStockViewModel.isAdding {
                 VStack (spacing: 5) {
                     Text("Augmentation (\(modifyStockViewModel.unite))").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                    TextField("Augmentation (\(modifyStockViewModel.unite))", value: $modifyStockViewModel.quantityToAdd, formatter: numberFormatter)
+                    TextField("Augmentation (\(modifyStockViewModel.unite))", value: $modifyStockViewModel.quantityToAdd, formatter: modifyStockViewModel.numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.sheetElementBackground))
@@ -86,7 +74,7 @@ struct ModifyStockView: View {
                 
                 VStack (spacing: 5) {
                     Text("Coût d'achat total (€)").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                    TextField("Coût d'achat total (€)", value: $modifyStockViewModel.totalPriceOfAddedQuantity, formatter: numberFormatter)
+                    TextField("Coût d'achat total (€)", value: $modifyStockViewModel.totalPriceOfAddedQuantity, formatter: modifyStockViewModel.numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.sheetElementBackground))
@@ -99,7 +87,7 @@ struct ModifyStockView: View {
             else {
                 VStack (spacing: 5) {
                     Text("Diminution (\(modifyStockViewModel.unite))").frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10).font(.title2)
-                    TextField("Diminution (\(modifyStockViewModel.unite))", value: $modifyStockViewModel.quantityToRemove, formatter: numberFormatter)
+                    TextField("Diminution (\(modifyStockViewModel.unite))", value: $modifyStockViewModel.quantityToRemove, formatter: modifyStockViewModel.numberFormatter)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 10)
                                         .fill(Color.sheetElementBackground))
@@ -113,7 +101,7 @@ struct ModifyStockView: View {
             HStack (spacing: 20){
                 Button(action: {
                     //sauvegarder
-                    if(isAdding){
+                    if(modifyStockViewModel.isAdding){
                         intentStock.intentToIncreaseStock(quantityToBeAdded: modifyStockViewModel.quantityToAdd, totalPriceOfQuantityAdded: modifyStockViewModel.totalPriceOfAddedQuantity)
                         intentStock.intentToEditIngredient(ingredient: self.modifyStockViewModel.ingredient)
                         presentationMode.wrappedValue.dismiss()

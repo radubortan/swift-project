@@ -1,10 +1,6 @@
 import SwiftUI
 
 struct StockView: View {
-    let bigText = CGFloat(25)
-    let smallText = CGFloat(20)
-    
-    @State private var showingSheet = false
     
     @ObservedObject var stockViewModel: StockViewModel
     @ObservedObject var stockListViewModel: StockListViewModel
@@ -24,7 +20,7 @@ struct StockView: View {
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text(String(format: "%.2f€", stockViewModel.prixUnitaire))
-                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: stockViewModel.smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
                 .frame(maxWidth: .infinity)
@@ -37,7 +33,7 @@ struct StockView: View {
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text(stockViewModel.unite)
-                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: stockViewModel.smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
                 .frame(maxWidth: .infinity)
@@ -52,7 +48,7 @@ struct StockView: View {
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text(stockViewModel.nomCat)
-                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: stockViewModel.smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
                 .frame(maxWidth: .infinity)
@@ -65,7 +61,7 @@ struct StockView: View {
                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     Text("\(String(format: "%.1f", stockViewModel.quantite))")
-                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: stockViewModel.smallText)).frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(15)
                 .frame(maxWidth: .infinity)
@@ -80,7 +76,7 @@ struct StockView: View {
                         .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                     Divider()
                     Text(allergen)
-                        .font(.system(size: smallText)).frame(maxWidth: .infinity, alignment: .center)
+                        .font(.system(size: stockViewModel.smallText)).frame(maxWidth: .infinity, alignment: .center)
                 }
                 .padding(15)
                 .frame(maxWidth: .infinity)
@@ -91,14 +87,14 @@ struct StockView: View {
             
             
             Button(action: {
-                showingSheet.toggle()
+                stockViewModel.showingSheet.toggle()
             }, label: {
                 Text("Modifier Stock")
                     .font(.title2)
                     .foregroundColor(.white)
                     .padding(12)
             }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
-                .sheet(isPresented : $showingSheet) {
+                .sheet(isPresented : $stockViewModel.showingSheet) {
                     ModifyStockView(modifyStockViewModel: ModifyStockViewModel(ingredient: stockViewModel.ingredient),stockListViewModel: self.stockListViewModel,stockViewModel: self.stockViewModel)
                 }
             

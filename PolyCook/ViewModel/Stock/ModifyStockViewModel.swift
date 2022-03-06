@@ -12,6 +12,9 @@ class ModifyStockViewModel: ObservableObject{
 
     private(set) var ingredient : Ingredient
     
+    //formats the entered values
+    let numberFormatter : NumberFormatter
+    
     @Published var nomIng: String
     @Published var nomCat: String
     @Published var nomCatAllerg: String?
@@ -22,6 +25,11 @@ class ModifyStockViewModel: ObservableObject{
     @Published var quantityToAdd: Double
     @Published var quantityToRemove: Double
     @Published var totalPriceOfAddedQuantity : Float
+    
+    @Published var isAdding : Bool = false
+    @Published var increase : Double = 0
+    @Published var decrease : Double = 0
+    @Published var price : Double = 0
     
     init(ingredient: Ingredient){
         self.ingredient = ingredient
@@ -35,6 +43,10 @@ class ModifyStockViewModel: ObservableObject{
         self.quantityToAdd = 0
         self.quantityToRemove = 0
         self.totalPriceOfAddedQuantity = 0.0
+        
+        numberFormatter = NumberFormatter()
+        //to format into decimal numbers
+        numberFormatter.numberStyle = .decimal
     }
     
     

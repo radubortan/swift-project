@@ -9,6 +9,9 @@ class CoefficientsViewModel : ObservableObject{
     //model
     private var coefficients : Coefficients = Coefficients(id: "0", coeffMultiAvec: 0, coeffMultiSans: 0, coutHoraireForfaitaire: 0, coutHoraireMoyen: 0)
     
+    //formats the entered values
+    let numberFormatter : NumberFormatter
+    
     //published field values
     @Published var coeffMultiAvec : Double = 0
     @Published var coeffMultiSans : Double = 0
@@ -16,6 +19,9 @@ class CoefficientsViewModel : ObservableObject{
     @Published var coutHoraireMoyen : Double = 0
     
     init() {
+        numberFormatter = NumberFormatter()
+        //to format into decimal numbers
+        numberFormatter.numberStyle = .decimal
         //fetching the data when the view loads
         Task {
             loadCoefficients()

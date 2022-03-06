@@ -6,6 +6,9 @@ class LoginViewModel : ObservableObject {
     
     @Published var signedIn = false
     
+    @Published var email : String = ""
+    @Published var password : String = ""
+    
     var isSignedIn : Bool {
         return auth.currentUser != nil
     }

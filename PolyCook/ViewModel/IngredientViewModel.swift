@@ -7,11 +7,16 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class IngredientViewModel: ObservableObject, IngredientObserver, Subscriber{
 
     private(set) var ingredient : Ingredient
     
+    let bigText = CGFloat(25)
+    let smallText = CGFloat(20)
+    
+    @Published var showingSheet = false
     @Published var nomIng: String
     @Published var nomCat: String
     @Published var nomCatAllerg: String?
