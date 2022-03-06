@@ -90,10 +90,6 @@ class NewStepViewModel : ObservableObject {
                                                       nomCat: doc["nomCat"] as? String ?? "",
                                                       nomCatAllerg: doc["nomCatAllerg"] as? String ?? nil,
                                                       unite: doc["unite"] as? String ?? "" )
-//                    if !initializedIngredient {
-//                        self.selectedIngredient = createdIngredient
-//                        initializedIngredient.toggle()
-//                    }
                     return createdIngredient
                 }
                 self.ingredients.sort(by : {$0.nomIng > $1.nomIng})

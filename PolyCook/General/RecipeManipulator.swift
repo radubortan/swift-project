@@ -84,7 +84,7 @@ class RecipeManipulator {
         return Recette(nbCouverts: recipe.nbCouverts, nomAuteur: recipe.nomAuteur, nomCatRecette: recipe.nomCatRecette, nomRecette: recipe.nomRecette, etapes: copiedSteps, nomEtape: recipe.nomEtape!)
     }
     
-    static func multiplyIngredients(steps: [Step], multiplier: Int) {
+    static func multiplyIngredients(steps: [Step], multiplier: Double) {
         for step in steps {
             if step is InExtensoStep {
                 let stepInExtenso = step as! InExtensoStep
