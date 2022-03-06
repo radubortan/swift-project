@@ -19,7 +19,8 @@ class PdfViewModel : ObservableObject {
     }
     
     var steps : [InExtensoStep] {
-        let steps = RecipeManipulator.extractSteps(steps: recipe.etapes)
+        let copiedRecipe = RecipeManipulator.copyRecipe(recipe: self.recipe)
+        let steps = RecipeManipulator.extractSteps(steps: copiedRecipe.etapes)
         RecipeManipulator.multiplyIngredients(steps: steps, multiplier: quantity.wrappedValue)
         return steps
     }
