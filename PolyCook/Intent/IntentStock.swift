@@ -26,15 +26,6 @@ enum IntentStockState : Equatable {
     case stockIncreasing(Double,Float)
     case editIngredient(Ingredient)
     case updatingStockList
-    
-//    var description: String{
-//       switch self {
-//          case .ready                 : return "ready"
-//       case .stockDecreasing(let removedQuantity) : return "quantite to be decreased to \(removedQuantity)"
-//       case .stockIncreasing(let addedQuantity, let price) : return "stockIncreasing"
-//       case .updatingStockList : return "stock list to be updated"
-//       }
-//    }
 }
 
 struct IntentStock {
