@@ -4,6 +4,7 @@ import Combine
 enum CreateRecipeIntentState {
     case dishesChanging(Int)
     case addingStep(Step)
+    case modifyingStep(InExtensoStep)
 }
 
 struct CreateRecipeIntent {
@@ -19,5 +20,9 @@ struct CreateRecipeIntent {
     
     func intentToAdd(step : Step){
         self.state.send(.addingStep(step))
+    }
+    
+    func intentToChange(step: InExtensoStep) {
+        self.state.send(.modifyingStep(step))
     }
 }

@@ -3,6 +3,7 @@ import Foundation
 protocol RecetteObserver {
     func change (nbCouverts: Int)
     func change (step: Step)
+    func change (step: InExtensoStep, index: Int)
 }
 
 class Recette : Step, Identifiable, Hashable {
@@ -29,17 +30,11 @@ class Recette : Step, Identifiable, Hashable {
         }
     }
     
-    
     var nomCatRecette : String
     
     var nomRecette : String
     
     var etapes : [Step] = []
-    {
-        didSet {
-            observer?.change(step: etapes.last!)
-        }
-    }
     
     var hasAllergens : Bool {
         let ingredients = RecipeManipulator.extractIngredients(steps: etapes)
@@ -53,5 +48,15 @@ class Recette : Step, Identifiable, Hashable {
         self.etapes = etapes
         self.nomAuteur = nomAuteur
         super.init(id : id, nomEtape : nomEtape)
+    }
+    
+    func addStep(step: Step) {
+        self.etapes.append(step)
+        observer?.change(step: etapes.last!)
+    }
+    
+    func changeStep(step: InExtensoStep, index: Int) {
+        self.etapes[index] = step
+        observer?.change(step: step, index: index)
     }
 }

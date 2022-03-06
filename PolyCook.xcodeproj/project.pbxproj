@@ -23,6 +23,8 @@
 		666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666DABDA27C02A7E00AA308A /* RecipeView.swift */; };
 		6671283F27C6D08A00012BCB /* InExtensoStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6671283E27C6D08A00012BCB /* InExtensoStepView.swift */; };
 		667A7E0727D55966009A1B22 /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667A7E0627D55966009A1B22 /* RecipeViewModel.swift */; };
+		667A7E0D27D56C50009A1B22 /* EditInExtensoStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667A7E0C27D56C50009A1B22 /* EditInExtensoStepView.swift */; };
+		667A7E0F27D56DB4009A1B22 /* EditInExtensoStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667A7E0E27D56DB4009A1B22 /* EditInExtensoStepViewModel.swift */; };
 		667D283B27C41A98001BEE8C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283A27C41A98001BEE8C /* CardView.swift */; };
 		667D283D27C41D40001BEE8C /* CustomCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283C27C41D40001BEE8C /* CustomCorner.swift */; };
 		667D283F27C422FD001BEE8C /* FilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667D283E27C422FD001BEE8C /* FilterMenu.swift */; };
@@ -88,6 +90,8 @@
 		666DABDA27C02A7E00AA308A /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		6671283E27C6D08A00012BCB /* InExtensoStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InExtensoStepView.swift; sourceTree = "<group>"; };
 		667A7E0627D55966009A1B22 /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
+		667A7E0C27D56C50009A1B22 /* EditInExtensoStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInExtensoStepView.swift; sourceTree = "<group>"; };
+		667A7E0E27D56DB4009A1B22 /* EditInExtensoStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInExtensoStepViewModel.swift; sourceTree = "<group>"; };
 		667D283A27C41A98001BEE8C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		667D283C27C41D40001BEE8C /* CustomCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCorner.swift; sourceTree = "<group>"; };
 		667D283E27C422FD001BEE8C /* FilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenu.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 				664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */,
 				664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */,
 				660CB4E427D4DB50001F0B7C /* CostsViewModel.swift */,
+				667A7E0E27D56DB4009A1B22 /* EditInExtensoStepViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				669BFE1827C52BF50079C071 /* RecipeIngredientListView.swift */,
 				6671283E27C6D08A00012BCB /* InExtensoStepView.swift */,
 				66AE7A7327C97866002CEF4C /* PdfView.swift */,
+				667A7E0C27D56C50009A1B22 /* EditInExtensoStepView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -394,6 +400,7 @@
 				666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */,
 				66DCF98E27D0CD96002CD021 /* RecipeIngredient.swift in Sources */,
 				661CBC9A27C81E5C001DDE25 /* Coefficients.swift in Sources */,
+				667A7E0D27D56C50009A1B22 /* EditInExtensoStepView.swift in Sources */,
 				66B3448F27BEEBE0005821F9 /* StartingView.swift in Sources */,
 				663E9F7827C11FF90030EEFF /* LoginViewModel.swift in Sources */,
 				FF5F50A127C4DFEE00E1DFF5 /* Ingredient.swift in Sources */,
@@ -403,6 +410,7 @@
 				66E7CCDC27CB94BC00EEDA7C /* InExtensoStep.swift in Sources */,
 				66D68FAC27CAB8C200AF0CE7 /* CreateRecipeViewModel.swift in Sources */,
 				66FCC6EA27C29634002FB4FD /* ModifyStockView.swift in Sources */,
+				667A7E0F27D56DB4009A1B22 /* EditInExtensoStepViewModel.swift in Sources */,
 				66D68FA827CAB28200AF0CE7 /* Recette.swift in Sources */,
 				FF816CCC27D0F5EF0044F493 /* ModifyStockViewModel.swift in Sources */,
 				FFA4F42C27C787E10004AACB /* EditIngredientViewModel.swift in Sources */,

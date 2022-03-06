@@ -1,8 +1,8 @@
 //
-//  NewStepViewModel.swift
+//  EditInExtensoStepViewModel.swift
 //  PolyCook
 //
-//  Created by Radu Bortan on 27/02/2022.
+//  Created by Radu Bortan on 06/03/2022.
 //
 
 import Foundation
@@ -10,54 +10,40 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-class NewStepViewModel : ObservableObject {
-    
+class EditInExtensoStepViewModel : ObservableObject {
     private let firestore  = Firestore.firestore()
     
     var listIntent : CreateRecipeIntent
     
-    @Published var isRecipe = false
-    @Published var nomEtape = ""
-    @Published var duration = 1
-    @Published var description = ""
+    var step : InExtensoStep
+    
+    @Published var nomEtape : String
+    @Published var duration : Int
+    @Published var description : String
     
     @Published var selectedIngredient = Ingredient(id: "", nomIng: "", nomCat: "", nomCatAllerg: "", unite: "")
     @Published var quantity : Double = 1
     
-    @Published var selectedRecipe = Recette(nbCouverts: 0, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [])
-    @Published var subrecipeQuantity : Int = 1
-    
-    //list of the recipes available
-    @Published var recipes : [Recette]
-    
-    var recipeIngredients : [RecipeIngredient] {
-        return RecipeManipulator.extractIngredients(steps: selectedRecipe.etapes)
-    }
-    
     //list of the ingredients available
     @Published var ingredients : [Ingredient] = []
     
-    //list of the ingredients used in the recipe
+    //list of the ingredients used in the step
     @Published var ingredientsList : [RecipeIngredient] = []
     
     //formats the entered values
     let numberFormatter = NumberFormatter()
     
-    
-    func deleteIngredient(at indexSet: IndexSet) {
-        withAnimation {
-            ingredientsList.remove(atOffsets: indexSet)
-        }
-    }
-    
-    init(listVm: CreateRecipeViewModel, recipes: [Recette]) {
+    init(listVm: CreateRecipeViewModel, step: InExtensoStep) {
+        self.step = step
+        self.nomEtape = step.nomEtape!
+        self.duration = step.duree
+        self.description = step.description
+        self.ingredientsList = step.ingredients
+        
         numberFormatter.numberStyle = .decimal
         self.listIntent = CreateRecipeIntent()
         self.listIntent.addObserver(viewModel: listVm)
-        self.recipes = recipes
-        if !self.recipes.isEmpty {
-            self.selectedRecipe = self.recipes[0]
-        }
+        
         Task {
             loadIngredients()
         }
@@ -72,6 +58,12 @@ class NewStepViewModel : ObservableObject {
             foundIngredient[0].quantity += quantity
             //to force the quantity to update in the view
             objectWillChange.send()
+        }
+    }
+    
+    func deleteIngredient(at indexSet: IndexSet) {
+        withAnimation {
+            ingredientsList.remove(atOffsets: indexSet)
         }
     }
     

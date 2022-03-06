@@ -133,7 +133,7 @@ struct CreateRecipeView: View {
                             }
                             .sheet(isPresented: $createVm.showStep) {
                                 if etape is InExtensoStep {
-                                    InExtensoStepView(step: etape as! InExtensoStep)
+                                    EditInExtensoStepView(listVm : createVm, step: etape as! InExtensoStep)
                                 }
                                 else {
                                     RecipeView(recette: etape as! Recette, isSheet: true)

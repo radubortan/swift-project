@@ -17,7 +17,13 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
         case .dishesChanging(let dishes):
             self.recipe.nbCouverts = dishes
         case .addingStep(let step):
-            self.recipe.etapes.append(step)
+            self.recipe.addStep(step: step)
+        case .modifyingStep(let step):
+            for (index, existingStep) in self.recipe.etapes.enumerated() {
+                if existingStep.id == step.id {
+                    self.recipe.changeStep(step: step, index: index)
+                }
+            }
         }
         return .none
     }
@@ -28,6 +34,10 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     
     var listIntent : RecipeListIntent
     var creationIntent : CreateRecipeIntent
+    var recipe : Recette
+    
+    //formats the entered values
+    let numberFormatter = NumberFormatter()
     
     @Published var mealType : String = "Entrée"
     @Published var nomRecette : String = ""
@@ -51,10 +61,9 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
         self.etapes.append(step)
     }
     
-    var recipe : Recette
-    
-    //formats the entered values
-    let numberFormatter = NumberFormatter()
+    func change(step: InExtensoStep, index: Int) {
+        self.etapes[index] = step
+    }
     
     init(listVm : RecipeListViewModel, recipes: [Recette]) {
         self.listIntent = RecipeListIntent()
