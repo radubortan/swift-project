@@ -25,14 +25,13 @@ class NewStepViewModel : ObservableObject {
     @Published var quantity : Double = 1
     
     @Published var selectedRecipe = Recette(nbCouverts: 0, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [])
-    
     @Published var subrecipeQuantity : Int = 1
     
     //list of the recipes available
     @Published var recipes : [Recette]
     
     var recipeIngredients : [RecipeIngredient] {
-        return IngredientExtractor.extractIngredients(steps: selectedRecipe.etapes)
+        return RecipeManipulator.extractIngredients(steps: selectedRecipe.etapes)
     }
     
     //list of the ingredients available
@@ -98,40 +97,5 @@ class NewStepViewModel : ObservableObject {
                     return createdIngredient
                 }
             }
-    }
-    
-    func copyRecipe(recipe: Recette) -> Recette {
-        var copiedSteps : [Step] = []
-        
-        for step in recipe.etapes {
-            if step is InExtensoStep {
-                let stepInExtenso = step as! InExtensoStep
-                let copiedIngredients = IngredientExtractor.copyRecipeIngredients(recipeIngredients: stepInExtenso.ingredients)
-                copiedSteps.append(InExtensoStep(nomEtape: stepInExtenso.nomEtape!, duree: stepInExtenso.duree, description: stepInExtenso.description, ingredients: copiedIngredients))
-            }
-            else {
-                let stepRecipe = step as! Recette
-                let copiedRecipe = copyRecipe(recipe: stepRecipe)
-                for subStep in copiedRecipe.etapes {
-                    copiedSteps.append(subStep)
-                }
-            }
-        }
-        return Recette(nbCouverts: recipe.nbCouverts, nomAuteur: recipe.nomAuteur, nomCatRecette: recipe.nomCatRecette, nomRecette: recipe.nomRecette, etapes: copiedSteps, nomEtape: recipe.nomEtape!)
-    }
-    
-    func multiplyIngredients(steps: [Step], multiplier: Int) {
-        for step in steps {
-            if step is InExtensoStep {
-                let stepInExtenso = step as! InExtensoStep
-                for ingredient in stepInExtenso.ingredients {
-                    ingredient.quantity = ingredient.quantity * Double(multiplier)
-                }
-            }
-            else {
-                let stepRecipe = step as! Recette
-                multiplyIngredients(steps: stepRecipe.etapes, multiplier: multiplier)
-            }
-        }
     }
 }

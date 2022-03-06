@@ -7,7 +7,7 @@
 
 import Foundation
 
-class IngredientExtractor {
+class RecipeManipulator {
     //extracts the InExtensoStep nested inside of the recipe
     static func extractSteps(steps : [Step]) -> [InExtensoStep] {
         var extractedSteps : [InExtensoStep] = []
@@ -63,5 +63,40 @@ class IngredientExtractor {
             copiedRecipeIngredients.append(RecipeIngredient(ingredient: recipeIngredient.ingredient, quantity: recipeIngredient.quantity))
         }
         return copiedRecipeIngredients
+    }
+    
+    static func copyRecipe(recipe: Recette) -> Recette {
+        var copiedSteps : [Step] = []
+        
+        for step in recipe.etapes {
+            if step is InExtensoStep {
+                let stepInExtenso = step as! InExtensoStep
+                let copiedIngredients = RecipeManipulator.copyRecipeIngredients(recipeIngredients: stepInExtenso.ingredients)
+                copiedSteps.append(InExtensoStep(nomEtape: stepInExtenso.nomEtape!, duree: stepInExtenso.duree, description: stepInExtenso.description, ingredients: copiedIngredients))
+            }
+            else {
+                let stepRecipe = step as! Recette
+                let copiedRecipe = copyRecipe(recipe: stepRecipe)
+                for subStep in copiedRecipe.etapes {
+                    copiedSteps.append(subStep)
+                }
+            }
+        }
+        return Recette(nbCouverts: recipe.nbCouverts, nomAuteur: recipe.nomAuteur, nomCatRecette: recipe.nomCatRecette, nomRecette: recipe.nomRecette, etapes: copiedSteps, nomEtape: recipe.nomEtape!)
+    }
+    
+    static func multiplyIngredients(steps: [Step], multiplier: Int) {
+        for step in steps {
+            if step is InExtensoStep {
+                let stepInExtenso = step as! InExtensoStep
+                for ingredient in stepInExtenso.ingredients {
+                    ingredient.quantity = ingredient.quantity * Double(multiplier)
+                }
+            }
+            else {
+                let stepRecipe = step as! Recette
+                multiplyIngredients(steps: stepRecipe.etapes, multiplier: multiplier)
+            }
+        }
     }
 }

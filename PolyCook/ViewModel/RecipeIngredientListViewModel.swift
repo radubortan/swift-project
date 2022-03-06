@@ -22,6 +22,6 @@ class RecipeIngredientListViewModel : ObservableObject{
     }
     
     var ingredients : [RecipeIngredient] {
-        return IngredientExtractor.extractIngredients(steps: self.steps)
+        return RecipeManipulator.extractIngredients(steps: self.steps)
     }
 }

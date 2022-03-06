@@ -281,8 +281,8 @@ struct NewStepView: View {
                         if stepVm.isRecipe {
                             print(stepVm.nomEtape)
                             let originalRecipe = Recette(nbCouverts: stepVm.subrecipeQuantity, nomAuteur: stepVm.selectedRecipe.nomAuteur, nomCatRecette: stepVm.selectedRecipe.nomCatRecette, nomRecette: stepVm.selectedRecipe.nomRecette, etapes: stepVm.selectedRecipe.etapes, nomEtape: stepVm.nomEtape)
-                            let copiedRecipe = stepVm.copyRecipe(recipe: originalRecipe)
-                            stepVm.multiplyIngredients(steps: copiedRecipe.etapes, multiplier: stepVm.subrecipeQuantity)
+                            let copiedRecipe = RecipeManipulator.copyRecipe(recipe: originalRecipe)
+                            RecipeManipulator.multiplyIngredients(steps: copiedRecipe.etapes, multiplier: stepVm.subrecipeQuantity)
                             stepVm.listIntent.intentToAdd(step: copiedRecipe)
                         }
                         else {
