@@ -24,24 +24,12 @@ class NewStepViewModel : ObservableObject {
     @Published var selectedIngredient = Ingredient(id: "", nomIng: "", nomCat: "", nomCatAllerg: "", unite: "")
     @Published var quantity : Double = 1
     
-    @Published var selectedRecipe = Recette(nbCouverts: 1, nomAuteur: "Radu", nomCatRecette: "Dessert", nomRecette: "Sauce", etapes: [
-        InExtensoStep(nomEtape: "Couper fruits", duree: 10, description: "Couper", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "sdfsdf", nomIng: "Pomme", nomCat: "Fruit", nomCatAllerg: nil, unite: "Kg"), quantity: 1)]),
-        InExtensoStep(nomEtape: "Mélanger", duree: 10, description: "desc", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "fsdfdsfs", nomIng: "Pomme", nomCat: "Fruit", nomCatAllerg: nil, unite: "Kg"), quantity: 1)])])
+    @Published var selectedRecipe = Recette(nbCouverts: 0, nomAuteur: "", nomCatRecette: "", nomRecette: "", etapes: [])
     
     @Published var subrecipeQuantity : Int = 1
     
     //list of the recipes available
-    @Published var recipes : [Recette] = [
-        Recette(nbCouverts: 1, nomAuteur: "Radu", nomCatRecette: "Dessert", nomRecette: "Sauce", etapes: [
-        InExtensoStep(nomEtape: "Couper fruits", duree: 10, description: "Couper", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "sdfsdf", nomIng: "Pomme", nomCat: "Fruit", nomCatAllerg: nil, unite: "Kg"), quantity: 1)]),
-        InExtensoStep(nomEtape: "Mélanger", duree: 10, description: "desc", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "fsdfdsfs", nomIng: "Pomme", nomCat: "Fruit", nomCatAllerg: nil, unite: "Kg"), quantity: 1)])]),
-        
-        Recette(nbCouverts: 2, nomAuteur: "Radu", nomCatRecette: "Principal", nomRecette: "Pates", etapes: [
-            InExtensoStep(nomEtape: "Faire cuire pates", duree: 20, description: "Mettre dans de l'eau", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "dgfza", nomIng: "Pates", nomCat: "", nomCatAllerg: nil, unite: "Kg"), quantity: 1), RecipeIngredient(ingredient: Ingredient(id: "zerz", nomIng: "Tomate", nomCat: "Légume", nomCatAllerg: nil, unite: "Kg"), quantity: 0.5)]),
-            InExtensoStep(nomEtape: "Faire cuire pates", duree: 20, description: "Mettre dans de l'eau", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "dgfza", nomIng: "Pates", nomCat: "", nomCatAllerg: nil, unite: "Kg"), quantity: 1), RecipeIngredient(ingredient: Ingredient(id: "zerz", nomIng: "Tomate", nomCat: "Légume", nomCatAllerg: nil, unite: "Kg"), quantity: 0.5)]),
-            InExtensoStep(nomEtape: "Faire cuire pates", duree: 20, description: "Mettre dans de l'eau", ingredients: [RecipeIngredient(ingredient: Ingredient(id: "dgfza", nomIng: "Pates", nomCat: "", nomCatAllerg: nil, unite: "Kg"), quantity: 1), RecipeIngredient(ingredient: Ingredient(id: "zerz", nomIng: "Tomate", nomCat: "Légume", nomCatAllerg: nil, unite: "Kg"), quantity: 0.5)])
-        ])
-    ]
+    @Published var recipes : [Recette]
     
     var recipeIngredients : [RecipeIngredient] {
         return IngredientExtractor.extractIngredients(steps: selectedRecipe.etapes)
@@ -63,10 +51,14 @@ class NewStepViewModel : ObservableObject {
         }
     }
     
-    init(listVm: CreateRecipeViewModel) {
+    init(listVm: CreateRecipeViewModel, recipes: [Recette]) {
         numberFormatter.numberStyle = .decimal
         self.listIntent = CreateRecipeIntent()
         self.listIntent.addObserver(viewModel: listVm)
+        self.recipes = recipes
+        if !self.recipes.isEmpty {
+            self.selectedRecipe = self.recipes[0]
+        }
         Task {
             loadIngredients()
         }
