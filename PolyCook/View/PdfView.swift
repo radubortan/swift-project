@@ -108,10 +108,7 @@ struct PdfView: View {
                             .padding(.top, 10)
                         }
                     }
-                    
-                    
                     Divider()
-                    
                     if pdfVm.showCosts.wrappedValue {
                         VStack {
                             Text("Coûts").font(.title3).bold()
@@ -119,45 +116,45 @@ struct PdfView: View {
                                 VStack (spacing: 3) {
                                     Text("Coût matière").font(.system(size: 9)).bold()
                                     Divider().padding(.horizontal, 2)
-                                    Text("2,00€").font(.system(size: 9))
+                                    Text(String(format: "%.2f€", self.pdfVm.coutMatiere)).font(.system(size: 9))
                                 }
                                 
                                 if pdfVm.costsInfo.withCharges {
                                     VStack (spacing: 3) {
                                         Text("Coût des charges").font(.system(size: 9)).bold()
                                         Divider().padding(.horizontal, 2)
-                                        Text("2,00€").font(.system(size: 9))
+                                        Text(String(format: "%.2f€", self.pdfVm.coutCharges)).font(.system(size: 9))
                                     }
                             
                                     VStack (spacing: 3) {
                                         Text("Coût du personnel").font(.system(size: 9)).bold()
                                         Divider().padding(.horizontal, 2)
-                                        Text("2,00€").font(.system(size: 9))
+                                        Text(String(format: "%.2f€", self.pdfVm.coutPersonnel)).font(.system(size: 9))
                                     }
                                     
                                     VStack (spacing: 3) {
                                         Text("Coût des fluides").font(.system(size: 9)).bold()
                                         Divider().padding(.horizontal, 2)
-                                        Text("2,00€").font(.system(size: 9))
+                                        Text(String(format: "%.2f€", self.pdfVm.coutFluide)).font(.system(size: 9))
                                     }
                                 }
                                 
                                 VStack (spacing: 3) {
                                     Text("Coût de production").font(.system(size: 9)).bold()
                                     Divider().padding(.horizontal, 2)
-                                    Text("2,00€").font(.system(size: 9))
+                                    Text(String(format: "%.2f€", self.pdfVm.coutProduction)).font(.system(size: 9))
                                 }
                                 
                                 VStack (spacing: 3) {
                                     Text("Prix de vente total").font(.system(size: 9)).bold()
                                     Divider().padding(.horizontal, 2)
-                                    Text("2,00€").font(.system(size: 9))
+                                    Text(String(format: "%.2f€", self.pdfVm.coutVente)).font(.system(size: 9))
                                 }
                                 
                                 VStack (spacing: 3) {
                                     Text("Bénéfice par portion").font(.system(size: 9)).bold()
                                     Divider().padding(.horizontal, 2)
-                                    Text("2,00€").font(.system(size: 9))
+                                    Text(String(format: "%.2f€", self.pdfVm.coutVenteParPortion)).font(.system(size: 9))
                                 }
                             }
                         }

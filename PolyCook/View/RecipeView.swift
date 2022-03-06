@@ -126,7 +126,7 @@ struct RecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $costsSheetIsOn) {
-                            CostsView(costsInfo: costsInfo, steps : recette.etapes)
+                            CostsView(costsInfo: costsInfo, steps : recette.etapes, nbCouverts : recette.nbCouverts)
                         }
                     
                     Button(action: {

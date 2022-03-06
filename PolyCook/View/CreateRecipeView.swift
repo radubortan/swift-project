@@ -165,7 +165,7 @@ struct CreateRecipeView: View {
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $createVm.costsSheetIsOn) {
-                            CostsView(costsInfo: CostsInfo(), steps : createVm.etapes)
+                            CostsView(costsInfo: CostsInfo(), steps : createVm.etapes, nbCouverts: createVm.recipe.nbCouverts)
                         }
                 }
                 .listRowBackground(Color.white.opacity(0))
