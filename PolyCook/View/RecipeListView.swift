@@ -61,11 +61,13 @@ struct RecipeListView: View {
                                         }.opacity(0)
                                         HStack {
                                             Text(recette.nomRecette).font(.system(size: 21)).truncationMode(.tail)
-    //                                        Spacer()
-    //                                        Image(systemName: "exclamationmark.circle")
-    //                                            .resizable()
-    //                                            .frame(width: 25, height: 25)
-    //                                            .foregroundColor(.red)
+                                            Spacer()
+                                            if recette.hasAllergens {
+                                                Image(systemName: "exclamationmark.circle")
+                                                    .resizable()
+                                                    .frame(width: 25, height: 25)
+                                                    .foregroundColor(.red)
+                                            }
                                         }.frame(height: 50)
                                     }
                                 }
