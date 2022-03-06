@@ -47,8 +47,6 @@ class RecipeManipulator {
                 }
                 else {
                     foundIngredient[0].quantity += recipeIngredient.quantity
-                    //to force the quantity to update in the view
-//                    objectWillChange.send()
                 }
             }
         }
@@ -64,6 +62,8 @@ class RecipeManipulator {
         return copiedRecipeIngredients
     }
     
+    
+    //creates copy of a recipe
     static func copyRecipe(recipe: Recette) -> Recette {
         var copiedSteps : [Step] = []
         
@@ -84,6 +84,8 @@ class RecipeManipulator {
         return Recette(nbCouverts: recipe.nbCouverts, nomAuteur: recipe.nomAuteur, nomCatRecette: recipe.nomCatRecette, nomRecette: recipe.nomRecette, etapes: copiedSteps, nomEtape: recipe.nomEtape!)
     }
     
+    
+    //multiplies all the ingredients in the array of steps by a provided multiplier
     static func multiplyIngredients(steps: [Step], multiplier: Double) {
         for step in steps {
             if step is InExtensoStep {

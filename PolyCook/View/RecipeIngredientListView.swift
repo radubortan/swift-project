@@ -75,7 +75,8 @@ struct RecipeIngredientListView: View {
                     }
                 }
             }
-        }.background(Color.sheetBackground)
+        }
+        .background(Color.sheetBackground)
     }
 }
 

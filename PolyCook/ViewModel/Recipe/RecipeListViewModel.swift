@@ -20,7 +20,8 @@ class RecipeListViewModel : ObservableObject, Subscriber {
         }
     }
     
-    //MARK: - Intent
+    //intent
+    
     typealias Input = RecipeListIntentState
     
     typealias Failure = Never
@@ -45,11 +46,13 @@ class RecipeListViewModel : ObservableObject, Subscriber {
         return
     }
     
-    
-    //MARK: - Published
-    @Published var recipes : [Recette] = []
+    //search bar text
     @Published var enteredText : String = ""
     
+    //recipes in the database
+    @Published var recipes : [Recette] = []
+    
+    //deletion states
     @Published var toBeDeleted : IndexSet?
     @Published var showingDeleteAlert = false
     
@@ -57,7 +60,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
     @Published var showMealFilter = false
     @Published var showIngredientFilter = false
     
-    
+    //filters
     @Published var mealFilters = Filter(filters: [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")])
     @Published var ingredientFilters : Filter = Filter(filters: [])
 
@@ -118,6 +121,7 @@ class RecipeListViewModel : ObservableObject, Subscriber {
         return finalResult
     }
     
+    //to show confirmation for deleting a recipe
     func showConfirmation(at indexSet : IndexSet) {
         self.toBeDeleted = indexSet
         self.showingDeleteAlert = true
@@ -170,8 +174,6 @@ class RecipeListViewModel : ObservableObject, Subscriber {
                     }
                 }
                 steps.append(["nomEtape": inExtenso.nomEtape ?? "","duree": inExtenso.duree,"description": inExtenso.description,"ingredients":ingredients])
-                
-                // Ajouter les ingrédients
             }
             
             //case Recipe

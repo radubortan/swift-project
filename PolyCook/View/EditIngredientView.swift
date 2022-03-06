@@ -6,15 +6,15 @@ struct EditIngredientView: View {
     
     @ObservedObject var ingredientViewModel: IngredientViewModel
     @ObservedObject var editIngredientViewModel: EditIngredientViewModel
+    @ObservedObject var ingredientCategoryList = IngredientCategories()
+    @ObservedObject var allergenCategoryList = AllergenCategories()
+    
     var intentIngredient: IntentIngredient
     
     @State private var isAllergene : Bool = false
-    
     @State var selectedAllergenCategory : String = "Crustacés"
     @State var selectedIngredientCategory : String = "Crustacés"
     
-    @ObservedObject var ingredientCategoryList = IngredientCategories()
-    @ObservedObject var allergenCategoryList = AllergenCategories()
     
     init(ingredientViewModel: IngredientViewModel, ingredientListViewModel: IngredientListViewModel){
         self.ingredientViewModel = ingredientViewModel

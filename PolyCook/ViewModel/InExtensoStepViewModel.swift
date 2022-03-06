@@ -17,6 +17,7 @@ class InExtensoStepViewModel : ObservableObject{
     var hasNormalIngredients : Bool {
         return step.ingredients.contains(where: {$0.ingredient.nomCatAllerg == nil})
     }
+    
     var hasAllergens : Bool {
         return step.ingredients.contains(where: {$0.ingredient.nomCatAllerg != nil})
     }

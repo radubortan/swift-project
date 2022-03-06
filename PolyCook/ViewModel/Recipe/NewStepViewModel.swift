@@ -75,6 +75,7 @@ class NewStepViewModel : ObservableObject {
         }
     }
     
+    //load ingredients for the inExtenso picker
     func loadIngredients() {
         firestore.collection("ingredients")
             .addSnapshotListener{

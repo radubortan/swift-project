@@ -16,8 +16,10 @@ class IngredientListViewModel : ObservableObject, Subscriber{
 
     @Published private(set) var ingredients = [Ingredient]()
     
+    //search bar
     @Published var enteredText : String = ""
     
+    //deletion states
     @Published var toBeDeleted : IndexSet?
     @Published var showingDeleteAlert = false
     
@@ -25,6 +27,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
     @Published var showCategoryFilter = false
     @Published var showAllergenFilter = false
     
+    //show sheets states
     @Published var showingCreationSheet = false
     @Published var showingInfoSheet = false
     
@@ -40,6 +43,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
         }
     }
     
+    //intent
     typealias Input = IntentIngredientState
     typealias Failure = Never
     
@@ -79,6 +83,8 @@ class IngredientListViewModel : ObservableObject, Subscriber{
         return
     }
     
+    
+    //ingredients being shown
     var filterResults : [Ingredient] {
         //extracting the selected categories
         var checkedCategories : [String] = []
@@ -132,6 +138,7 @@ class IngredientListViewModel : ObservableObject, Subscriber{
         return filteredByAllergen
     }
     
+    
     func remove(atOffsets : IndexSet){
         atOffsets.forEach{
             index in
@@ -176,7 +183,6 @@ class IngredientListViewModel : ObservableObject, Subscriber{
         else {
             firestore.collection("ingredients").addDocument(data: ["nomIng":ingredient.nomIng,"nomCat": ingredient.nomCat , "unite":ingredient.unite,"prixUnitaire" : ingredient.prixUnitaire, "quantite" : ingredient.quantite])
         }
-
     }
     
     

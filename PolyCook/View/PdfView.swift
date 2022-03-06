@@ -3,6 +3,7 @@ import SwiftUI
 struct PdfView: View {
     @ObservedObject var pdfVm : PdfViewModel
     
+    //grid elements
     let infoColumns = [GridItem](repeating: .init(.flexible()), count: 3)
     let ingredientsColumns = [GridItem(.flexible(), spacing: 0), GridItem(.fixed(40), spacing: 0), GridItem(.fixed(40), spacing: 0)]
     let costsColumns = [GridItem](repeating: .init(.flexible(), spacing: 0), count: 4)
@@ -88,8 +89,7 @@ struct PdfView: View {
                                                 Text("\(String(format: "%.1f", ingredient.quantity))").font(.system(size: 9))
                                                 Text(ingredient.ingredient.unite).font(.system(size: 9))
                                             }
-                                        }
-                                        
+                                        }   
                                     }
                                 }
                                 .frame(maxWidth: .infinity)

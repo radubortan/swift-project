@@ -13,6 +13,7 @@ class StockViewModel: ObservableObject, IngredientObserver, Subscriber{
 
     private(set) var ingredient : Ingredient
     
+    //text sizes
     let bigText = CGFloat(25)
     let smallText = CGFloat(20)
     
@@ -35,6 +36,7 @@ class StockViewModel: ObservableObject, IngredientObserver, Subscriber{
         self.ingredient.add(ingredientObserver: self)
     }
     
+    //intent
     typealias Input = IntentStockState
     typealias Failure = Never
     

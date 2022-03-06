@@ -13,17 +13,20 @@ class CostsInfo : ObservableObject {
     
     private let firestore = Firestore.firestore()
 
+    //custom coefficients
     @Published var customParams : Bool = false
     @Published var customCoutHoraireMoyen : Double = 0
     @Published var customCoutHoraireForfaitaire : Double = 0
     @Published var customCoeffMultiSans : Double = 0
     @Published var customCoeffMultiAvec : Double = 0
     
+    //custom assaisonnement
     @Published var customAssaisonnement : Bool = false
     @Published var customAssaissonnementValue : Double = 0
+    
     @Published var withCharges : Bool = false
     
-    // Real coefficients
+    //global coefficients
     @Published var coutHoraireMoyen : Double = 0
     @Published var coutHoraireForfaitaire : Double = 0
     @Published var coeffMultiSans : Double = 0
@@ -34,7 +37,6 @@ class CostsInfo : ObservableObject {
             loadCoefficients()
         }
     }
-    
     
     func loadCoefficients() {
         firestore.collection("options")

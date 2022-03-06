@@ -16,7 +16,7 @@ struct InExtensoStepView: View {
                 .background(Color.sheetBackground)
             
             List {
-                //step titlet
+                //step title
                 Section {
                     Text(vm.step.nomEtape!)
                         .font(.title)

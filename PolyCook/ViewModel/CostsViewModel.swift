@@ -14,9 +14,7 @@ class CostsViewModel : ObservableObject {
     private let firestore = Firestore.firestore()
     
     let steps : [Step]
-    
     let nbCouverts : Int
-    
     let numberFormatter : NumberFormatter
     
     var coutMatiere : Double {
@@ -61,7 +59,6 @@ class CostsViewModel : ObservableObject {
     }
     
     var coutVente : Double {
-        
         if costsInfo.withCharges{
             if costsInfo.customParams {
                 return self.coutProduction * self.costsInfo.customCoeffMultiAvec
@@ -93,6 +90,7 @@ class CostsViewModel : ObservableObject {
              return costsInfo.coutHoraireMoyen
          }
      }
+    
      var coutHoraireForfaitaire : Double {
          if costsInfo.customParams {
              return costsInfo.customCoutHoraireForfaitaire

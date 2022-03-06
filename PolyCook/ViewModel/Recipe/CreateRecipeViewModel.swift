@@ -4,6 +4,10 @@ import SwiftUI
 
 class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
     
+    //intent
+    var listIntent : RecipeListIntent
+    var creationIntent : CreateRecipeIntent
+    
     typealias Input = CreateRecipeIntentState
     
     typealias Failure = Never
@@ -32,8 +36,7 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
         return
     }
     
-    var listIntent : RecipeListIntent
-    var creationIntent : CreateRecipeIntent
+    
     var recipe : Recette
     
     //formats the entered values
@@ -86,6 +89,7 @@ class CreateRecipeViewModel : ObservableObject, RecetteObserver, Subscriber {
             etapes.move(fromOffsets: source, toOffset: destination)
         }
     
+    //clear all the data
     func clearView() {
         mealType = "Entrée"
         nomRecette = ""

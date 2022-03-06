@@ -13,6 +13,7 @@ class LoginViewModel : ObservableObject {
         return auth.currentUser != nil
     }
     
+    //to sing in
     func signIn(email: String, password: String) {
         auth.signIn(withEmail: email, password: password) { [weak self]
             result, error in
@@ -25,6 +26,7 @@ class LoginViewModel : ObservableObject {
         }
     }
     
+    //to sign out
     func signOut() {
         try? auth.signOut()
         self.signedIn = false

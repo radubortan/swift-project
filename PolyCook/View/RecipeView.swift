@@ -2,6 +2,8 @@ import SwiftUI
 
 struct RecipeView: View {
     @ObservedObject var vm : RecipeViewModel
+    
+    //stores the costs parameters chosen by the user
     @ObservedObject var costsInfo : CostsInfo = CostsInfo()
     
     //formats the entered values

@@ -9,12 +9,17 @@ import Foundation
 import SwiftUI
 
 class RecipeViewModel: ObservableObject {
+    //sheet states
     @Published var costsSheetIsOn = false
     @Published var ingredientsSheetIsOn = false
-    @Published var showCosts = false
-    @Published var quantity = 1
     @Published var showStep = false
     @Published var showPdf = false
+    
+    //pdf states
+    @Published var showCosts = false
+    @Published var quantity = 1
+    
+    //recipe information
     @Published var isSheet : Bool
     @Published var recette : Recette
     

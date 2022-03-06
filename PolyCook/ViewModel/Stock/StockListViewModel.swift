@@ -64,6 +64,8 @@ class StockListViewModel : ObservableObject, Subscriber{
         return
     }
     
+    
+    //ingredients being shown
     var filterResults : [Ingredient] {
         //extracting the selected categories
         var checkedCategories : [String] = []

@@ -6,6 +6,8 @@ struct CreateRecipeView: View {
     
     @ObservedObject var listVm : RecipeListViewModel
     @ObservedObject var createVm : CreateRecipeViewModel
+    
+    //stores the costs parameters chosen by the user
     @ObservedObject var costsInfo : CostsInfo = CostsInfo()
     
     init(listVm : RecipeListViewModel, recipes: [Recette]) {
