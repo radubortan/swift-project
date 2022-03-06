@@ -42,7 +42,7 @@ class Recette : Step, Identifiable, Hashable {
     }
     
     var hasAllergens : Bool {
-        let ingredients = IngredientExtractor.extractIngredients(steps: etapes)
+        let ingredients = RecipeManipulator.extractIngredients(steps: etapes)
         return ingredients.contains(where: {$0.ingredient.nomCatAllerg != nil})
     }
     

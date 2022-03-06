@@ -19,6 +19,8 @@ class PdfViewModel : ObservableObject {
     }
     
     var steps : [InExtensoStep] {
-        return IngredientExtractor.extractSteps(steps: recipe.etapes)
+        let steps = RecipeManipulator.extractSteps(steps: recipe.etapes)
+        RecipeManipulator.multiplyIngredients(steps: steps, multiplier: quantity.wrappedValue)
+        return steps
     }
 }
