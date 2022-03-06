@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct CardView: View {
-    @State var filter: FilterItem
+    @ObservedObject var filter: FilterItem
     
+
     var body: some View {
         HStack {
             Text(filter.title)
@@ -32,8 +33,8 @@ struct CardView: View {
     }
 }
 
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        CardView(filter: FilterItem(checked: true, title: ""))
-    }
-}
+//struct CardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CardView(filter: FilterItem(checked: true, title: ""))
+//    }
+//}

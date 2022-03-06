@@ -193,7 +193,7 @@ struct CostsView: View {
                                     Text("Coût       matière")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("2.00€")
+                                    Text("\(vm.totalIngredientsValue)")
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)
@@ -263,7 +263,7 @@ struct CostsView: View {
                                     Text("Coût    matière")
                                         .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                     Divider()
-                                    Text("2.00€")
+                                    Text("\(vm.totalIngredientsValue)")
                                         .font(.system(size: 20)).frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 .padding(15)

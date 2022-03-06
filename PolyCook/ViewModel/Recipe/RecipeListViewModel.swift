@@ -54,8 +54,6 @@ class RecipeListViewModel : ObservableObject, Subscriber {
     //filter states
     @Published var showMealFilter = false
     @Published var showIngredientFilter = false
-    @Published var mealFilters = [FilterItem(title: "Entrée"), FilterItem(title: "Principal"), FilterItem(title: "Dessert")]
-    @Published var ingredientFilters = [FilterItem(title: "Pomme"), FilterItem(title: "Oeuf"), FilterItem(title: "Pâtes"), FilterItem(title: "Poisson"), FilterItem(title: "Tomate"), FilterItem(title: "Oignon"), FilterItem(title: "Courgette")]
     
     
     func showConfirmation(at indexSet : IndexSet) {

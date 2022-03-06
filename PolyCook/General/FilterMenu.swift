@@ -5,7 +5,14 @@ struct FilterMenu: View {
     let height : CGFloat
     
     var isOn : Binding<Bool>
-    var filters : Binding<[FilterItem]>
+    @ObservedObject var filter : Filter
+    
+    init(title: String, height: CGFloat, isOn: Binding<Bool>, filter: Filter){
+        self.title = title
+        self.height = height
+        self.isOn = isOn
+        self.filter = filter
+    }
     
     var body: some View {
         VStack {
@@ -20,7 +27,7 @@ struct FilterMenu: View {
                     Spacer()
                     
                     Button(action : {
-                        withAnimation{isOn.wrappedValue.toggle()}
+                        withAnimation{self.isOn.wrappedValue.toggle()}
                     }, label : {
                         Text("Done")
                             .bold()
@@ -31,19 +38,8 @@ struct FilterMenu: View {
                 .padding(.bottom, 10)
                 
                 ScrollView(.vertical) {
-                    ForEach(filters.wrappedValue, id: \.self.title) {filter in
+                    ForEach(filter.filters, id: \.self.title) {filter in
                         CardView(filter: filter)
-//                            .onChange(of: filter.checked, perform: {
-//                                checked in
-//                                print("print")
-//                                if checked {
-//                                    print("YOYOYOY")
-//                                }
-//                                else{
-//                                    print("TITIT")
-//                                }
-//                                
-//                            })
                     }
                 }
                 .padding(.bottom, 10)
@@ -56,7 +52,7 @@ struct FilterMenu: View {
             .offset(y: isOn.wrappedValue ? 90 : UIScreen.main.bounds.height)
         }
         .background(Color.black.opacity(isOn.wrappedValue ? 0.5 : 0).onTapGesture {
-            withAnimation{isOn.wrappedValue.toggle()}
+            withAnimation{self.isOn.wrappedValue.toggle()}
         })
     }
 }
