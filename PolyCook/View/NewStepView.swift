@@ -54,7 +54,6 @@ struct NewStepView: View {
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
                     VStack (spacing: 20) {
-//                        HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Recette").font(.title2)
                                 if stepVm.recipes.isEmpty {
@@ -91,7 +90,6 @@ struct NewStepView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.sheetElementBackground)
                             .cornerRadius(10)
-//                        }
                     }
                     .listRowBackground(Color.white.opacity(0))
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
