@@ -54,7 +54,7 @@ struct NewStepView: View {
                             .textCase(.none)
                             .foregroundColor(Color.textFieldForeground)) {
                     VStack (spacing: 20) {
-                        HStack (spacing: 20){
+//                        HStack (spacing: 20){
                             VStack (spacing: 5) {
                                 Text("Recette").font(.title2)
                                 if stepVm.recipes.isEmpty {
@@ -91,7 +91,7 @@ struct NewStepView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.sheetElementBackground)
                             .cornerRadius(10)
-                        }
+//                        }
                     }
                     .listRowBackground(Color.white.opacity(0))
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -107,21 +107,32 @@ struct NewStepView: View {
                                 .padding(.bottom, 5)
                                 .textCase(.none)
                                 .foregroundColor(Color.textFieldForeground)) {
-                        ForEach(stepVm.recipeIngredients, id: \.id) {recipeIngredient in
-                            HStack {
-                                Text(recipeIngredient.ingredient.nomIng)
-                                Spacer()
-                                if (recipeIngredient.ingredient.nomCatAllerg != nil) {
-                                    Image(systemName: "exclamationmark.circle")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.red)
+                        if stepVm.recipeIngredients.isEmpty {
+                            Text("Aucun ingrédient")
+                                .font(.system(size: 21))
+                                .bold()
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 20)
+                                .listRowBackground(Color.white.opacity(0))
+                                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }
+                        else {
+                            ForEach(stepVm.recipeIngredients, id: \.id) {recipeIngredient in
+                                HStack {
+                                    Text(recipeIngredient.ingredient.nomIng)
+                                    Spacer()
+                                    if (recipeIngredient.ingredient.nomCatAllerg != nil) {
+                                        Image(systemName: "exclamationmark.circle")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.red)
+                                    }
+                                    Text("\(String(format: "%.1f", recipeIngredient.quantity / Double(stepVm.selectedRecipe.nbCouverts) * Double(stepVm.subrecipeQuantity))) \(recipeIngredient.ingredient.unite)")
+                                        .frame(width: 75, height: 30)
+                                        .background(Color.innerTextFieldBackground)
+                                        .cornerRadius(10)
+                                        .foregroundColor(Color.textFieldForeground)
                                 }
-                                Text("\(String(format: "%.1f", recipeIngredient.quantity / Double(stepVm.selectedRecipe.nbCouverts) * Double(stepVm.subrecipeQuantity))) \(recipeIngredient.ingredient.unite)")
-                                    .frame(width: 75, height: 30)
-                                    .background(Color.innerTextFieldBackground)
-                                    .cornerRadius(10)
-                                    .foregroundColor(Color.textFieldForeground)
                             }
                         }
                     }
