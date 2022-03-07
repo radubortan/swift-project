@@ -24,7 +24,7 @@ struct PdfView: View {
             
             ScrollView {
                 Button {
-                    exportPDF {
+                    exportPDF(recipeName: pdfVm.recipe.nomRecette) {
                         self
                     } completion: { status, url in
                         if let url = url, status {
