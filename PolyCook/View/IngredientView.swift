@@ -66,7 +66,7 @@ struct IngredientView: View {
             if let currentAllergCategory = ingredientViewModel.nomCatAllerg {
                 VStack (spacing: 10) {
                     Text("Catégorie d'allergène")
-                        .font(.system(size: ingredientViewModel.bigText))
+                        .font(.title2).frame(maxWidth: .infinity, alignment: .center)
                     Divider()
                     Text(currentAllergCategory)
                         .font(.system(size: ingredientViewModel.smallText))
