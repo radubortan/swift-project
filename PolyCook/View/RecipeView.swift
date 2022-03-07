@@ -60,7 +60,7 @@ struct RecipeView: View {
                             .cornerRadius(10)
                             
                             VStack (spacing: 10) {
-                                Text("N°        couverts")
+                                Text("N°               couverts")
                                     .font(.title2).frame(maxWidth: .infinity, alignment: .leading)
                                 Divider()
                                 Text("\(vm.recette.nbCouverts)")
@@ -151,6 +151,26 @@ struct RecipeView: View {
                         .buttonStyle(BorderlessButtonStyle())
                         .sheet(isPresented: $vm.ingredientsSheetIsOn) {
                             RecipeIngredientListView(steps: vm.recette.etapes)
+                        }
+                    
+                    Button(action: {
+                        vm.ticketSheetIsOn.toggle()
+                    }, label: {
+                        HStack {
+                            Image(systemName: "ticket")
+                                .font(.title2)
+                            Text("Générer ticket")
+                                .font(.title2)
+                                .padding(.vertical, 12)
+                        }
+                    })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                        .buttonStyle(BorderlessButtonStyle())
+                        .sheet(isPresented: $vm.ticketSheetIsOn) {
+                            TicketView(recipe: vm.recette)
                         }
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))

@@ -12,8 +12,11 @@ class RecipeViewModel: ObservableObject {
     //sheet states
     @Published var costsSheetIsOn = false
     @Published var ingredientsSheetIsOn = false
+    @Published var ticketSheetIsOn = false
+    
     @Published var showStep = false
     @Published var showPdf = false
+    
     
     //pdf states
     @Published var showCosts = false

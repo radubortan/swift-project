@@ -52,9 +52,9 @@ extension View {
         return safeArea
     }
     
-    func exportPDF<Content: View>(recipeName: String, @ViewBuilder content: @escaping ()->Content, completion: @escaping (Bool, URL?)->()) {
+    func exportPDF<Content: View>(fileName: String, @ViewBuilder content: @escaping ()->Content, completion: @escaping (Bool, URL?)->()) {
         let documentDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-        let outputFileURL = documentDirectory.appendingPathComponent("\(recipeName).pdf")
+        let outputFileURL = documentDirectory.appendingPathComponent("\(fileName).pdf")
         
         let pdfView = convertToScrollView {
             content()

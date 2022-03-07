@@ -54,6 +54,8 @@
 		66DCF98E27D0CD96002CD021 /* RecipeIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DCF98D27D0CD96002CD021 /* RecipeIngredient.swift */; };
 		66E7CCDC27CB94BC00EEDA7C /* InExtensoStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E7CCDB27CB94BC00EEDA7C /* InExtensoStep.swift */; };
 		66E7CCE027CB98FB00EEDA7C /* NewStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E7CCDF27CB98FB00EEDA7C /* NewStepViewModel.swift */; };
+		66E97FE427D67916006C9A8D /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E97FE327D67916006C9A8D /* TicketView.swift */; };
+		66E97FE627D67A08006C9A8D /* TicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E97FE527D67A08006C9A8D /* TicketViewModel.swift */; };
 		66FCC6E027C2645E002FB4FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66FCC6DF27C2645E002FB4FD /* GoogleService-Info.plist */; };
 		66FCC6E227C26746002FB4FD /* CreateIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E127C26746002FB4FD /* CreateIngredientView.swift */; };
 		66FCC6E427C27C1E002FB4FD /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FCC6E327C27C1E002FB4FD /* IngredientView.swift */; };
@@ -121,6 +123,8 @@
 		66DCF98D27D0CD96002CD021 /* RecipeIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeIngredient.swift; sourceTree = "<group>"; };
 		66E7CCDB27CB94BC00EEDA7C /* InExtensoStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InExtensoStep.swift; sourceTree = "<group>"; };
 		66E7CCDF27CB98FB00EEDA7C /* NewStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStepViewModel.swift; sourceTree = "<group>"; };
+		66E97FE327D67916006C9A8D /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
+		66E97FE527D67A08006C9A8D /* TicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketViewModel.swift; sourceTree = "<group>"; };
 		66FCC6DF27C2645E002FB4FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66FCC6E127C26746002FB4FD /* CreateIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientView.swift; sourceTree = "<group>"; };
 		66FCC6E327C27C1E002FB4FD /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 				664EA16327D3BEA000622540 /* RecipeIngredientListViewModel.swift */,
 				664EA16727D3CF3A00622540 /* InExtensoStepViewModel.swift */,
 				660CB4E427D4DB50001F0B7C /* CostsViewModel.swift */,
+				66E97FE527D67A08006C9A8D /* TicketViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 				6671283E27C6D08A00012BCB /* InExtensoStepView.swift */,
 				66AE7A7327C97866002CEF4C /* PdfView.swift */,
 				667A7E0C27D56C50009A1B22 /* EditInExtensoStepView.swift */,
+				66E97FE327D67916006C9A8D /* TicketView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 			files = (
 				667D284327C42CAD001BEE8C /* FilterItem.swift in Sources */,
 				666DABDB27C02A7E00AA308A /* RecipeView.swift in Sources */,
+				66E97FE427D67916006C9A8D /* TicketView.swift in Sources */,
 				66DCF98E27D0CD96002CD021 /* RecipeIngredient.swift in Sources */,
 				661CBC9A27C81E5C001DDE25 /* Coefficients.swift in Sources */,
 				667A7E0D27D56C50009A1B22 /* EditInExtensoStepView.swift in Sources */,
@@ -442,6 +449,7 @@
 				66E7CCE027CB98FB00EEDA7C /* NewStepViewModel.swift in Sources */,
 				66D68FAE27CAB9F500AF0CE7 /* RecipeListIntent.swift in Sources */,
 				66D68FB027CACBAB00AF0CE7 /* CreateRecipeIntent.swift in Sources */,
+				66E97FE627D67A08006C9A8D /* TicketViewModel.swift in Sources */,
 				6671283F27C6D08A00012BCB /* InExtensoStepView.swift in Sources */,
 				FF816CC827D0E9B90044F493 /* StockViewModel.swift in Sources */,
 				66FCC6E427C27C1E002FB4FD /* IngredientView.swift in Sources */,
