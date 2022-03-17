@@ -83,7 +83,8 @@ struct IngredientView: View {
                     .font(.title2)
                     .foregroundColor(.white)
                     .padding(12)
-            }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
+                    .frame(maxWidth: .infinity)
+            }).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $ingredientViewModel.showingSheet) {
                     EditIngredientView(ingredientViewModel: ingredientViewModel, ingredientListViewModel: ingredientListViewModel)                            }
             

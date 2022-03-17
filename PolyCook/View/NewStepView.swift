@@ -242,8 +242,9 @@ struct NewStepView: View {
                                     .font(.title2)
                                     .padding(.vertical, 12)
                             }
-                        })
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        })
+                            
                             .background(stepVm.ingredients.isEmpty ? .gray : .blue)
                             .cornerRadius(10)
                             .foregroundColor(.white)
@@ -308,8 +309,9 @@ struct NewStepView: View {
                             .font(.title2)
                             .foregroundColor(.white)
                             .padding(12)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     })
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
                         .background(stepVm.isRecipe && stepVm.recipes.isEmpty ? .gray : .blue)
                         .cornerRadius(10)
                         .buttonStyle(BorderlessButtonStyle())
@@ -321,9 +323,11 @@ struct NewStepView: View {
                     }, label: {
                         Text("Annuler")
                             .font(.title2)
-                            .foregroundColor(.white).padding(12)
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     })
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
                         .background(.red)
                         .cornerRadius(10)
                         .buttonStyle(BorderlessButtonStyle())

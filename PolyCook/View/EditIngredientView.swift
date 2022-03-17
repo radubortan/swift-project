@@ -119,8 +119,10 @@ struct EditIngredientView: View {
                 }, label: {
                     Text("Modifier")
                         .font(.title2)
-                        .foregroundColor(.white).padding(12)
-                }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .frame(maxWidth: .infinity)
+                }).background(.blue).cornerRadius(10)
                 
                 Button(action: {
                     //dismissed the current view
@@ -128,8 +130,10 @@ struct EditIngredientView: View {
                 }, label: {
                     Text("Annuler")
                         .font(.title2)
-                        .foregroundColor(.white).padding(12)
-                }).frame(maxWidth: .infinity).background(.red).cornerRadius(10)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .frame(maxWidth: .infinity)
+                }).background(.red).cornerRadius(10)
             }
             Spacer()
         }

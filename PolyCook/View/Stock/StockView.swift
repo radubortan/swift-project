@@ -93,7 +93,8 @@ struct StockView: View {
                     .font(.title2)
                     .foregroundColor(.white)
                     .padding(12)
-            }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
+                    .frame(maxWidth: .infinity)
+            }).background(.blue).cornerRadius(10)
                 .sheet(isPresented : $stockViewModel.showingSheet) {
                     ModifyStockView(modifyStockViewModel: ModifyStockViewModel(ingredient: stockViewModel.ingredient),stockListViewModel: self.stockListViewModel,stockViewModel: self.stockViewModel)
                 }

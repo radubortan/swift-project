@@ -116,7 +116,8 @@ struct ModifyStockView: View {
                     Text("Modifier")
                         .font(.title2)
                         .foregroundColor(.white).padding(12)
-                }).frame(maxWidth: .infinity).background(.blue).cornerRadius(10)
+                        .frame(maxWidth: .infinity)
+                }).background(.blue).cornerRadius(10)
                 
                 Button(action: {
                     //dismissed the current view
@@ -125,7 +126,8 @@ struct ModifyStockView: View {
                     Text("Annuler")
                         .font(.title2)
                         .foregroundColor(.white).padding(12)
-                }).frame(maxWidth: .infinity).background(.red).cornerRadius(10)
+                        .frame(maxWidth: .infinity)
+                }).background(.red).cornerRadius(10)
             }
             
             

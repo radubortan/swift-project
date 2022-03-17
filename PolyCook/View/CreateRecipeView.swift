@@ -104,8 +104,8 @@ struct CreateRecipeView: View {
                                 .font(.title2)
                                 .padding(.vertical, 12)
                         }
-                    })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    })
                         .background(.blue)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
@@ -158,9 +158,10 @@ struct CreateRecipeView: View {
                             Text("Coûts")
                                 .font(.title2)
                                 .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                     })
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
                         .background(.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
@@ -185,8 +186,9 @@ struct CreateRecipeView: View {
                                 .font(.title2)
                                 .padding(.vertical, 12)
                         }
-                    })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    })
+                        
                         .background(.blue)
                         .foregroundColor(.white)
                         .buttonStyle(BorderlessButtonStyle())
@@ -212,8 +214,9 @@ struct CreateRecipeView: View {
                                 .font(.title2)
                                 .foregroundColor(.white)
                                 .padding(12)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         })
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            
                             .background(.blue)
                             .cornerRadius(10)
                             .buttonStyle(BorderlessButtonStyle())
@@ -231,8 +234,8 @@ struct CreateRecipeView: View {
                             Text("Annuler")
                                 .font(.title2)
                                 .foregroundColor(.white).padding(12)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         })
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(.red)
                             .cornerRadius(10)
                             .buttonStyle(BorderlessButtonStyle())

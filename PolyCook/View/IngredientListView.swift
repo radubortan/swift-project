@@ -20,8 +20,8 @@ struct IngredientListView: View {
                                     withAnimation{ingredientListViewModel.showCategoryFilter.toggle()}
                                 }, label: {
                                     Text("Catégorie").font(.system(size: 21))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 })
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
@@ -31,8 +31,8 @@ struct IngredientListView: View {
                                     withAnimation{ingredientListViewModel.showAllergenFilter.toggle()}
                                 }, label: {
                                     Text("Allergène").font(.system(size: 21))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 })
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)

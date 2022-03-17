@@ -14,8 +14,8 @@ struct StocksListView: View {
                                     withAnimation{stockListViewModel.showCategoryFilter.toggle()}
                                 }, label: {
                                     Text("Catégorie").font(.system(size: 21))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 })
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
@@ -25,8 +25,8 @@ struct StocksListView: View {
                                     withAnimation{stockListViewModel.showAllergenFilter.toggle()}
                                 }, label: {
                                     Text("Allergène").font(.system(size: 21))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 })
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)

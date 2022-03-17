@@ -118,13 +118,12 @@ struct RecipeView: View {
                     Button(action: {
                         vm.costsSheetIsOn.toggle()
                     }, label: {
-                        HStack {
                             Text("Coûts")
                                 .font(.title2)
                                 .padding(.vertical, 12)
-                        }
-                    })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    })
+                        
                         .background(.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
@@ -143,8 +142,9 @@ struct RecipeView: View {
                                 .font(.title2)
                                 .padding(.vertical, 12)
                         }
-                    })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    })
+                        
                         .background(.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
@@ -163,8 +163,9 @@ struct RecipeView: View {
                                 .font(.title2)
                                 .padding(.vertical, 12)
                         }
-                    })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    })
+                        
                         .background(.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
@@ -226,8 +227,8 @@ struct RecipeView: View {
                                     .font(.title2)
                                     .padding(.vertical, 12)
                             }
-                        })
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        })
                             .background(.blue)
                             .cornerRadius(10)
                             .foregroundColor(.white)

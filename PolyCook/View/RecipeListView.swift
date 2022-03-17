@@ -16,8 +16,8 @@ struct RecipeListView: View {
                                     withAnimation{listVm.showMealFilter.toggle()}
                                 }, label: {
                                     Text("Type Repas").font(.system(size: 21))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 })
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
@@ -27,8 +27,8 @@ struct RecipeListView: View {
                                     withAnimation{listVm.showIngredientFilter.toggle()}
                                 }, label: {
                                     Text("Ingrédients").font(.system(size: 21))
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 })
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                     .background(.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
